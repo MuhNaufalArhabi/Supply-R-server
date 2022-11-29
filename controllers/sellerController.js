@@ -24,6 +24,7 @@ class SellerController {
       });
       res.status(201).json({ id: seller.id, email: seller.email });
     } catch (error) {
+        console.log(error);
       next(error);
     }
   }
