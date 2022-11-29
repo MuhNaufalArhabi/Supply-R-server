@@ -860,13 +860,13 @@
     {
       "BuyerId": 1,
       "isPaid": true,
-      "paymenMethod": "upfront",
+      "paymentMethod": "upfront",
       "totalPrice": 1892905
     },
     {
       "BuyerId": 2,
       "isPaid": false,
-      "paymenMethod": "installment",
+      "paymentMethod": "installment",
       "totalPrice": 751729
     }
   ],
