@@ -842,7 +842,7 @@
       "email": "ejacqueme0@technorati.com",
       "phoneNumber": "161-714-7611",
       "address": "94 Continental Terrace",
-      "industy": "Advertising",
+      "industry": "Advertising",
       "id": 1
     },
     {
@@ -852,7 +852,7 @@
       "email": "cproom1@sphinn.com",
       "phoneNumber": "944-996-9330",
       "address": "02 Pierstorff Parkway",
-      "industy": "Metal Fabrications",
+      "industry": "Metal Fabrications",
       "id": 2
     }
   ],
