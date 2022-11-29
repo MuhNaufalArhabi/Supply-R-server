@@ -16,8 +16,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   Buyer.init(
     {
-      name: DataTypes.STRING,
-      owner: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      owner: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -48,19 +62,47 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      phoneNumber: DataTypes.STRING,
-      address: DataTypes.STRING,
-      industry: DataTypes.STRING,
-      website: DataTypes.STRING,
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      industry: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      website: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
     },
     {
       sequelize,
       modelName: "Buyer",
-      hooks:{
-        beforeCreate:(instance)=>{
+      hooks: {
+        beforeCreate: (instance) => {
           instance.password = hashPass(instance.password);
-        }
-      }
+        },
+      },
     }
   );
   return Buyer;
