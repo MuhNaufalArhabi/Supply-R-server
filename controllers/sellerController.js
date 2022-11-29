@@ -5,7 +5,19 @@ const { encode } = require("../helpers/jwt");
 class SellerController {
   static async findAll(req, res, next) {
     try {
-      const sellers = await Seller.findAll();
+      let sellers = await Seller.findAll();
+      sellers = sellers.map((seller) => {
+        return {
+          id: seller.id,
+          username: seller.username,
+          email: seller.email,
+          phoneNumber: seller.phoneNumber,
+          ktp: seller.ktp,
+          createdAt: seller.createdAt,
+          updatedAt: seller.updatedAt,
+        };
+      });
+
       res.status(200).json(sellers);
     } catch (error) {
       next(error);
@@ -24,7 +36,7 @@ class SellerController {
       });
       res.status(201).json({ id: seller.id, email: seller.email });
     } catch (error) {
-        console.log(error);
+      console.log(error);
       next(error);
     }
   }
@@ -32,11 +44,20 @@ class SellerController {
   static async findOne(req, res, next) {
     try {
       const { id } = req.params;
-      const seller = await Seller.findOne({
+      let seller = await Seller.findOne({
         where: {
           id,
         },
       });
+      seller = {
+        id: seller.id,
+        username: seller.username,
+        email: seller.email,
+        phoneNumber: seller.phoneNumber,
+        ktp: seller.ktp,
+        createdAt: seller.createdAt,
+        updatedAt: seller.updatedAt,
+      };
       res.status(200).json(seller);
     } catch (error) {
       next(error);
@@ -86,12 +107,12 @@ class SellerController {
     try {
       const { email, password } = req.body;
 
-      if(!email) {
-            throw { name: 'Email is required' }
+      if (!email) {
+        throw { name: "Email is required" };
       }
 
-      if(!password) {
-            throw { name: 'Password is required' }
+      if (!password) {
+        throw { name: "Password is required" };
       }
 
       const seller = await Seller.findOne({
@@ -111,7 +132,7 @@ class SellerController {
         res.status(200).json({ access_token });
       }
     } catch (error) {
-        console.log(error);
+      console.log(error);
       next(error);
     }
   }
