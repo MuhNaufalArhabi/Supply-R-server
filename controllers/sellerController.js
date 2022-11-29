@@ -85,6 +85,15 @@ class SellerController {
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
+
+      if(!email) {
+            throw { name: 'Email is required' }
+      }
+
+      if(!password) {
+            throw { name: 'Password is required' }
+      }
+
       const seller = await Seller.findOne({
         where: {
           email,
@@ -102,6 +111,7 @@ class SellerController {
         res.status(200).json({ access_token });
       }
     } catch (error) {
+        console.log(error);
       next(error);
     }
   }
