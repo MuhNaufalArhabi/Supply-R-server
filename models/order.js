@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     /**
@@ -11,18 +9,49 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Order.belongsTo(models.Buyer)
-      Order.hasMany(models.OrderProduct)
+      Order.belongsTo(models.Buyer);
+      Order.hasMany(models.OrderProduct);
     }
   }
-  Order.init({
-    isPaid: DataTypes.BOOLEAN,
-    paymentMethod: DataTypes.STRING,
-    totalPrice: DataTypes.INTEGER,
-    BuyerId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Order',
-  });
+  Order.init(
+    {
+      isPaid: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      paymentMethod: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      totalPrice: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      BuyerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Order",
+    }
+  );
   return Order;
 };
