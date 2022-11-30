@@ -1,3 +1,5 @@
+const { comparePass } = require("../helpers/bcrypt");
+const { encode } = require("../helpers/jwt");
 const { Buyer, Order } = require("../models");
 
 class ControllerJalurAtas {
@@ -28,8 +30,16 @@ class ControllerJalurAtas {
   }
   static async postBuyer(req, res, next) {
     try {
-      const { name, owner, password, email, phoneNumber, address, industry,website } =
-        req.body;
+      const {
+        name,
+        owner,
+        password,
+        email,
+        phoneNumber,
+        address,
+        industry,
+        website,
+      } = req.body;
       const newBuyer = await Buyer.create({
         name,
         owner,
@@ -45,13 +55,35 @@ class ControllerJalurAtas {
       next(error);
     }
   }
-  static async delBuyer(req,res,next){
+  static async delBuyer(req, res, next) {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const deletedBuyer = await Buyer.destroy({
-        where: {id}
-      })
+        where: { id },
+      });
       res.status(200).json({ id: deletedBuyer.id, email: deletedBuyer.email });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async buyerLogin(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const buyerData = await Buyer.findOne({
+        where: { email },
+      });
+      if (!buyerData) {
+        throw { name: "InvalidLogin" };
+      }
+      if (comparePass(password, buyerData.password)) {
+        const payload = { id: buyerData.id };
+        const token = encode(payload);
+        res.status(200).json({
+          access_token: token,
+        });
+      } else {
+        throw { name: "InvalidLogin" };
+      }
     } catch (error) {
       next(error);
     }
