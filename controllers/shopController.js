@@ -1,4 +1,4 @@
-const { Shop, Seller } = require('../models')
+const { Shop, Seller, Product } = require('../models')
 
 class ShopController {
     static async findAll(req, res, next) {
@@ -18,7 +18,7 @@ class ShopController {
                 where: {
                     id: req.params.id
                 },
-                include: [Seller]
+                include: [Seller, Product]
             })
             res.status(200).json(shop)
         } catch (err) {
@@ -45,7 +45,7 @@ class ShopController {
 
     static async update(req, res, next) {
         try {
-            const shop = await Shop.update({
+            await Shop.update({
                 name: req.body.name,
                 lat: req.body.lat,
                 long: req.body.long,
@@ -59,7 +59,7 @@ class ShopController {
                 },
                 returning: true
             })
-            res.status(200).json(shop[1][0])
+            res.status(200).json({ message: 'Shop updated' })
         } catch (err) {
             next(err)
         }
