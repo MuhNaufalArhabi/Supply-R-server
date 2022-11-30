@@ -3,8 +3,8 @@ const ShopController = require('../controllers/shopController');
 
 router.get('/', ShopController.findAll)
 router.get('/:id', ShopController.findOne)
-router.post('/', ShopController.create)
-router.put('/:id', ShopController.update)
-router.delete('/:id', ShopController.delete)
+router.post('/add', ShopController.create)
+router.put('/update/:id', ShopController.update)
+router.delete('/delete/:id', ShopController.delete)
 
 module.exports = router
