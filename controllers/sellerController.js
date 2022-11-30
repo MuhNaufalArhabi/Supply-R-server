@@ -92,12 +92,12 @@ class SellerController {
   static async delete(req, res, next) {
     try {
       const { id } = req.params;
-      const seller = await Seller.destroy({
+      await Seller.destroy({
         where: {
           id,
         },
       });
-      res.status(200).json(seller);
+      res.status(200).json({ message: "Seller deleted" });
     } catch (error) {
       next(error);
     }
