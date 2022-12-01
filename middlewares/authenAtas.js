@@ -4,17 +4,17 @@ async function authenticateBuyer(req, res, next) {
   try {
     const { access_token } = req.headers;
     if (!access_token) {
-      throw { name: "invalidToken" };
+      throw { name: "invalid_token" };
     }
     const payload = decode(access_token);
     if (!payload) {
-      throw { name: "invalidToken" };
+      throw { name: "invalid_token" };
     }
     const buyerData = await Buyer.findOne({
       where: { id: payload.id },
     });
     if (!buyerData) {
-      throw { name: "invalidToken" };
+      throw { name: "invalid_token" };
     }
     req.buyer = { id: buyerData.id };
     next();

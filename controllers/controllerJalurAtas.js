@@ -21,7 +21,7 @@ class ControllerJalurAtas {
         include: [Order],
       });
       if (!buyer) {
-        throw { name: "NotFound" };
+        throw { name: "not_found" };
       }
       res.status(200).json(buyer);
     } catch (error) {
@@ -73,7 +73,7 @@ class ControllerJalurAtas {
         where: { email },
       });
       if (!buyerData) {
-        throw { name: "InvalidLogin" };
+        throw { name: "invalidLogin" };
       }
       if (comparePass(password, buyerData.password)) {
         const payload = { id: buyerData.id };
@@ -82,7 +82,7 @@ class ControllerJalurAtas {
           access_token: token,
         });
       } else {
-        throw { name: "InvalidLogin" };
+        throw { name: "invalidLogin" };
       }
     } catch (error) {
       next(error);
