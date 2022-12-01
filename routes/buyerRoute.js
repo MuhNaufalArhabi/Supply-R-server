@@ -6,7 +6,7 @@ const router = require("express").Router();
 router.post("/login", ControllerJalurAtas.buyerLogin);
 router.post("/register", ControllerJalurAtas.postBuyer);
 
-// router.use(authenticateBuyer);
+router.use(authenticateBuyer);
 
 router.get("/", ControllerJalurAtas.getBuyers);
 router.get("/:id", ControllerJalurAtas.getOneBuyer);
