@@ -24,6 +24,7 @@ const errorHandler = (err, req, res, next) => {
         code = 400;
         message = err.name;
     }
+    console.log(err)
     res.status(code).json({ message });
   };
 
