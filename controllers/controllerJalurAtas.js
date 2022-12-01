@@ -88,6 +88,25 @@ class ControllerJalurAtas {
       next(error);
     }
   }
+  static async editBuyer(req,res,next) {
+    try {
+      const {
+        name,owner,email,password,phoneNumber,address,website,industry
+      } = req.body;
+      const buyerId = req.params.id;
+      const buyer = await Buyer.findOne({where:{id:buyerId}});
+      if(!buyer) {
+        throw { name: "Error not found" };
+      }
+      buyer.set({
+        name,owner,email,password,phoneNumber,address,website,industry
+      })
+      await buyer.save();
+      res.status(200).json({msg:`buyer id ${buyer.id} is successfully changed`});
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = ControllerJalurAtas;
