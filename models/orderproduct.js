@@ -15,14 +15,45 @@ module.exports = (sequelize, DataTypes) => {
       OrderProduct.belongsTo(models.Product)
     }
   }
-  OrderProduct.init({
-    quantity: DataTypes.INTEGER,
-    totalPrice: DataTypes.INTEGER,
-    ProductId: DataTypes.INTEGER,
-    OrderId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'OrderProduct',
-  });
+  OrderProduct.init(
+    {
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      totalPrice: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      ProductId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      OrderId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "OrderProduct",
+    }
+  );
   return OrderProduct;
 };
