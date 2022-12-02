@@ -8,64 +8,77 @@ const {
   Product,
   Shop,
   Category,
+  Seller
 } = require("../models");
 
 const cleanUpDatabase = async () => {
-  await Product.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
-  await OrderProduct.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
-  await Order.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
-  await Buyer.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
-  await Shop.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
-  await Category.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
+  try {
+    await Product.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await OrderProduct.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await Order.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await Buyer.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await Shop.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await Seller.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await Category.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+  } catch (error) {
+    console.log(error)
+  }
 };
 const createOrderProducts = async () => {
-  const {
-    orderLists,
-    orders,
-    products,
-    shops,
-    categories,
-  } = require("../db.json");
-  await Order.bulkCreate(orders);
-  // shops.forEach((el) => {
-  //   el.lat = "t";
-  //   el.long = "s";
-  // });
-  console.log(shops)
-  await Shop.bulkCreate(shops);
-  await Category.bulkCreate(categories);
-  await Product.bulkCreate(products);
-  await OrderProduct.bulkCreate(orderLists);
+  try {
+    const {
+      orderLists,
+      orders,
+      products,
+      shops,
+      categories,
+      sellers
+    } = require("../db.json");
+    await Order.bulkCreate(orders);
+    await Seller.bulkCreate(sellers);
+    await Shop.bulkCreate(shops);
+    await Category.bulkCreate(categories);
+    await Product.bulkCreate(products);
+    await OrderProduct.bulkCreate(orderLists);
+  } catch (error) {
+    console.log(error)
+  }
+  
 };
 const createTwoBuyers = async () => {
   const { buyers } = require("../db.json");
@@ -113,5 +126,36 @@ describe("GET /orders/", () => {
       "OrderId",
       expect.any(Number)
     );
+  });
+});
+
+describe('PATCH /orders/', () => {
+  beforeAll(async () => {
+    await createTwoBuyers();
+    await createOrderProducts();
+    await Order.create({
+      BuyerId: 1,
+      isPaid: false,
+      paymentMethod: "pending",
+      totalPrice: 1892905,
+    });
+    access_token = encode({ id: 1 });
+  });
+  afterAll(() => {
+    cleanUpDatabase();
+
+  });
+  test("PATCH /orders/ success-test", async () => {
+    const response = await request(app)
+      .put("/orders")
+      .set({ access_token: access_token })
+      .send({
+        paymentMethod:"Installment",
+        isPaid:false,
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("msg", "order changed");
+    
   });
 });
