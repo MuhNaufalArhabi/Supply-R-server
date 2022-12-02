@@ -426,6 +426,29 @@ describe("Seller Routes Test", () => {
       request(app)
         .put("/sellers/2")
         .send({
+          email: "seller.test@mail.com",
+            password: "sellerTest",
+            username: "sellerTest",
+            phoneNumber: "1234567890",
+            ktp: "1234567890",
+        })
+        .set("access_token", access_token_invalid)
+        .end((err, res) => {
+            if (err) return done(err);
+            const { body, status } = res;
+            expect(status).toBe(401);
+            expect(body).toHaveProperty("message", "Invalid Token");
+            return done();
+            });
+        });
+    });
+
+
+    describe("PUT /sellers/:id - update seller by id", () => {
+    test("401 Failed update seller - should return error if access token is invalid", (done) => {
+      request(app)
+        .put("/sellers/2")
+        .send({
             email: "seller.test@mail.com",
             password: "sellerTest",
             username: "sellerTest",
@@ -442,6 +465,44 @@ describe("Seller Routes Test", () => {
             });
         });
     });
+
+    describe("PUT /sellers/:id - update seller by id", () => {
+    test("404 Failed update seller - should return error if seller not found", (done) => {
+      request(app)
+        .put("/sellers/100")
+        .send({
+          email: "seller.test@mail.com",
+            password: "sellerTest",
+            username: "sellerTest",
+            phoneNumber: "1234567890",
+            ktp: "1234567890",
+        })
+        .set("access_token", access_token_valid)
+        .end((err, res) => {
+            if (err) return done(err);
+            const { body, status } = res;
+            expect(status).toBe(404);
+            expect(body).toHaveProperty("message", "Error not found");
+            return done();
+            });
+        });
+    });
+
+
+    describe("DELETE /sellers/:id - delete seller by id", () => {
+      test("404 Failed delete seller - should return error if seller not found", (done) => {
+        request(app)
+          .delete("/sellers/100")
+          .set("access_token", access_token_valid)
+          .end((err, res) => {
+              if (err) return done(err);
+              const { body, status } = res;
+              expect(status).toBe(404);
+              expect(body).toHaveProperty("message", "Error not found");
+              return done();
+              });
+          });
+      });
     
     describe("DELETE /sellers/:id - delete seller by id", () => {
     test("200 Success delete seller - should return success message", (done) => {
@@ -457,4 +518,21 @@ describe("Seller Routes Test", () => {
             });
         });
     });
+
+    describe("DELETE /sellers/:id - delete seller by id", () => {
+    test("401 Failed delete seller - should return error if access token is invalid", (done) => {
+      request(app)
+        .delete("/sellers/1")
+        .set("access_token", access_token_invalid)
+        .end((err, res) => {
+            if (err) return done(err);
+            const { body, status } = res;
+            expect(status).toBe(401);
+            expect(body).toHaveProperty("message", "Invalid Token");
+            return done();
+            });
+        });
+    });
+
+    
 });
