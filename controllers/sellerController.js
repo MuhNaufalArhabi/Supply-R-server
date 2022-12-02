@@ -49,6 +49,11 @@ class SellerController {
           id,
         },
       });
+
+      if (!seller) {
+        throw { name: "not_found" };
+      }
+
       seller = {
         id: seller.id,
         username: seller.username,
@@ -68,7 +73,11 @@ class SellerController {
     try {
       const { id } = req.params;
       const { username, email, password, phoneNumber, ktp } = req.body;
-      const seller = await Seller.update(
+      const seller = await Seller.findByPk(id);
+      if (!seller) {
+        throw { name: "not_found" };
+      }
+      await Seller.update(
         {
           username,
           email,
@@ -83,8 +92,9 @@ class SellerController {
           returning: true,
         }
       );
-      res.status(200).json(seller);
+      res.status(200).json({ message: "Success update seller" });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -121,9 +131,9 @@ class SellerController {
         },
       });
       if (!seller) {
-        throw { name: "invalid_email" };
+        throw { name: "invalidLogin" };
       } else if (!comparePass(password, seller.password)) {
-        throw { name: "invalid_password" };
+        throw { name: "invalidLogin" };
       } else {
         const access_token = encode({
           id: seller.id,
@@ -132,7 +142,6 @@ class SellerController {
         res.status(200).json({ access_token });
       }
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
