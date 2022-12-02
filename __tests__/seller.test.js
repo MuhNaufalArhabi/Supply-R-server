@@ -404,11 +404,11 @@ describe("Seller Routes Test", () => {
       request(app)
         .put("/sellers/2")
         .send({
-            email: "seller.test@mail.com",
-            password: "sellerTest",
-            username: "sellerTest",
-            phoneNumber: "1234567890",
-            ktp: "1234567890",
+            email: "seller.test12@mail.com",
+            password: "sellerTest12",
+            username: "sellerTest12",
+            phoneNumber: "123456789012",
+            ktp: "123456789012",
         })
         .set("access_token", access_token_valid)
         .end((err, res) => {
