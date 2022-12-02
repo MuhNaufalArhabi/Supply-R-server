@@ -24,26 +24,28 @@ const createOneBuyer = async () => {
   });
 };
 const createTwoBuyers = async () => {
-  await Buyer.create({
-    name: "testing",
-    owner: "Ed Testing",
-    password: "E9Lsv4TtIBi",
-    email: "testing@h8.com",
-    phoneNumber: "161-714-7611",
-    address: "Jalan",
-    website: "www.bura.com",
-    industry: "Civil Works",
-  });
-  await Buyer.create({
-    name: "testing",
-    owner: "Ed 212",
-    password: "E9Lsv4TtIBi",
-    email: "testink@h8.com",
-    phoneNumber: "161-714-7611",
-    address: "Jalan",
-    website: "www.bura.com",
-    industry: "Civil Works",
-  });
+  const {buyers} = require("../db.json")
+  // await Buyer.create({
+  //   name: "testing",
+  //   owner: "Ed Testing",
+  //   password: "E9Lsv4TtIBi",
+  //   email: "testing@h8.com",
+  //   phoneNumber: "161-714-7611",
+  //   address: "Jalan",
+  //   website: "www.bura.com",
+  //   industry: "Civil Works",
+  // });
+  // await Buyer.create({
+  //   name: "testing",
+  //   owner: "Ed 212",
+  //   password: "E9Lsv4TtIBi",
+  //   email: "testink@h8.com",
+  //   phoneNumber: "161-714-7611",
+  //   address: "Jalan",
+  //   website: "www.bura.com",
+  //   industry: "Civil Works",
+  // });
+  await Buyer.bulkCreate(buyers)
 };
 
 describe("POST /buyers/register", () => {
@@ -278,7 +280,7 @@ describe("POST /buyers/login", () => {
 
 describe("GET /buyers/", () => {
   beforeAll(async () => {
-    createTwoBuyers();
+    await createTwoBuyers();
     await Order.create({
     BuyerId: 1,
     isPaid: false,
@@ -340,6 +342,13 @@ describe("DEL /buyers/:id", () => {
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("msg", "Buyer deleted");
+  });
+  test("DEL /buyers/delete success-test", async () => {
+    const response = await request(app)
+      .delete("/buyers")
+    expect(response.status).toBe(401);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("message", "Invalid Token");
   });
 });
 
