@@ -4,6 +4,12 @@ const { encode } = require("../helpers/jwt.js");
 const { Buyer, Order } = require("../models");
 
 const cleanUpDatabase = async () => {
+  await Order.destroy({
+    where: {},
+    truncate: true,
+    cascade: true,
+    restartIdentity: true,
+  });
   await Buyer.destroy({
     where: {},
     truncate: true,
