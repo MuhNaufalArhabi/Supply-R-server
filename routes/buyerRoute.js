@@ -10,7 +10,7 @@ router.get("/:id", ControllerJalurAtas.getOneBuyer);
 
 router.use(authenticateBuyer);
 
-router.delete("/:id", ControllerJalurAtas.delBuyer);
-router.put("/:id", ControllerJalurAtas.editBuyer);
+router.delete("/", ControllerJalurAtas.delBuyer);
+router.put("/", ControllerJalurAtas.editBuyer);
 
 module.exports = router;

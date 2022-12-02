@@ -6,6 +6,16 @@ class ControllerJalurAtas {
   static async getBuyers(req, res, next) {
     try {
       const buyer = await Buyer.findAll({
+        attributes: [
+          "id",
+          "name",
+          "owner",
+          "email",
+          "phoneNumber",
+          "address",
+          "website",
+          "industry",
+        ],
         include: [Order],
       });
       res.status(200).json(buyer);
@@ -18,6 +28,16 @@ class ControllerJalurAtas {
       const { id } = req.params;
       const buyer = await Buyer.findOne({
         where: { id },
+        attributes: [
+          "id",
+          "name",
+          "owner",
+          "email",
+          "phoneNumber",
+          "address",
+          "website",
+          "industry",
+        ],
         include: [Order],
       });
       if (!buyer) {
@@ -57,11 +77,11 @@ class ControllerJalurAtas {
   }
   static async delBuyer(req, res, next) {
     try {
-      const { id } = req.params;
+      const { id } = req.buyer;
       const deletedBuyer = await Buyer.destroy({
         where: { id },
       });
-      res.status(200).json({ id: deletedBuyer.id, email: deletedBuyer.email });
+      res.status(200).json({ msg:"Buyer deleted" });
     } catch (error) {
       next(error);
     }
@@ -100,7 +120,7 @@ class ControllerJalurAtas {
         website,
         industry,
       } = req.body;
-      const buyerId = req.params.id;
+      const {id:buyerId} = req.buyer;
       const buyer = await Buyer.findOne({ where: { id: buyerId } });
       if (!buyer) {
         throw { name: "not_found" };
