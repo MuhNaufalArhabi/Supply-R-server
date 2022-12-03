@@ -120,7 +120,7 @@ class ProductController {
           ProductId: id,
         };
       });
-      await Images.bulkCreate(images, { transaction: t });
+      await Image.bulkCreate(images, { transaction: t });
       await t.commit();
       res.status(200).json(updatedProduct);
     } catch (error) {
@@ -139,7 +139,7 @@ class ProductController {
         throw { name: 'not_found' };
       }
       await Product.destroy({ where: { id }, transaction: t });
-      await Images.destroy({ where: { ProductId: id }, transaction: t });
+      await Image.destroy({ where: { ProductId: id }, transaction: t });
       await t.commit();
       res.status(200).json({ message: 'Product deleted' });
     } catch (error) {
