@@ -17,7 +17,7 @@ const errorHandler = (err, req, res, next) => {
     ) {
       let errMessage = err.errors.map((el) => el.message);
       code = 400;
-      message = errMessage;
+      message = errMessage[0];
     } else if (err.name === "invalid_token" || err.name === "JsonWebTokenError") {
       code = 401;
       message = "Invalid Token";
@@ -25,6 +25,7 @@ const errorHandler = (err, req, res, next) => {
         code = 400;
         message = err.name;
     }
+    console.log(err)
     res.status(code).json({ message });
   };
 
