@@ -88,7 +88,7 @@ const createTwoBuyers = async () => {
   }
 };
 let access_token;
-describe.only("GET /orders/", () => {
+describe("GET /orders/", () => {
   beforeAll(async () => {
     await createTwoBuyers();
     await createOrderProducts();
@@ -274,10 +274,88 @@ describe("DEL /products/:orderProductId", () => {
   test("DEL /products/:orderProductId success", async () => {
     access_token = encode({ id: 1 });
     const response = await request(app)
-      .delete("/products/3")
+      .delete("/orders/products/11")
       .set({ access_token });
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("msg", "orderproduct deleted");
+  });
+  describe("DEL /products/:orderProductId fail-test", () => {
+    test("DEL /products/:orderProductId unauthorized", async () => {
+      access_token = encode({ id: 1 });
+      const response = await request(app)
+        .delete("/orders/products/3")
+        .set({ access_token });
+      expect(response.status).toBe(403);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Access Forbidden");
+    });
+    test("DEL /products/:orderProductId notfound", async () => {
+      access_token = encode({ id: 1 });
+      const response = await request(app)
+        .delete("/orders/products/13")
+        .set({ access_token });
+      expect(response.status).toBe(404);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Error not found");
+    });
+  });
+});
+
+describe("PATCH /products/:orderProductId", () => {
+  beforeAll(async () => {
+    try {
+      await createTwoBuyers();
+      await createOrderProducts();
+      const order = await Order.create({
+        BuyerId: 1,
+        isPaid: false,
+        paymentMethod: "pending",
+        totalPrice: 1892905,
+      });
+      await OrderProduct.create({
+        OrderId: 3,
+        ProductId: 20,
+        quantity: 16,
+        totalPrice: 427760,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  afterAll(() => {
+    cleanUpDatabase();
+  });
+  test("PATCH /products/:orderProductId success", async () => {
+    access_token = encode({ id: 1 });
+    const response = await request(app)
+      .patch("/orders/products/11")
+      .set({ access_token }).send({
+        quantity:100,
+        totalPrice:100000
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("msg", "orderproduct changed");
+  });
+  describe("PATCH /products/:orderProductId fail-test", () => {
+    test("PATCH /products/:orderProductId unauthorized", async () => {
+      access_token = encode({ id: 1 });
+      const response = await request(app)
+        .patch("/orders/products/3")
+        .set({ access_token });
+      expect(response.status).toBe(403);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Access Forbidden");
+    });
+    test("PATCH /products/:orderProductId notfound", async () => {
+      access_token = encode({ id: 1 });
+      const response = await request(app)
+        .patch("/orders/products/13")
+        .set({ access_token });
+      expect(response.status).toBe(404);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Error not found");
+    });
   });
 });

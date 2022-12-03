@@ -151,9 +151,9 @@ class ControllerJalurAtas {
         include: [{ model: OrderProduct }],
       };
       const orders = await Order.findAll(options);
-      if (!orders) {
-        throw { name: "not_found" };
-      }
+      // if (!orders) {
+      //   throw { name: "not_found" };
+      // }
       res.status(200).json(orders);
     } catch (error) {
       next(error);
