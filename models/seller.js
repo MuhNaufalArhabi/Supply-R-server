@@ -62,31 +62,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      phoneNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            msg: "Phone number is required",
-          },
-          notNull: {
-            msg: "Phone number is required",
-          },
-        },
-      },
-      ktp: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          notEmpty: {
-            msg: "KTP is required",
-          },
-          notNull: {
-            msg: "KTP is required",
-          },
-        },
-      },
+      phoneNumber: DataTypes.STRING,
+      ktp: DataTypes.STRING,
     },
     {
       sequelize,

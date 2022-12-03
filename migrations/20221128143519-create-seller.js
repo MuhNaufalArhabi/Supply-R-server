@@ -23,12 +23,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       phoneNumber: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       ktp: {
-        allowNull: false,
-        unique: true,
         type: Sequelize.STRING
       },
       createdAt: {
