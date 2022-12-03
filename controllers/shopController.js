@@ -20,6 +20,8 @@ class ShopController {
                 },
                 include: [Seller, Product]
             })
+            if (!shop) throw { name: 'not_found' }
+
             res.status(200).json(shop)
         } catch (err) {
             next(err)
@@ -35,7 +37,7 @@ class ShopController {
                 address: req.body.address,
                 phoneNumber: req.body.phoneNumber,
                 owner: req.body.owner,
-                SellerId: req.body.SellerId
+                SellerId: req.user.id
             })
             res.status(201).json(shop)
         } catch (err) {
@@ -45,6 +47,8 @@ class ShopController {
 
     static async update(req, res, next) {
         try {
+            const shop = await Shop.findByPk(req.params.id)
+            if (!shop) throw { name: 'not_found' }
             await Shop.update({
                 name: req.body.name,
                 lat: req.body.lat,
@@ -67,6 +71,8 @@ class ShopController {
 
     static async delete(req, res, next) {
         try {
+            const shop = await Shop.findByPk(req.params.id)
+            if (!shop) throw { name: 'not_found' }
             await Shop.destroy({
                 where: {
                     id: req.params.id

@@ -17,13 +17,63 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Shop.init({
-    name: DataTypes.STRING,
-    lat: DataTypes.STRING,
-    long: DataTypes.STRING,
-    address: DataTypes.STRING,
-    phoneNumber: DataTypes.STRING,
-    owner: DataTypes.STRING,
-    SellerId: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Name is required'
+        },
+        notEmpty: {
+          msg: 'Name is required'
+        }
+      }
+    },
+    lat: {
+      type: DataTypes.STRING,
+    },
+    long: {
+      type: DataTypes.STRING,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Address is required'
+        },
+        notEmpty: {
+          msg: 'Address is required'
+        }
+      }
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Phone number is required'
+        },
+        notEmpty: {
+          msg: 'Phone number is required'
+        }
+      }
+    },
+    owner: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Owner is required'
+        },
+        notEmpty: {
+          msg: 'Owner is required'
+        }
+      }
+    },
+    SellerId: {
+      type: DataTypes.INTEGER,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {

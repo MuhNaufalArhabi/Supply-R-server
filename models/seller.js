@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       phoneNumber: DataTypes.STRING,
-      ktp: DataTypes.STRING,
+      ktp: DataTypes.STRING,  
     },
     {
       sequelize,
