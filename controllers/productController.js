@@ -2,6 +2,7 @@ const { Product, Image, Shop, Category } = require('../models');
 const { sequelize } = require('../models');
 const ImageKit = require('imagekit');
 const fs = require('fs');
+const { Op } = require('sequelize');
 
 const imagekit = new ImageKit({
   urlEndpoint: 'https://ik.imagekit.io/yyfgxwocn',
@@ -147,6 +148,100 @@ class ProductController {
       next(error);
     }
   }
+
+  static async getProductsByShop(req, res, next) {
+    try {
+      const { shopId } = req.params;
+      const products = await Product.findAll({
+        where: { ShopId: shopId },
+        include: ['Shop', 'Category', 'Images'],
+      });
+      res.status(200).json(products);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async getProductsByCategory(req, res, next) {
+    try {
+      const { categoryId } = req.params;
+      const products = await Product.findAll({
+        where: { CategoryId: categoryId },
+        include: ['Shop', 'Category', 'Images'],
+      });
+      res.status(200).json(products);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async getProductDetailByShop(req, res, next) {
+    try {
+      const { shopId } = req.shop;
+      const { productId } = req.params;
+      const product = await Product.findOne({
+        where: { ShopId: shopId, id: productId },
+        include: ['Shop', 'Category', 'Images'],
+      });
+      if (!product) {
+        throw { name: 'not_found' };
+      }
+      res.status(200).json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getProductsPagination(req, res, next) {
+    try {
+      const { page, limit } = req.query;
+      const offset = (page - 1) * limit;
+      const products = await Product.findAndCountAll({
+        limit,
+        offset,
+        include: ['Shop', 'Category', 'Images'],
+      });
+      res.status(200).json(products);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async searchProduct(req, res, next) {
+    try {
+      const { name } = req.query;
+      const products = await Product.findAll({
+        where: { name: { [Op.iLike]: `%${name}%` } },
+        include: ['Shop', 'Category', 'Images'],
+      });
+      res.status(200).json(products);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async searchProductByCategory(req, res, next) {
+    try {
+      const { name } = req.query;
+      const { categoryId } = req.params;
+      const products = await Product.findAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+          CategoryId: categoryId,
+        },
+        include: ['Shop', 'Category', 'Images'],
+      });
+      res.status(200).json(products);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
 }
 
 module.exports = ProductController;
