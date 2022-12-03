@@ -201,6 +201,9 @@ class ControllerJalurAtas {
         transaction: t,
       });
       const { orderlists } = req.body;
+      if(!orderlists){
+        throw { name: "no_input" };
+      }
       orderlists.map((el) => {
         el.OrderId = orders.id;
         return el;
@@ -241,7 +244,7 @@ class ControllerJalurAtas {
       });
       await order.save({ transaction: t });
       await t.commit();
-      res.status(200).json({ msg: "deleted" });
+      res.status(200).json({ msg: "orderproduct deleted" });
     } catch (error) {
       await t.rollback();
       next(error);

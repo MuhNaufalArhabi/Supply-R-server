@@ -24,6 +24,9 @@ const errorHandler = (err, req, res, next) => {
     } else if(err.name == 'Email is required' || err.name == 'Password is required') {
         code = 400;
         message = err.name;
+    } else if(err.name=== "no_input"){
+      code = 400;
+      message = "invalid input";
     }
     console.log(err)
     res.status(code).json({ message });
