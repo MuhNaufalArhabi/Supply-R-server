@@ -26,7 +26,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       ktp: {
-        unique: true,
         type: Sequelize.STRING
       },
       createdAt: {
