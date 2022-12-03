@@ -20,16 +20,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: true,
-          notEmpty: true,
+          notNull: {
+            msg: "Name is required",
+          },
+          notEmpty: {
+            msg: "Name is required",
+          },
         },
       },
       owner: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: true,
-          notEmpty: true,
+          notNull: {
+            msg: "Owner is required",
+          },
+          notEmpty: {
+            msg: "Owner is required",
+          },
         },
       },
       email: {
@@ -66,32 +74,48 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: true,
-          notEmpty: true,
+          notNull: {
+            msg: "Phone number is required",
+          },
+          notEmpty: {
+            msg: "Phone number is required",
+          },
         },
       },
       address: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: true,
-          notEmpty: true,
+          notNull: {
+            msg: "Address is required",
+          },
+          notEmpty: {
+            msg: "Address is required",
+          },
         },
       },
       industry: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: true,
-          notEmpty: true,
+          notNull: {
+            msg: "Industry is required",
+          },
+          notEmpty: {
+            msg: "Industry is required",
+          },
         },
       },
       website: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: true,
-          notEmpty: true,
+          notNull: {
+            msg: "Website is required",
+          },
+          notEmpty: {
+            msg: "Website is required",
+          },
         },
       },
     },

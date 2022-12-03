@@ -12,7 +12,6 @@ router.use("/sellers", sellerRouter);
 router.use("/buyers", buyerRoute);
 router.use("/products", productRouter);
 router.use("/orders", orderRoute);
-router.use(categoryRouter)
-
+router.use(categoryRouter);
 
 module.exports = router;
