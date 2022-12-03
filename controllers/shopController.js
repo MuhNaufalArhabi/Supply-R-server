@@ -35,7 +35,7 @@ class ShopController {
                 address: req.body.address,
                 phoneNumber: req.body.phoneNumber,
                 owner: req.body.owner,
-                SellerId: req.body.SellerId
+                SellerId: req.user.id
             })
             res.status(201).json(shop)
         } catch (err) {
