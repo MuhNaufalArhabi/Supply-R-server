@@ -8,6 +8,13 @@
     "dev": "nodemon bin/www",
     "start": "node bin/www"
   },
+  "jest": {
+    "collectCoverage": true,
+    "testPathIgnorePatterns" : [
+      "__tests__/buyer.test.js",
+      "__tests__/order.test.js"
+    ]
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MuhNaufalArhabi/Final-Boss-BE.git"
