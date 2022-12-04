@@ -4,68 +4,72 @@ const { encode } = require("../helpers/jwt.js");
 const { Buyer, Order } = require("../models");
 
 const cleanUpDatabase = async () => {
-  await Order.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
-  await Buyer.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-  });
+  try {
+    await Order.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+    await Buyer.destroy({
+      where: {},
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 const createOneBuyer = async () => {
-  await Buyer.create({
-    name: "testing",
-    owner: "Ed Testing",
-    password: "E9Lsv4TtIBi",
-    email: "testing@h8.com",
-    phoneNumber: "161-714-7611",
-    address: "Jalan",
-    website: "www.bura.com",
-    industry: "Civil Works",
-  });
+  try {
+    await Buyer.create({
+      name: "testing",
+      owner: "Ed Testing",
+      password: "E9Lsv4TtIBi",
+      email: "testink@h8.com",
+      phoneNumber: "161-714-7611",
+      address: "Jalan",
+      website: "www.bura.com",
+      industry: "Civil Works",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 const createTwoBuyers = async () => {
-  const {buyers} = require("../db.json")
-  // await Buyer.create({
-  //   name: "testing",
-  //   owner: "Ed Testing",
-  //   password: "E9Lsv4TtIBi",
-  //   email: "testing@h8.com",
-  //   phoneNumber: "161-714-7611",
-  //   address: "Jalan",
-  //   website: "www.bura.com",
-  //   industry: "Civil Works",
-  // });
-  // await Buyer.create({
-  //   name: "testing",
-  //   owner: "Ed 212",
-  //   password: "E9Lsv4TtIBi",
-  //   email: "testink@h8.com",
-  //   phoneNumber: "161-714-7611",
-  //   address: "Jalan",
-  //   website: "www.bura.com",
-  //   industry: "Civil Works",
-  // });
-  await Buyer.bulkCreate(buyers)
+  try {
+    const { buyers } = require("../db.json");
+    buyers.forEach(el=>{
+      delete el.id;
+    })
+    await Buyer.bulkCreate(buyers);
+  } catch (error) {
+    console.log(error);
+  }
 };
-
+let access_token;
+afterAll((done) => {
+  access_token="";
+  cleanUpDatabase();
+  done();
+});
+// afterEach(() => {
+//   cleanUpDatabase();
+// });
+beforeAll(() => {
+  createOneBuyer();
+  createTwoBuyers();
+});
 describe("POST /buyers/register", () => {
-  beforeAll(() => {
-    cleanUpDatabase();
-  });
   test("POST /buyers/register success-test", () => {
     return request(app)
       .post("/buyers/register")
       .send({
-        name: "testing",
-        owner: "Ed Testing",
+        name: "baru",
+        owner: "register baru",
         password: "E9Lsv4TtIBi",
-        email: "testing@h8.com",
+        email: "registerBaru@mail.com",
         phoneNumber: "161-714-7611",
         address: "Jalan",
         website: "www.bura.com",
@@ -75,34 +79,30 @@ describe("POST /buyers/register", () => {
         expect(res.status).toBe(201);
         expect(res.body).toBeInstanceOf(Object);
         expect(res.body).toHaveProperty("id", expect.any(Number));
-        expect(res.body).toHaveProperty("email", "testing@h8.com");
+        expect(res.body).toHaveProperty("email", "registerBaru@mail.com");
       });
   });
   describe("POST /buyers/register fail-test", () => {
-    afterAll(() => {
-      cleanUpDatabase();
-    });
+    // beforeAll(async () => {
+    //   try {
+    //     await createOneBuyer();
+    //     // console.log(newBuyer.id,"<<ID");
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // });
     test("POST /buyers/register uniq-email-test", async () => {
-      await request(app).post("/public/register").send({
-        name: "testing",
-        owner: "Ed Testing",
-        password: "E9Lsv4TtIBi",
-        email: "testing@h8.com",
-        phoneNumber: "161-714-7611",
-        address: "Jalan",
-        website: "www.bura.com",
-        industry: "Civil Works",
-      });
       const response = await request(app).post("/buyers/register").send({
-        name: "testing",
-        owner: "Ed Testing",
+        name: "testingk",
+        owner: "Ed TestingKK",
         password: "E9Lsv4TtIBi",
-        email: "testing@h8.com",
+        email: "testink@h8.com",
         phoneNumber: "161-714-7611",
         address: "Jalan",
         website: "www.bura.com",
         industry: "Civil Works",
       });
+      console.log(response.body.id);
       expect(response.status).toBe(400);
       expect(response.body).toBeInstanceOf(Object);
       expect(response.body).toHaveProperty("message", "Email must be unique");
@@ -241,15 +241,15 @@ describe("POST /buyers/register", () => {
 });
 
 describe("POST /buyers/login", () => {
-  beforeAll(() => {
-    createOneBuyer();
-  });
-  afterAll(() => {
-    cleanUpDatabase();
-  });
+  // beforeAll(() => {
+  //   createOneBuyer();
+  // });
+  // afterAll(() => {
+  //   cleanUpDatabase();
+  // });
   test("POST /buyers/login success-test", async () => {
     const response = await request(app).post("/buyers/login").send({
-      email: "testing@h8.com",
+      email: "testink@h8.com",
       password: "E9Lsv4TtIBi",
     });
     expect(response.status).toBe(200);
@@ -257,7 +257,7 @@ describe("POST /buyers/login", () => {
     expect(response.body).toHaveProperty("access_token", expect.any(String));
   });
   describe("POST /buyers/login fail-test", () => {
-    test("POST /buyers/login wrongtest-test ", async () => {
+    test("POST /buyers/login wrongemail-test ", async () => {
       const response = await request(app).post("/buyers/login").send({
         email: "salahemail@h8.com",
         password: "E9Lsv4TtIBi",
@@ -286,13 +286,13 @@ describe("POST /buyers/login", () => {
 
 describe("GET /buyers/", () => {
   beforeAll(async () => {
-    await createTwoBuyers();
+    // createTwoBuyers();
     await Order.create({
-    BuyerId: 1,
-    isPaid: false,
-    paymentMethod: "pending",
-    totalPrice: 123123,
-  });
+      BuyerId: 1,
+      isPaid: false,
+      paymentMethod: "pending",
+      totalPrice: 123123,
+    });
   });
   afterAll(() => {
     cleanUpDatabase();
@@ -326,13 +326,12 @@ describe("GET /buyers/", () => {
     expect(response.body).toHaveProperty("Order", expect.any(Object));
   });
   test("GET /buyers/:id fail-test", async () => {
-    const response = await request(app).get("/buyers/4");
+    const response = await request(app).get("/buyers/41");
     expect(response.status).toBe(404);
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("message", "Error not found");
   });
 });
-let access_token;
 describe("DEL /buyers/:id", () => {
   beforeAll(() => {
     createTwoBuyers();
@@ -349,16 +348,15 @@ describe("DEL /buyers/:id", () => {
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("msg", "Buyer deleted");
   });
-  test("DEL /buyers/delete success-test", async () => {
-    const response = await request(app)
-      .delete("/buyers")
+  test("DEL /buyers/delete no token-test", async () => {
+    const response = await request(app).delete("/buyers");
     expect(response.status).toBe(401);
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("message", "Invalid Token");
   });
 });
 
-describe("PUT /buyers/",()=>{
+describe("PUT /buyers/", () => {
   beforeAll(() => {
     createTwoBuyers();
     access_token = encode({ id: 1 });
@@ -387,4 +385,4 @@ describe("PUT /buyers/",()=>{
       "buyer id 1 is successfully changed"
     );
   });
-})
+});

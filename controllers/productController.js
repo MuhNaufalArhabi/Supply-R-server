@@ -1,6 +1,6 @@
 const { Product, Image, Shop, Category } = require('../models');
 const { sequelize } = require('../models');
-const ImageKit = require('imagekit');
+const ImageKit = require('imagekit')
 const fs = require('fs');
 const { Op } = require('sequelize');
 

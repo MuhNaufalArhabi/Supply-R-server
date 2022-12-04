@@ -1,25 +1,26 @@
-const ControllerJalurAtas = require("../controllers/controllerJalurAtas");
+// const ControllerJalurAtas = require("../controllers/controllerJalurAtas");
 const {
   authenticateBuyer,
   authDelBuyer,
 } = require("../middlewares/authenAtas");
+const OrderController = require("../controllers/orderController")
 const router = require("express").Router();
 
 router.use(authenticateBuyer);
 
 // can only accessed by authenticated token
-router.get("/", ControllerJalurAtas.fetchBuyerOrder);
-router.patch("/", ControllerJalurAtas.patchOrder);
-router.post("/products", ControllerJalurAtas.postOrderProduct);
+router.get("/", OrderController.fetchBuyerOrder);
+router.patch("/", OrderController.patchOrder);
+router.post("/products", OrderController.postOrderProduct);
 router.delete(
   "/products/:orderProductId",
   authDelBuyer,
-  ControllerJalurAtas.delOrderProduct
+  OrderController.delOrderProduct
 );
 router.patch(
   "/products/:orderProductId",
   authDelBuyer,
-  ControllerJalurAtas.patchOrderProduct
+  OrderController.patchOrderProduct
 );
 
 
