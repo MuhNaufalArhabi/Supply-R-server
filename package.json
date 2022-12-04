@@ -4,15 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --coverage",
+    "test": "jest --runInBand --coverage --verbose --testTimeout 10000",
     "dev": "nodemon bin/www",
     "start": "node bin/www"
   },
   "jest": {
     "collectCoverage": true,
     "testPathIgnorePatterns" : [
-      "__tests__/buyer.test.js",
-      "__tests__/order.test.js"
+      
     ]
 },
   "repository": {
