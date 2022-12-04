@@ -1,4 +1,4 @@
-const { Order, OrderProduct, sequelize } = require("../models");
+const { Order, OrderProduct, sequelize, Product, Shop } = require("../models");
 
 class OrderController {
   static async fetchBuyerOrder(req, res, next) {
@@ -138,6 +138,31 @@ class OrderController {
       res.status(200).json({ msg: "orderproduct changed" });
     } catch (error) {
       await t.rollback();
+      next(error);
+    }
+  }
+  static async testGetOrder(req, res, next) {
+    try {
+      const data = await Shop.findAll({
+        include: {
+          model: Product,
+          required: true,
+          include: {
+            model: OrderProduct,
+            required: true,
+
+            include: {
+              model: Order,
+              where: { isPaid: false },
+            },
+          },
+        },
+        where: {
+          id: 4,
+        },
+      });
+      res.status(200).json(data);
+    } catch (error) {
       next(error);
     }
   }

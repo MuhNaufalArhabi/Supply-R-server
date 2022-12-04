@@ -88,15 +88,30 @@ const createTwoBuyers = async () => {
   }
 };
 let access_token;
+beforeAll(async () => {
+  createTwoBuyers();
+  createOrderProducts();
+  access_token = encode({ id: 1 });
+  await createOrderProducts();
+      const order = await Order.create({
+        BuyerId: 1,
+        isPaid: false,
+        paymentMethod: "pending",
+        totalPrice: 1892905,
+      });
+});
+afterAll(()=>{
+  cleanUpDatabase();
+})
 describe("GET /orders/", () => {
-  beforeAll(async () => {
-    await createTwoBuyers();
-    await createOrderProducts();
-    access_token = encode({ id: 1 });
-  });
-  afterAll(() => {
-    cleanUpDatabase();
-  });
+  // beforeAll(async () => {
+  //   await createTwoBuyers();
+  //   await createOrderProducts();
+  //   access_token = encode({ id: 1 });
+  // });
+  // afterAll(() => {
+  //   cleanUpDatabase();
+  // });
   test("GET /orders/ success-test", async () => {
     const response = await request(app)
       .get("/orders")
@@ -133,23 +148,23 @@ describe("GET /orders/", () => {
 });
 
 describe("PATCH /orders/", () => {
-  beforeAll(async () => {
-    try {
-      await createTwoBuyers();
-      await createOrderProducts();
-      const order = await Order.create({
-        BuyerId: 1,
-        isPaid: false,
-        paymentMethod: "pending",
-        totalPrice: 1892905,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  afterAll(() => {
-    cleanUpDatabase();
-  });
+  // beforeAll(async () => {
+  //   try {
+  //     await createTwoBuyers();
+  //     await createOrderProducts();
+  //     const order = await Order.create({
+  //       BuyerId: 1,
+  //       isPaid: false,
+  //       paymentMethod: "pending",
+  //       totalPrice: 1892905,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // });
+  // afterAll(() => {
+  //   cleanUpDatabase();
+  // });
   test("PATCH /orders/ success-test", async () => {
     access_token = encode({ id: 1 });
     const response = await request(app)
@@ -195,24 +210,24 @@ describe("PATCH /orders/", () => {
 });
 
 describe("POST /products", () => {
-  beforeAll(async () => {
-    try {
-      await createTwoBuyers();
-      await createOrderProducts();
-      // const order = await Order.create({
-      //   BuyerId: 1,
-      //   isPaid: false,
-      //   paymentMethod: "pending",
-      //   totalPrice: 1892905,
-      // });
-      access_token = encode({ id: 1 });
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  afterAll(() => {
-    cleanUpDatabase();
-  });
+  // beforeAll(async () => {
+  //   try {
+  //     await createTwoBuyers();
+  //     await createOrderProducts();
+  //     // const order = await Order.create({
+  //     //   BuyerId: 1,
+  //     //   isPaid: false,
+  //     //   paymentMethod: "pending",
+  //     //   totalPrice: 1892905,
+  //     // });
+  //     access_token = encode({ id: 1 });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // });
+  // afterAll(() => {
+  //   cleanUpDatabase();
+  // });
   test("POST /products success-test", async () => {
     const response = await request(app)
       .post("/orders/products")
@@ -330,9 +345,10 @@ describe("PATCH /products/:orderProductId", () => {
     access_token = encode({ id: 1 });
     const response = await request(app)
       .patch("/orders/products/11")
-      .set({ access_token }).send({
-        quantity:100,
-        totalPrice:100000
+      .set({ access_token })
+      .send({
+        quantity: 100,
+        totalPrice: 100000,
       });
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
