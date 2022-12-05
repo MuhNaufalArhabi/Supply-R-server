@@ -4,10 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --coverage",
+    "test": "jest --runInBand --coverage --verbose --testTimeout=10000 --detectOpenHandles",
     "dev": "nodemon bin/www",
     "start": "node bin/www"
   },
+  "jest": {
+    "collectCoverage": true,
+    "testPathIgnorePatterns" : [
+    ]
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MuhNaufalArhabi/Final-Boss-BE.git"

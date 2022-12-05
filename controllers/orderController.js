@@ -1,160 +1,25 @@
-const { comparePass } = require("../helpers/bcrypt");
-const { encode } = require("../helpers/jwt");
-const { Buyer, Order, OrderProduct, sequelize, User } = require("../models");
+const { Order, OrderProduct, sequelize, Product, Shop } = require("../models");
 
-class ControllerJalurAtas {
-  static async getBuyers(req, res, next) {
-    try {
-      const buyer = await Buyer.findAll({
-        attributes: [
-          "id",
-          "name",
-          "owner",
-          "email",
-          "phoneNumber",
-          "address",
-          "website",
-          "industry",
-        ],
-        include: [Order],
-      });
-      res.status(200).json(buyer);
-    } catch (error) {
-      next(error);
-    }
-  }
-  static async getOneBuyer(req, res, next) {
-    try {
-      const { id } = req.params;
-      const buyer = await Buyer.findOne({
-        where: { id },
-        attributes: [
-          "id",
-          "name",
-          "owner",
-          "email",
-          "phoneNumber",
-          "address",
-          "website",
-          "industry",
-        ],
-        include: [Order],
-      });
-      if (!buyer) {
-        throw { name: "not_found" };
-      }
-      res.status(200).json(buyer);
-    } catch (error) {
-      next(error);
-    }
-  }
-  static async postBuyer(req, res, next) {
-    try {
-      const {
-        name,
-        owner,
-        password,
-        email,
-        phoneNumber,
-        address,
-        industry,
-        website,
-      } = req.body;
-
-      const newBuyer = await Buyer.create({
-        name,
-        owner,
-        password,
-        email,
-        phoneNumber,
-        address,
-        industry,
-        website,
-      });
-      res.status(201).json({ id: newBuyer.id, email: newBuyer.email });
-    } catch (error) {
-      next(error);
-    }
-  }
-  static async delBuyer(req, res, next) {
-    try {
-      const { id } = req.buyer;
-      const deletedBuyer = await Buyer.destroy({
-        where: { id },
-      });
-      res.status(200).json({ msg:"Buyer deleted" });
-    } catch (error) {
-      next(error);
-    }
-  }
-  static async buyerLogin(req, res, next) {
-    try {
-      const { email, password } = req.body;
-      const buyerData = await Buyer.findOne({
-        where: { email },
-      });
-      if (!buyerData) {
-        throw { name: "invalidLogin" };
-      }
-      if (comparePass(password, buyerData.password)) {
-        const payload = { id: buyerData.id };
-        const token = encode(payload);
-        res.status(200).json({
-          access_token: token, role: 'buyer', name: buyerData.name, id: buyerData.id
-        });
-      } else {
-        throw { name: "invalidLogin" };
-      }
-    } catch (error) {
-      next(error);
-    }
-  }
-  static async editBuyer(req, res, next) {
-    try {
-      const {
-        name,
-        owner,
-        email,
-        password,
-        phoneNumber,
-        address,
-        website,
-        industry,
-      } = req.body;
-      const {id:buyerId} = req.buyer;
-      const buyer = await Buyer.findOne({ where: { id: buyerId } });
-      if (!buyer) {
-        throw { name: "not_found" };
-      }
-      buyer.set({
-        name,
-        owner,
-        email,
-        password,
-        phoneNumber,
-        address,
-        website,
-        industry,
-      });
-      await buyer.save();
-      res
-        .status(200)
-        .json({ msg: `buyer id ${buyer.id} is successfully changed` });
-    } catch (error) {
-      next(error);
-    }
-  }
+class OrderController {
   static async fetchBuyerOrder(req, res, next) {
     try {
       const BuyerId = req.buyer.id;
       let options = {
         where: { BuyerId },
-        include: [{ model: OrderProduct }],
+        include: {
+          model: OrderProduct,
+          include: {
+            model: Product,
+            include: {
+              model: Shop,
+            },
+          },
+        },
       };
       const orders = await Order.findAll(options);
-      if (!orders) {
-        throw { name: "not_found" };
-      }
+      // if (!orders) {
+      //   throw { name: "not_found" };
+      // }
       res.status(200).json(orders);
     } catch (error) {
       next(error);
@@ -202,6 +67,9 @@ class ControllerJalurAtas {
         transaction: t,
       });
       const { orderlists } = req.body;
+      if (!orderlists) {
+        throw { name: "no_input" };
+      }
       orderlists.map((el) => {
         el.OrderId = orders.id;
         return el;
@@ -227,9 +95,9 @@ class ControllerJalurAtas {
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
-      if (!orderProduct) {
-        throw { name: "not_found" };
-      }
+      // if (!orderProduct) {
+      //   throw { name: "not_found" };
+      // }
       await OrderProduct.destroy({
         where: { id: orderProductId },
         transaction: t,
@@ -242,7 +110,7 @@ class ControllerJalurAtas {
       });
       await order.save({ transaction: t });
       await t.commit();
-      res.status(200).json({ msg: "deleted" });
+      res.status(200).json({ msg: "orderproduct deleted" });
     } catch (error) {
       await t.rollback();
       next(error);
@@ -256,6 +124,7 @@ class ControllerJalurAtas {
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
+      //janlup tambahin proteksi tambahan kalau ispaid ternyata true
       if (!orderProduct) {
         throw { name: "not_found" };
       }
@@ -267,7 +136,7 @@ class ControllerJalurAtas {
       const order = await Order.findOne({
         where: { BuyerId, paymentMethod: "pending" },
       });
-      if(!order){
+      if (!order) {
         throw { name: "not_found" };
       }
       await order.set({
@@ -281,6 +150,31 @@ class ControllerJalurAtas {
       next(error);
     }
   }
+  // static async testGetOrder(req, res, next) {
+  //   try {
+  //     const data = await Shop.findAll({
+  //       include: {
+  //         model: Product,
+  //         required: true,
+  //         include: {
+  //           model: OrderProduct,
+  //           required: true,
+
+  //           include: {
+  //             model: Order,
+  //             where: { isPaid: false },
+  //           },
+  //         },
+  //       },
+  //       where: {
+  //         id: 4,
+  //       },
+  //     });
+  //     res.status(200).json(data);
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 }
 
-module.exports = ControllerJalurAtas;
+module.exports = OrderController;

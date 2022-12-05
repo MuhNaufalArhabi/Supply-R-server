@@ -21,12 +21,15 @@ const sellerTest2 = {
 
 let access_token_valid = "";
 let access_token_invalid = "123467890";
+let access_token_invalid2 = ""
 
 beforeAll(async () => {
   try {
     const seller = await Seller.create(sellerTest2);
     const access_token = encode({ id: seller.id, email: seller.email });
     access_token_valid = access_token;
+    const access = encode({ id: 999, email: seller.email });
+    access_token_invalid2 = access;
   } catch (error) {
     console.log(error);
   }
@@ -455,7 +458,7 @@ describe("Seller Routes Test", () => {
             phoneNumber: "1234567890",
             ktp: "1234567890",
         })
-        .set("access_token", access_token_invalid)
+        .set("access_token", access_token_invalid2)
         .end((err, res) => {
             if (err) return done(err);
             const { body, status } = res;
@@ -465,6 +468,27 @@ describe("Seller Routes Test", () => {
             });
         });
     });
+
+    describe("PUT /sellers/:id - update seller by id", () => {
+      test("401 Failed update seller - should return error if access token is empty", (done) => {
+        request(app)
+          .put("/sellers/2")
+          .send({
+              email: "seller.test@mail.com",
+              password: "sellerTest",
+              username: "sellerTest",
+              phoneNumber: "1234567890",
+              ktp: "1234567890",
+          })
+          .end((err, res) => {
+              if (err) return done(err);
+              const { body, status } = res;
+              expect(status).toBe(401);
+              expect(body).toHaveProperty("message", "Access Forbidden");
+              return done();
+              });
+          });
+      });
 
     describe("PUT /sellers/:id - update seller by id", () => {
     test("404 Failed update seller - should return error if seller not found", (done) => {

@@ -1,6 +1,6 @@
 const { Product, Image, Shop, Category } = require('../models');
 const { sequelize } = require('../models');
-const ImageKit = require('imagekit');
+const ImageKit = require('imagekit')
 const fs = require('fs');
 const { Op } = require('sequelize');
 
@@ -28,7 +28,6 @@ class ProductController {
       });
       res.status(200).json(products);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -59,14 +58,9 @@ class ProductController {
             fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
             tags: ['foto'],
           })
-          .then((result) => {
-            return result.url;
-          });
-      });
-      let data = await Promise.all(uploadImages);
-      const { name, price, stock, description, CategoryId } = JSON.parse(
-        req.body.product
-      );
+      })
+      let data = await Promise.all(uploadImages); 
+      const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
       const ShopId = req.shop.id;
       const slug = name.split(' ').join('-');
       const mainImage = data[0];
@@ -103,27 +97,40 @@ class ProductController {
   static async editProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {
+      const uploadImages = req.body.image.map((gambar) => {
+        return imagekit.upload(
+            {
+              file: gambar, //required
+              fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
+              tags: ['foto'],
+            } 
+          )
+          .then(result => {
+            return result.url
+          })
+      })
+      let data = await Promise.all(uploadImages); 
+      const mainImage = data[0];
       const { id } = req.params;
       const { name, price, stock, description, CategoryId } = req.body;
       const ShopId = req.shop.id;
-      const slug = name.toLowerCase().split(' ').join('-');
       const product = await Product.findByPk(id);
       if (!product) {
         throw { name: 'not_found' };
       }
       const updatedProduct = await Product.update(
-        { name, price, stock, description, ShopId, CategoryId, slug },
+        { name, price, stock, description, ShopId, CategoryId, mainImage },
         { where: { id }, returning: true, transaction: t }
       );
-      const images = req.files.map((file) => {
+      const images = data.slice(1).map((file) => {
         return {
-          image: file.imageUrl,
+          image: file,
           ProductId: id,
         };
       });
       await Image.bulkCreate(images, { transaction: t });
       await t.commit();
-      res.status(200).json(updatedProduct);
+      res.status(200).json({message: 'Product updated'});
     } catch (error) {
       console.log(error);
       await t.rollback();
@@ -172,11 +179,36 @@ class ProductController {
   static async getProductsByCategory(req, res, next) {
     try {
       const { categoryId } = req.params;
-      const products = await Product.findAll({
-        where: { CategoryId: categoryId },
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
+      const { name, page, limit } = req.query;
+      const offset = (page - 1) * limit;
+      if(name) {
+        const products = await Product.findAndCountAll({
+          where: {
+            CategoryId: categoryId,
+            name: {
+              [Op.iLike]: `%${name}%`
+            }
+          },
+          limit,
+          offset,
+          include: ['Shop', 'Category', 'Images'],
+        });
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products: products.rows, totalPage, currentPage, totalProducts: products.count });
+      } else {
+        const products = await Product.findAndCountAll({
+          where: {
+            CategoryId: categoryId,
+          },
+          limit,
+          offset,
+          include: ['Shop', 'Category', 'Images'],
+        });
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products: products.rows, totalPage, currentPage, totalProducts: products.count });
+      }
     } catch (error) {
       console.log(error);
       next(error);
@@ -202,46 +234,34 @@ class ProductController {
 
   static async getProductsPagination(req, res, next) {
     try {
-      const { page, limit } = req.query;
+      const { page, limit, name } = req.query;
       const offset = (page - 1) * limit;
-      const products = await Product.findAndCountAll({
-        limit,
-        offset,
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
-
-  static async searchProduct(req, res, next) {
-    try {
-      const { name } = req.query;
-      const products = await Product.findAll({
-        where: { name: { [Op.iLike]: `%${name}%` } },
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
-
-  static async searchProductByCategory(req, res, next) {
-    try {
-      const { name } = req.query;
-      const { categoryId } = req.params;
-      const products = await Product.findAll({
-        where: {
-          name: { [Op.iLike]: `%${name}%` },
-          CategoryId: categoryId,
-        },
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
+      if(name) {
+        const products = await Product.findAndCountAll({
+          where: {
+            name: {
+              [Op.iLike]: `%${name}%`
+            }
+          },
+          include: ['Shop', 'Category', 'Images'],
+          limit,
+          offset,
+        });
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products, totalPage, currentPage });
+      } else {
+        const products = await Product.findAndCountAll({
+          limit,
+          offset,
+          include: ['Shop', 'Category', 'Images'],
+        });
+  
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products, totalPage, currentPage });
+      }
+      
     } catch (error) {
       console.log(error);
       next(error);
