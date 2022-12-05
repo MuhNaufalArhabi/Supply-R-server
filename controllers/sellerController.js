@@ -142,7 +142,11 @@ class SellerController {
           id: seller.id,
           email: seller.email,
         });
-        res.status(200).json({ access_token });
+        res.status(200).json({ 
+          access_token: access_token,
+          id: seller.id,
+          role: 'seller'
+        });
       }
     } catch (error) {
       next(error);

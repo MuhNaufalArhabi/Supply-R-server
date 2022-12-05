@@ -92,6 +92,7 @@ class BuyerController {
       const buyerData = await Buyer.findOne({
         where: { email },
       });
+      console.log(buyerData.name, buyerData.id);
       if (!buyerData) {
         throw { name: "invalidLogin" };
       }
@@ -100,6 +101,9 @@ class BuyerController {
         const token = encode(payload);
         res.status(200).json({
           access_token: token,
+          role: 'buyer',
+          name: buyerData.name,
+          id: buyerData.id,
         });
       } else {
         throw { name: "invalidLogin" };
