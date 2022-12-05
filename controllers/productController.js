@@ -166,11 +166,25 @@ class ProductController {
   static async getProductsByCategory(req, res, next) {
     try {
       const { categoryId } = req.params;
-      const products = await Product.findAll({
-        where: { CategoryId: categoryId },
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
+      const { name } = req.query;
+      if(name) {
+        const products = await Product.findAll({
+          where: {
+            CategoryId: categoryId,
+            name: {
+              [Op.iLike]: `%${name}%`
+            }
+          },
+          include: ['Shop', 'Category', 'Images'],
+        });
+        res.status(200).json(products);
+      } else {
+        const products = await Product.findAll({
+          where: { CategoryId: categoryId },
+          include: ['Shop', 'Category', 'Images'],
+        });
+        res.status(200).json(products);
+      }
     } catch (error) {
       console.log(error);
       next(error);
@@ -203,7 +217,10 @@ class ProductController {
         offset,
         include: ['Shop', 'Category', 'Images'],
       });
-      res.status(200).json(products);
+
+      const totalPage = Math.ceil(products.count / limit);
+      const currentPage = Number(page);
+      res.status(200).json({ products, totalPage, currentPage });
     } catch (error) {
       console.log(error);
       next(error);
