@@ -178,11 +178,36 @@ class ProductController {
   static async getProductsByCategory(req, res, next) {
     try {
       const { categoryId } = req.params;
-      const products = await Product.findAll({
-        where: { CategoryId: categoryId },
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
+      const { name, page, limit } = req.query;
+      const offset = (page - 1) * limit;
+      if(name) {
+        const products = await Product.findAndCountAll({
+          where: {
+            CategoryId: categoryId,
+            name: {
+              [Op.iLike]: `%${name}%`
+            }
+          },
+          limit,
+          offset,
+          include: ['Shop', 'Category', 'Images'],
+        });
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products: products.rows, totalPage, currentPage, totalProducts: products.count });
+      } else {
+        const products = await Product.findAndCountAll({
+          where: {
+            CategoryId: categoryId,
+          },
+          limit,
+          offset,
+          include: ['Shop', 'Category', 'Images'],
+        });
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products: products.rows, totalPage, currentPage, totalProducts: products.count });
+      }
     } catch (error) {
       console.log(error);
       next(error);
@@ -208,46 +233,34 @@ class ProductController {
 
   static async getProductsPagination(req, res, next) {
     try {
-      const { page, limit } = req.query;
+      const { page, limit, name } = req.query;
       const offset = (page - 1) * limit;
-      const products = await Product.findAndCountAll({
-        limit,
-        offset,
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
-
-  static async searchProduct(req, res, next) {
-    try {
-      const { name } = req.query;
-      const products = await Product.findAll({
-        where: { name: { [Op.iLike]: `%${name}%` } },
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
-
-  static async searchProductByCategory(req, res, next) {
-    try {
-      const { name } = req.query;
-      const { categoryId } = req.params;
-      const products = await Product.findAll({
-        where: {
-          name: { [Op.iLike]: `%${name}%` },
-          CategoryId: categoryId,
-        },
-        include: ['Shop', 'Category', 'Images'],
-      });
-      res.status(200).json(products);
+      if(name) {
+        const products = await Product.findAndCountAll({
+          where: {
+            name: {
+              [Op.iLike]: `%${name}%`
+            }
+          },
+          include: ['Shop', 'Category', 'Images'],
+          limit,
+          offset,
+        });
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products, totalPage, currentPage });
+      } else {
+        const products = await Product.findAndCountAll({
+          limit,
+          offset,
+          include: ['Shop', 'Category', 'Images'],
+        });
+  
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        res.status(200).json({ products, totalPage, currentPage });
+      }
+      
     } catch (error) {
       console.log(error);
       next(error);
