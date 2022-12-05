@@ -1,6 +1,7 @@
-const { Seller } = require("../models");
-const { comparePass } = require("../helpers/bcrypt");
-const { encode } = require("../helpers/jwt");
+const { Seller, Shop } = require('../models');
+const { comparePass } = require('../helpers/bcrypt');
+const { encode } = require('../helpers/jwt');
+const { sequelize } = require('../models');
 
 class SellerController {
   static async findAll(req, res, next) {
@@ -25,18 +26,41 @@ class SellerController {
   }
 
   static async create(req, res, next) {
+    const t = await sequelize.transaction();
     try {
-      const { username, email, password, phoneNumber, ktp } = req.body;
-      const seller = await Seller.create({
-        username,
-        email,
-        password,
-        phoneNumber,
-        ktp,
-      });
+      const { username, email, password, phoneNumber, ktp } = req.body.formSeller;
+
+      const seller = await Seller.create(
+        {
+          username,
+          email,
+          password,
+          phoneNumber,
+          ktp,
+        },
+        { transaction: t }
+      );
+
+      const shop = await Shop.create(
+        {
+          name: req.body.formShop.name,
+          lat: req.body.formShop.lat,
+          long: req.body.formShop.long,
+          address: req.body.formShop.address,
+          phoneNumber: req.body.formShop.phoneNumber,
+          owner: req.body.formShop.owner,
+          SellerId: seller.id,
+        },
+        { transaction: t }
+      );
+
+      console.log(shop)
+
+      await t.commit();
       res.status(201).json({ id: seller.id, email: seller.email });
     } catch (error) {
       console.log(error);
+      await t.rollback();
       next(error);
     }
   }
@@ -51,7 +75,7 @@ class SellerController {
       });
 
       if (!seller) {
-        throw { name: "not_found" };
+        throw { name: 'not_found' };
       }
 
       seller = {
@@ -75,7 +99,7 @@ class SellerController {
       const { username, email, password, phoneNumber, ktp } = req.body;
       const seller = await Seller.findByPk(id);
       if (!seller) {
-        throw { name: "not_found" };
+        throw { name: 'not_found' };
       }
       await Seller.update(
         {
@@ -92,7 +116,7 @@ class SellerController {
           returning: true,
         }
       );
-      res.status(200).json({ message: "Success update seller" });
+      res.status(200).json({ message: 'Success update seller' });
     } catch (error) {
       next(error);
     }
@@ -103,14 +127,14 @@ class SellerController {
       const { id } = req.params;
       const seller = await Seller.findByPk(id);
       if (!seller) {
-        throw { name: "not_found" };
-      }      
+        throw { name: 'not_found' };
+      }
       await Seller.destroy({
         where: {
           id,
         },
       });
-      res.status(200).json({ message: "Seller deleted" });
+      res.status(200).json({ message: 'Seller deleted' });
     } catch (error) {
       next(error);
     }
@@ -121,32 +145,31 @@ class SellerController {
       const { email, password } = req.body;
 
       if (!email) {
-        throw { name: "Email is required" };
+        throw { name: 'Email is required' };
       }
 
       if (!password) {
-        throw { name: "Password is required" };
+        throw { name: 'Password is required' };
       }
 
       const seller = await Seller.findOne({
         where: {
           email,
         },
+        include: Shop,
       });
       if (!seller) {
-        throw { name: "invalidLogin" };
+        throw { name: 'invalidLogin' };
       } else if (!comparePass(password, seller.password)) {
-        throw { name: "invalidLogin" };
+        throw { name: 'invalidLogin' };
       } else {
+        console.log(seller)
         const access_token = encode({
           id: seller.id,
           email: seller.email,
         });
-        res.status(200).json({ 
-          access_token: access_token,
-          id: seller.id,
-          role: 'seller'
-        });
+        res.status(200).json({ access_token, role: 'seller', id: seller.Shop.id , name: seller.Shop.name}); // id: seller.Shop.id
+
       }
     } catch (error) {
       next(error);
