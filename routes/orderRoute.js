@@ -6,7 +6,7 @@ const {
 const OrderController = require("../controllers/orderController")
 const router = require("express").Router();
 
-// router.use(authenticateBuyer);
+router.use(authenticateBuyer);
 
 // can only accessed by authenticated token
 router.get("/", OrderController.fetchBuyerOrder);
@@ -22,6 +22,6 @@ router.patch(
   authDelBuyer,
   OrderController.patchOrderProduct
 );
-router.get("/testers",OrderController.testGetOrder)
+// router.get("/testers",OrderController.testGetOrder)
 
 module.exports = router;

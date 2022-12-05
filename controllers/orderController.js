@@ -6,7 +6,15 @@ class OrderController {
       const BuyerId = req.buyer.id;
       let options = {
         where: { BuyerId },
-        include: [{ model: OrderProduct }],
+        include: {
+          model: OrderProduct,
+          include: {
+            model: Product,
+            include: {
+              model: Shop,
+            },
+          },
+        },
       };
       const orders = await Order.findAll(options);
       // if (!orders) {
@@ -87,9 +95,9 @@ class OrderController {
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
-      if (!orderProduct) {
-        throw { name: "not_found" };
-      }
+      // if (!orderProduct) {
+      //   throw { name: "not_found" };
+      // }
       await OrderProduct.destroy({
         where: { id: orderProductId },
         transaction: t,
@@ -116,6 +124,7 @@ class OrderController {
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
+      //janlup tambahin proteksi tambahan kalau ispaid ternyata true
       if (!orderProduct) {
         throw { name: "not_found" };
       }
@@ -141,31 +150,31 @@ class OrderController {
       next(error);
     }
   }
-  static async testGetOrder(req, res, next) {
-    try {
-      const data = await Shop.findAll({
-        include: {
-          model: Product,
-          required: true,
-          include: {
-            model: OrderProduct,
-            required: true,
+  // static async testGetOrder(req, res, next) {
+  //   try {
+  //     const data = await Shop.findAll({
+  //       include: {
+  //         model: Product,
+  //         required: true,
+  //         include: {
+  //           model: OrderProduct,
+  //           required: true,
 
-            include: {
-              model: Order,
-              where: { isPaid: false },
-            },
-          },
-        },
-        where: {
-          id: 4,
-        },
-      });
-      res.status(200).json(data);
-    } catch (error) {
-      next(error);
-    }
-  }
+  //           include: {
+  //             model: Order,
+  //             where: { isPaid: false },
+  //           },
+  //         },
+  //       },
+  //       where: {
+  //         id: 4,
+  //       },
+  //     });
+  //     res.status(200).json(data);
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 }
 
 module.exports = OrderController;
