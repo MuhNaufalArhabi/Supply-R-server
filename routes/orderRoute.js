@@ -22,6 +22,6 @@ router.patch(
   authDelBuyer,
   OrderController.patchOrderProduct
 );
-
+// router.get("/testers",OrderController.testGetOrder)
 
 module.exports = router;
