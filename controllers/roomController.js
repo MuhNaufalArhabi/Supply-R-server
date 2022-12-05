@@ -1,4 +1,4 @@
-const {Room} = require('../models');
+const {Room, Chat} = require('../models');
 
 class RoomController {
     static async getAllRoomsByUserId(req, res, next) {
@@ -13,6 +13,22 @@ class RoomController {
             res.status(200).json(rooms);
         } catch (error) {
             next(error);
+        }
+    }
+
+    static async getMessageByRoomId(req, res, next) {
+        try {
+            const {id} = req.params;
+            const chat = await Chat.findAll({
+                where: {
+                    RoomId : id
+                },
+                order: [['createdAt', 'ASC']]
+            
+            });
+            res.status(200).json(chat);
+        } catch (err) {
+            next(err)
         }
     }
 }

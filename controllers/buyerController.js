@@ -99,7 +99,7 @@ class BuyerController {
         const payload = { id: buyerData.id };
         const token = encode(payload);
         res.status(200).json({
-          access_token: token,
+          access_token: token, role: 'buyer', id: buyerData.id, name: buyerData.name
         });
       } else {
         throw { name: "invalidLogin" };
