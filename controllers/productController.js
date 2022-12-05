@@ -52,19 +52,15 @@ class ProductController {
     const t = await sequelize.transaction();
     try {
       const uploadImages = req.body.image.map((gambar) => {
-        return imagekit.upload(
-            {
-              file: gambar, //required
-              fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
-              tags: ['foto'],
-            } 
-          )
-          .then(result => {
-            return result.url
+        return imagekit
+          .upload({
+            file: gambar, //required
+            fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
+            tags: ['foto'],
           })
       })
       let data = await Promise.all(uploadImages); 
-      const { name, price, stock, description, CategoryId } = req.body.product
+      const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
       const ShopId = req.shop.id;
       const slug = name.split(' ').join('-');
       const mainImage = data[0];
@@ -77,7 +73,7 @@ class ProductController {
           ShopId,
           CategoryId,
           slug,
-          mainImage
+          mainImage,
         },
         { transaction: t }
       );
@@ -166,7 +162,12 @@ class ProductController {
       const { shopId } = req.params;
       const products = await Product.findAll({
         where: { ShopId: shopId },
-        include: ['Shop', 'Category', 'Images'],
+        include: [{
+          model: Shop,
+          include: {
+            model: Seller,
+          }
+        }, 'Category', 'Images'],
       });
       res.status(200).json(products);
     } catch (error) {
@@ -266,7 +267,6 @@ class ProductController {
       next(error);
     }
   }
-
 }
 
 module.exports = ProductController;
