@@ -1,6 +1,6 @@
 const { comparePass } = require("../helpers/bcrypt");
 const { encode } = require("../helpers/jwt");
-const { Buyer, Order, OrderProduct, sequelize } = require("../models");
+const { Buyer, Order, OrderProduct, sequelize, User } = require("../models");
 
 class ControllerJalurAtas {
   static async getBuyers(req, res, next) {
@@ -60,6 +60,7 @@ class ControllerJalurAtas {
         industry,
         website,
       } = req.body;
+
       const newBuyer = await Buyer.create({
         name,
         owner,
@@ -99,7 +100,7 @@ class ControllerJalurAtas {
         const payload = { id: buyerData.id };
         const token = encode(payload);
         res.status(200).json({
-          access_token: token,
+          access_token: token, role: 'buyer', name: buyerData.name, id: buyerData.id
         });
       } else {
         throw { name: "invalidLogin" };

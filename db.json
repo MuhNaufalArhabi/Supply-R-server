@@ -839,7 +839,7 @@
       "name": "Oyoloo",
       "owner": "Ed Jacqueme",
       "password": "E9Lsv4TtIBi",
-      "email": "ejacqueme0@technorati.com",
+      "email": "inibaruya@technorati.com",
       "phoneNumber": "161-714-7611",
       "address": "94 Continental Terrace",
       "website": "www.Oyoloo.com",
@@ -932,6 +932,29 @@
       "ProductId": 49,
       "quantity": 20,
       "totalPrice": 756116
+    }
+  ],
+  "Users": [
+    {
+      "role": "buyer"
+    },
+    {
+      "role": "seller"
+    },
+    {
+      "role": "seller"
+    },
+    {
+      "role": "seller"
+    },
+    {
+      "role": "seller"
+    },
+    {
+      "role": "seller"
+    },
+    {
+      "role": "buyer"
     }
   ]
 }

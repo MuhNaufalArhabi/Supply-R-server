@@ -12,21 +12,13 @@ module.exports = {
       chat: {
         type: Sequelize.STRING
       },
-      ShopId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Shops',
-          key: 'id'
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+      senderId: {
+        type: Sequelize.INTEGER
       },
-      BuyerId: {
-        allowNull: false,
+      RoomId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Buyers',
+          model: 'Rooms',
           key: 'id'
         },
         onDelete: 'cascade',
