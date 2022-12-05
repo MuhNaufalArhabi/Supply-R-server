@@ -24,7 +24,6 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ fileFilter:fileFilter })
 
 router.get('/', ProductController.getAllProducts);
-router.get('/search', ProductController.searchProduct);
 router.get('/pagination', ProductController.getProductsPagination);
 router.get('/:id', ProductController.getProductById);
 router.get('/shop/:shopId', ProductController.getProductsByShop);

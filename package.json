@@ -4,10 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --coverage",
+    "test": "jest --runInBand --coverage --verbose --testTimeout=10000 --detectOpenHandles",
     "dev": "nodemon bin/www",
     "start": "node bin/www"
   },
+  "jest": {
+    "collectCoverage": true,
+    "testPathIgnorePatterns" : [
+    ]
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MuhNaufalArhabi/Final-Boss-BE.git"
@@ -27,7 +32,8 @@
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.8.0",
-    "sequelize": "^6.26.0"
+    "sequelize": "^6.26.0",
+    "socket.io": "^4.5.4"
   },
   "devDependencies": {
     "jest": "^29.3.1",
