@@ -1,5 +1,5 @@
 const { Order, OrderProduct, sequelize, Product, Shop } = require("../models");
-
+const midtransClient = require("midtrans-client");
 class OrderController {
   static async fetchBuyerOrder(req, res, next) {
     try {
@@ -148,6 +148,39 @@ class OrderController {
     } catch (error) {
       await t.rollback();
       next(error);
+    }
+  }
+  static async midTransToken(req, res, next) {
+    try { 
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_SERVER_KEY,
+      });
+      console.log(process.env.MIDTRANS_SERVER_KEY);
+      const order_id = "TRANS_" + new Date().getTime();
+      let parameter = {
+        transaction_details: {
+          order_id: order_id, // isi order_id dengan value yang unique untuk tiap transaction
+          gross_amount: req.body.price, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          first_name: req.body.firstName,
+          last_name: req.body.lastName,
+          // email: "budi@mail.com",
+          // phone: "08111222333",
+        },
+      };
+
+      const transaction = await snap.createTransaction(parameter);
+
+      res.status(201).json({ transaction });
+    } catch (err) {
+      console.log(err);
+      next(err);
     }
   }
   // static async testGetOrder(req, res, next) {
