@@ -1,3 +1,4 @@
+
 'use strict';
 const {
   Model
@@ -18,14 +19,86 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    name: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    description: DataTypes.TEXT,
-    stock: DataTypes.INTEGER,
-    mainImage: DataTypes.STRING,
-    slug: DataTypes.STRING,
-    ShopId: DataTypes.INTEGER,
-    CategoryId: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Name is required'
+        }, 
+        notEmpty: {
+          msg: 'Name is required'
+        }
+      }
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Price is required'
+        }, 
+        notEmpty: {
+          msg: 'Price is required'
+        }
+      }
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Description is required'
+        }, 
+        notEmpty: {
+          msg: 'Description is required'
+        }
+      }
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Stock is required'
+        }, 
+        notEmpty: {
+          msg: 'Stock is required'
+        }
+      }
+    },
+    mainImage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Image is required'
+        }, 
+        notEmpty: {
+          msg: 'Image is required'
+        }
+      }
+    },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    ShopId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Category is required'
+        }, 
+        notEmpty: {
+          msg: 'Category is required'
+        }
+      }
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {
