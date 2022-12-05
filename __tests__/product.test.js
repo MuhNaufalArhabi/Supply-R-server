@@ -136,6 +136,119 @@ describe("GET /products", () => {
   })
 });
 
+describe("GET /products", () => {
+  test("200 get products by shop", (done) => {
+    request(app)
+      .get("/products/shop/1")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(200);
+        expect(body).toBeInstanceOf(Array);
+        expect(body[0]).toBeInstanceOf(Object);
+        expect(body[0]).toHaveProperty("id", expect.any(Number));
+        expect(body[0]).toHaveProperty("name", expect.any(String));
+        expect(body[0]).toHaveProperty("price", expect.any(Number));
+        expect(body[0]).toHaveProperty("stock", expect.any(Number));
+        expect(body[0]).toHaveProperty("description", expect.any(String));
+        done();
+      });
+  });
+
+  test("404, shop not found", (done) => {
+    request(app)
+      .get("/products/shop/999")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(404);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Error not found");
+        done();
+      });
+  });
+
+  test("200 get products by category with pagination", (done) => {
+    request(app)
+      .get("/products/category/1?page=1&limit=3")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(200);
+        expect(body).toBeInstanceOf(Object);
+        expect(body[0]).toHaveProperty("products", expect.any(Array));
+        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
+        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
+        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        done();
+      });
+  })
+
+  test("200 get products by category with pagination with search", (done) => {
+    request(app)
+      .get("/products/category/1?page=1&limit=3&name=productTest")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(200);
+        expect(body).toBeInstanceOf(Object);
+        expect(body[0]).toHaveProperty("products", expect.any(Array));
+        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
+        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
+        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        done();
+      });
+  })
+
+  test("200 get products by pagination", (done) => {
+    request(app)
+      .get("/products/pagination?page=1&limit=1")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(200);
+        expect(body).toBeInstanceOf(Object);
+        expect(body[0]).toHaveProperty("products", expect.any(Array));
+        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
+        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
+        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        done();
+      });
+  })
+
+  test("200 get products by pagination with search", (done) => {
+    request(app)
+      .get("/products/pagination?page=1&limit=1&name=product")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(200);
+        expect(body).toBeInstanceOf(Object);
+        expect(body[0]).toHaveProperty("products", expect.any(Array));
+        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
+        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
+        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        done();
+      });
+  })
+
+  test("200 get product detail by shop id", (done) => {
+    request(app)
+      .get("/products/shop/1/product/1")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(200);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("id", expect.any(Number));
+        expect(body).toHaveProperty("name", expect.any(String));
+        expect(body).toHaveProperty("price", expect.any(Number));
+        done();
+      });
+  })
+
+});
+
 
 describe("POST /products", () => {
   test("201 Success create product", (done) => {
@@ -309,59 +422,59 @@ describe("PUT /products", () => {
 });
 
 describe("DELETE /products", () => {
-    test("200 Success delete product", (done) => {
-        request(app)
-        .delete("/products/1")
-        .set("access_token", access_token)
-        .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(200);
-            expect(body).toBeInstanceOf(Object);
-            expect(body).toHaveProperty("message", "Product deleted");
-            done();
-        });
-    });
+  test("200 Success delete product", (done) => {
+      request(app)
+      .delete("/products/1")
+      .set("access_token", access_token)
+      .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(200);
+          expect(body).toBeInstanceOf(Object);
+          expect(body).toHaveProperty("message", "Product deleted");
+          done();
+      });
+  });
 
-    test("401 Unauthorized delete product", (done) => {
-        request(app)
-        .delete("/products/1")
-        .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(401);
-            expect(body).toBeInstanceOf(Object);
-            expect(body).toHaveProperty("message", "Invalid Token");
-            done();
-        });
-    });
+  test("401 Unauthorized delete product", (done) => {
+      request(app)
+      .delete("/products/1")
+      .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(401);
+          expect(body).toBeInstanceOf(Object);
+          expect(body).toHaveProperty("message", "Invalid Token");
+          done();
+      });
+  });
 
-    test("401 Unauthorized delete product", (done) => {
-        request(app)
-        .delete("/products/1")
-        .set("access_token", access_token_invalid)
-        .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(401);
-            expect(body).toBeInstanceOf(Object);
-            expect(body).toHaveProperty("message", "Invalid Token");
-            done();
-        });
-    });
+  test("401 Unauthorized delete product", (done) => {
+      request(app)
+      .delete("/products/1")
+      .set("access_token", access_token_invalid)
+      .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(401);
+          expect(body).toBeInstanceOf(Object);
+          expect(body).toHaveProperty("message", "Invalid Token");
+          done();
+      });
+  });
 
-    test("404 Not Found delete product", (done) => {
-        request(app)
-        .delete("/products/100")
-        .set("access_token", access_token)
-        .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(404);
-            expect(body).toBeInstanceOf(Object);
-            expect(body).toHaveProperty("message", "Error not found");
-            done();
-        });
-    });
+  test("404 Not Found delete product", (done) => {
+      request(app)
+      .delete("/products/100")
+      .set("access_token", access_token)
+      .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(404);
+          expect(body).toBeInstanceOf(Object);
+          expect(body).toHaveProperty("message", "Error not found");
+          done();
+      });
+  });
 
 });

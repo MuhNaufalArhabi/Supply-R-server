@@ -18,6 +18,7 @@ router.get('/', ProductController.getAllProducts);
 router.get('/pagination', ProductController.getProductsPagination);
 router.get('/:id', ProductController.getProductById);
 router.get('/shop/:shopId', ProductController.getProductsByShop);
+router.get('/shop/:shopId/product/:productId', ProductController.getProductDetailByShop);
 router.get('/category/:categoryId', ProductController.getProductsByCategory);
 router.use(authShop);
 router.post('/', upload.array('image') ,ProductController.addProduct);

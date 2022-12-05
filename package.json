@@ -9,8 +9,13 @@
     "start": "node bin/www"
   },
   "jest": {
-    "collectCoverage": true,
+    "collectCoverage": false,
     "testPathIgnorePatterns" : [
+      "__tests__/buyer.test.js",
+      "__tests__/category.test.js",
+      "__tests__/order.test.js",
+      "__tests__/seller.test.js",
+      "__tests__/shop.test.js"
     ]
 },
   "repository": {
