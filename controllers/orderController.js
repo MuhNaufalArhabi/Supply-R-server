@@ -5,9 +5,10 @@ class OrderController {
     try {
       const BuyerId = req.buyer.id;
       let options = {
-        where: { BuyerId },
+        where: { BuyerId, isPaid: false, paymentMethod:"pending" },
         include: {
           model: OrderProduct,
+          required: true,
           include: {
             model: Product,
             include: {
@@ -44,7 +45,7 @@ class OrderController {
           delete input[key];
         }
       }
-      console.log({ p, pay });
+      // console.log({ p, pay });
       order.set(input);
       await order.save();
       res.status(200).json({ msg: "order changed" });
@@ -151,25 +152,26 @@ class OrderController {
     }
   }
   static async midTransToken(req, res, next) {
-    try { 
+    try {
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
         serverKey: process.env.MIDTRANS_SERVER_KEY,
       });
-      console.log(process.env.MIDTRANS_SERVER_KEY);
-      const order_id = "TRANS_" + new Date().getTime();
+      // console.log(process.env.MIDTRANS_SERVER_KEY);
+      const { Order } = req.body;
+      // const order_id = Order.id;
       let parameter = {
         transaction_details: {
-          order_id: order_id, // isi order_id dengan value yang unique untuk tiap transaction
-          gross_amount: req.body.price, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
+          order_id: Order.id, // isi order_id dengan value yang unique untuk tiap transaction
+          gross_amount: Order.totalPrice, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
         },
         credit_card: {
           secure: true,
         },
         customer_details: {
-          first_name: req.body.firstName,
-          last_name: req.body.lastName,
+          first_name: "test first name",
+          last_name: "test first last name",
           // email: "budi@mail.com",
           // phone: "08111222333",
         },
