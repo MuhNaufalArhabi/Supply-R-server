@@ -9,14 +9,14 @@
     "start": "node bin/www"
   },
   "jest": {
-    "collectCoverage": true,
+    "collectCoverage": false,
     "testPathIgnorePatterns" : [
-      "__test__/buyer.test.js",
-      "__test__/seller.test.js",
-      "__test__/product.test.js",
-      "__test__/order.test.js",
-      "__test__/shop.test.js",
-      "__test__/category.test.js"
+      "__tests__/buyer.test.js",
+      "__tests__/seller.test.js",
+      "__tests__/product.test.js",
+      "__tests__/order.test.js",
+      "__tests__/shop.test.js",
+      "__tests__/category.test.js"
     ]
 },
   "repository": {
