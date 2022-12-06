@@ -1,13 +1,21 @@
-const { Order, OrderProduct, sequelize, Product, Shop } = require("../models");
-
+const {
+  Order,
+  OrderProduct,
+  sequelize,
+  Product,
+  Shop,
+  Buyer,
+} = require("../models");
+const midtransClient = require("midtrans-client");
 class OrderController {
   static async fetchBuyerOrder(req, res, next) {
     try {
       const BuyerId = req.buyer.id;
       let options = {
-        where: { BuyerId },
+        where: { BuyerId, isPaid: false, paymentMethod: "pending" },
         include: {
           model: OrderProduct,
+          required: true,
           include: {
             model: Product,
             include: {
@@ -44,7 +52,7 @@ class OrderController {
           delete input[key];
         }
       }
-      console.log({ p, pay });
+      // console.log({ p, pay });
       order.set(input);
       await order.save();
       res.status(200).json({ msg: "order changed" });
@@ -148,6 +156,55 @@ class OrderController {
     } catch (error) {
       await t.rollback();
       next(error);
+    }
+  }
+  static async midTransToken(req, res, next) {
+    try {
+      const BuyerId = req.buyer.id;
+      const order = await Order.findOne({
+        where: { BuyerId, paymentMethod: "pending", isPaid: false },
+        include: Buyer
+      });
+      console.log(order)
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_SERVER_KEY,
+      });
+      let parameter = {
+        transaction_details: {
+          order_id: order.id+(new Date().getMilliseconds()), // isi order_id dengan value yang unique untuk tiap transaction
+          gross_amount: order.totalPrice, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
+        },
+        credit_card: {
+          secure: true,
+          installment: {
+            required: false,
+            terms: {
+              bca: [3, 6, 12],
+              bni: [3, 6, 12],
+              mandiri: [3, 6, 12],
+              cimb: [3, 6, 12],
+              bri: [3, 6, 12],
+              maybank: [3, 6, 12],
+              mega: [3, 6, 12],
+            },
+          },
+        },
+        customer_details: {
+          first_name: order.Buyer.name,
+          // last_name: "test first last name",
+          // email: "budi@mail.com",
+          // phone: "08111222333",
+        },
+      };
+
+      const transaction = await snap.createTransaction(parameter);
+
+      res.status(201).json({ transaction });
+    } catch (err) {
+      console.log(err);
+      next(err);
     }
   }
   // static async testGetOrder(req, res, next) {
