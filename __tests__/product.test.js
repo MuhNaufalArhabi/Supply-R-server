@@ -15,7 +15,7 @@ const productTestSeller = {
 };
 
 const imageTest = [
-  "shoptest1.jpg", "testshop2.jpg", "testshop3.jpg"
+  "test.png", "test2.png"
 ];
 
 beforeAll(async () => {
@@ -193,10 +193,10 @@ describe("GET /products", () => {
         const { body, status } = res;
         expect(status).toBe(200);
         expect(body).toBeInstanceOf(Object);
-        expect(body[0]).toHaveProperty("products", expect.any(Array));
-        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
-        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
-        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        expect(body).toHaveProperty("products", expect.any(Array));
+        expect(body).toHaveProperty("totalProducts", expect.any(Number));
+        expect(body).toHaveProperty("totalPage", expect.any(Number));
+        expect(body).toHaveProperty("currentPage", expect.any(Number));
         done();
       });
   })
@@ -227,10 +227,10 @@ describe("GET /products", () => {
         const { body, status } = res;
         expect(status).toBe(200);
         expect(body).toBeInstanceOf(Object);
-        expect(body[0]).toHaveProperty("products", expect.any(Array));
-        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
-        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
-        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        expect(body).toHaveProperty("products", expect.any(Array));
+        expect(body).toHaveProperty("totalProducts", expect.any(Number));
+        expect(body).toHaveProperty("totalPage", expect.any(Number));
+        expect(body).toHaveProperty("currentPage", expect.any(Number));
         done();
       });
   })
@@ -244,10 +244,11 @@ describe("GET /products", () => {
         const { body, status } = res;
         expect(status).toBe(200);
         expect(body).toBeInstanceOf(Object);
-        expect(body[0]).toHaveProperty("products", expect.any(Array));
-        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
-        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
-        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        expect(body).toHaveProperty("products", expect.any(Object));
+        expect(body.products).toHaveProperty("rows", expect.any(Array));
+        expect(body.products).toHaveProperty("count", expect.any(Number));
+        expect(body).toHaveProperty("totalPage", expect.any(Number));
+        expect(body).toHaveProperty("currentPage", expect.any(Number));
         done();
       });
   })
@@ -261,10 +262,11 @@ describe("GET /products", () => {
         const { body, status } = res;
         expect(status).toBe(200);
         expect(body).toBeInstanceOf(Object);
-        expect(body[0]).toHaveProperty("products", expect.any(Array));
-        expect(body[0]).toHaveProperty("totalProducts", expect.any(Number));
-        expect(body[0]).toHaveProperty("totalPages", expect.any(Number));
-        expect(body[0]).toHaveProperty("currentPage", expect.any(Number));
+        expect(body).toHaveProperty("products", expect.any(Object));
+        expect(body.products).toHaveProperty("rows", expect.any(Array));
+        expect(body.products).toHaveProperty("count", expect.any(Number));
+        expect(body).toHaveProperty("totalPage", expect.any(Number));
+        expect(body).toHaveProperty("currentPage", expect.any(Number));
         done();
       });
   })
@@ -334,7 +336,9 @@ describe("POST /products", () => {
     request(app)
       .post("/products")
       .set("access_token", access_token)
-      .send(body)
+      .field("product", JSON.stringify(body.product))
+      .attach("image", "__tests__/assets/test.png")
+      .attach("image", "__tests__/assets/test2.png")
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
@@ -369,7 +373,37 @@ describe("POST /products", () => {
     request(app)
       .post("/products")
       .set("access_token", access_token)
-      .send(body)
+      .field("product", JSON.stringify(body.product))
+      .attach("image", "__tests__/assets/test.png")
+      .attach("image", "__tests__/assets/test2.png")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(400);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Name is required");
+        done();
+      });
+  });
+
+  test("400 Bad Request create product", (done) => {
+    const body = {
+      product: {
+        price: 10000,
+        stock: 10,
+        description: "productTest",
+        slug: "productTest",
+        CategoryId: 1,
+        ShopId: 1,
+        mainImage: "productTest",
+      },
+      image: imageTest,
+    };
+    request(app)
+      .post("/products")
+      .set("access_token", access_token)
+      .field("product", JSON.stringify(body.product))
+      .attach("image", "__tests__/assets/test3.txt")
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
