@@ -15,7 +15,8 @@ let user = [];
 
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
-  user.push(socket.id);
+
+ 
   socket.on("message", async (data) => { 
     socket.emit("messageResponse", data);
     user.forEach((el) => {
@@ -23,6 +24,7 @@ socketIO.on("connection", (socket) => {
         socket.to(el.socketId).emit("messageResponse", data);
       }
     });
+    socket.emit("messageResponse", data);
 
     let rooms;
     if (data.senderRole === "buyer") {
@@ -60,18 +62,20 @@ socketIO.on("connection", (socket) => {
   });
 
   socket.on("userConnect", (data) => {
-    user.push(data);
+    let falg = false
+    
+    user.forEach(el => {
+      if(el.id == data.id && el.role == data.role){
+       el.socketId = data.socketId;
+       falg = true
+      }
+    })
+    if(!falg){
+      user.push(data);
+    } 
   });
 
   socket.on("newRooms", async (data) => {
-    /**
-     * cari room yang ada di database
-     * jika ada, maka push ke array rooms
-     * jika tidak ada, maka buat room baru
-     * push ke array rooms
-     * emit ke client
-     */
-    // console.log(data, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
     let rooms = [];
 
     if (data.role == "buyer") {
@@ -99,14 +103,8 @@ socketIO.on("connection", (socket) => {
         if (!tmp) {
           rooms.push(el);
         }
-        // rooms.forEach(x => {
-        //   if(x.id != el.id){
-        //     rooms.push(el);
-        //   }
-        // })
       });
     }
-    console.log(rooms.length, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     socket.emit("newRoomResponse", rooms);
   });
 

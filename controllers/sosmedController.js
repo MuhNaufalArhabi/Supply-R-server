@@ -23,7 +23,6 @@ class SosmedController {
       })
       res.status(200).json({access_token, message: `login Google ok` })
     } catch (err) {
-      console.log('masuk errror')
       next(err);
     }
   }

@@ -53,12 +53,9 @@ class SellerController {
         { transaction: t }
       );
 
-      console.log(shop)
-
       await t.commit();
       res.status(201).json({ id: seller.id, email: seller.email });
     } catch (error) {
-      console.log(error);
       await t.rollback();
       next(error);
     }
@@ -162,7 +159,6 @@ class SellerController {
       } else if (!comparePass(password, seller.password)) {
         throw { name: 'invalidLogin' };
       } else {
-        console.log(seller)
         const access_token = encode({
           id: seller.id,
           email: seller.email,

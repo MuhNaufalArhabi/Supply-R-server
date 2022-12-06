@@ -155,23 +155,6 @@ describe("GET /orders/", () => {
 });
 
 describe("PATCH /orders/", () => {
-  // beforeAll(async () => {
-  //   try {
-  //     await createTwoBuyers();
-  //     await createOrderProducts();
-  //     const order = await Order.create({
-  //       BuyerId: 1,
-  //       isPaid: false,
-  //       paymentMethod: "pending",
-  //       totalPrice: 1892905,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // });
-  // afterAll(() => {
-  //   cleanUpDatabase();
-  // });
   test("PATCH /orders/ success-test", async () => {
     access_token = encode({ id: 1 });
     const response = await request(app)
@@ -194,7 +177,6 @@ describe("PATCH /orders/", () => {
           paymentMethod: "Installment",
           isPaid: false,
         });
-      // console.log(response.body);
       expect(response.status).toBe(401);
       expect(response.body).toBeInstanceOf(Object);
       expect(response.body).toHaveProperty("message", "Invalid Token");
@@ -208,7 +190,6 @@ describe("PATCH /orders/", () => {
           paymentMethod: "Installment",
           isPaid: false,
         });
-      // console.log(response.body);
       expect(response.status).toBe(404);
       expect(response.body).toBeInstanceOf(Object);
       expect(response.body).toHaveProperty("message", "Error not found");
@@ -217,24 +198,6 @@ describe("PATCH /orders/", () => {
 });
 
 describe("POST /products", () => {
-  // beforeAll(async () => {
-  //   try {
-  //     await createTwoBuyers();
-  //     await createOrderProducts();
-  //     // const order = await Order.create({
-  //     //   BuyerId: 1,
-  //     //   isPaid: false,
-  //     //   paymentMethod: "pending",
-  //     //   totalPrice: 1892905,
-  //     // });
-  //     access_token = encode({ id: 1 });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // });
-  // afterAll(() => {
-  //   cleanUpDatabase();
-  // });
   test("POST /products success-test", async () => {
     const response = await request(app)
       .post("/orders/products")
@@ -270,29 +233,6 @@ describe("POST /products", () => {
 });
 
 describe("DEL /products/:orderProductId", () => {
-  // beforeAll(async () => {
-  //   try {
-  // await createTwoBuyers();
-  // await createOrderProducts();
-  // await Order.create({
-  //   BuyerId: 1,
-  //   isPaid: false,
-  //   paymentMethod: "pending",
-  //   totalPrice: 1892905,
-  // });
-  // await OrderProduct.create({
-  //   OrderId: 3,
-  //   ProductId: 20,
-  //   quantity: 16,
-  //   totalPrice: 427760,
-  // });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // });
-  // afterAll(() => {
-  //   cleanUpDatabase();
-  // });
   test("DEL /products/:orderProductId success", async () => {
     // access_token = encode({ id: 1 });
     const response = await request(app)
