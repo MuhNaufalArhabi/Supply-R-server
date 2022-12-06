@@ -40,26 +40,23 @@ const createOneBuyer = async () => {
 const createTwoBuyers = async () => {
   try {
     const { buyers } = require("../db.json");
-    buyers.forEach(el=>{
+    buyers.forEach((el) => {
       delete el.id;
-    })
+    });
     await Buyer.bulkCreate(buyers);
   } catch (error) {
     console.log(error);
   }
 };
 let access_token;
-afterAll((done) => {
-  access_token="";
-  cleanUpDatabase();
-  done();
+afterAll(async () => {
+  access_token = "";
+  await cleanUpDatabase();
 });
-// afterEach(() => {
-//   cleanUpDatabase();
-// });
-beforeAll(() => {
-  createOneBuyer();
-  createTwoBuyers();
+beforeAll(async () => {
+  await createOneBuyer();
+  await createTwoBuyers();
+  access_token = encode({ id: 1 });
 });
 describe("POST /buyers/register", () => {
   test("POST /buyers/register success-test", () => {
@@ -83,14 +80,6 @@ describe("POST /buyers/register", () => {
       });
   });
   describe("POST /buyers/register fail-test", () => {
-    // beforeAll(async () => {
-    //   try {
-    //     await createOneBuyer();
-    //     // console.log(newBuyer.id,"<<ID");
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // });
     test("POST /buyers/register uniq-email-test", async () => {
       const response = await request(app).post("/buyers/register").send({
         name: "testingk",
@@ -241,12 +230,6 @@ describe("POST /buyers/register", () => {
 });
 
 describe("POST /buyers/login", () => {
-  // beforeAll(() => {
-  //   createOneBuyer();
-  // });
-  // afterAll(() => {
-  //   cleanUpDatabase();
-  // });
   test("POST /buyers/login success-test", async () => {
     const response = await request(app).post("/buyers/login").send({
       email: "testink@h8.com",
@@ -271,7 +254,7 @@ describe("POST /buyers/login", () => {
     });
     test("POST /buyers/login wrongpass-test ", async () => {
       const response = await request(app).post("/buyers/login").send({
-        email: "testing@h8.com",
+        email: "testink@h8.com",
         password: "salahpassword",
       });
       expect(response.status).toBe(401);
@@ -286,16 +269,12 @@ describe("POST /buyers/login", () => {
 
 describe("GET /buyers/", () => {
   beforeAll(async () => {
-    // createTwoBuyers();
     await Order.create({
       BuyerId: 1,
       isPaid: false,
       paymentMethod: "pending",
       totalPrice: 123123,
     });
-  });
-  afterAll(() => {
-    cleanUpDatabase();
   });
   test("GET /buyers/ success-test ", async () => {
     const response = await request(app).get("/buyers/");
@@ -332,15 +311,9 @@ describe("GET /buyers/", () => {
     expect(response.body).toHaveProperty("message", "Error not found");
   });
 });
-describe("DEL /buyers/:id", () => {
-  beforeAll(() => {
-    createTwoBuyers();
-    access_token = encode({ id: 1 });
-  });
-  afterAll(() => {
-    cleanUpDatabase();
-  });
+describe("DEL /buyers/", () => {
   test("DEL /buyers/delete success-test", async () => {
+    access_token = encode({ id: 2 });
     const response = await request(app)
       .delete("/buyers")
       .set({ access_token: access_token });
@@ -354,17 +327,20 @@ describe("DEL /buyers/:id", () => {
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("message", "Invalid Token");
   });
+  test("DEL /buyers/delete token-false-test", async () => {
+    access_token = encode({ id: 25 });
+    const response = await request(app)
+      .delete("/buyers")
+      .set({ access_token: access_token });
+    expect(response.status).toBe(401);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("message", "Invalid Token");
+  });
 });
 
 describe("PUT /buyers/", () => {
-  beforeAll(() => {
-    createTwoBuyers();
-    access_token = encode({ id: 1 });
-  });
-  afterAll(() => {
-    cleanUpDatabase();
-  });
   test("PUT /buyers/ success-test", async () => {
+    access_token = encode({ id: 1 });
     const response = await request(app)
       .put("/buyers")
       .set({ access_token: access_token })

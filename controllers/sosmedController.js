@@ -15,7 +15,8 @@ class SosmedController {
           password: 'google_secret',
           ktp: '',
           phoneNumber: ''
-        }
+        },
+        hooks: false
       })
       const access_token = encode({
         id: user.id
@@ -40,7 +41,8 @@ class SosmedController {
           password: 'facebook_secret',
           ktp: '',
           phoneNumber: ''
-        }
+        },
+        hooks: false
       })
       const access_token = encode({
         id: user.id
@@ -64,7 +66,8 @@ class SosmedController {
           password: 'twitter_secret',
           ktp: '',
           phoneNumber: ''
-        }
+        },
+        hooks: false
       })
       const access_token = encode({
         id: user.id
