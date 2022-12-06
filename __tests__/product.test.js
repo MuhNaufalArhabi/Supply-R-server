@@ -101,6 +101,22 @@ describe("GET /products", () => {
       });
   });
 
+  test("500 Internal server error", (done) => {
+    jest.spyOn(Product, "findAll").mockImplementationOnce(() => {
+      throw new Error();
+    });
+    request(app)
+      .get("/products")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(500);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Internal Server Error");
+        done();
+      });
+  });
+
   test("200 success get product by id", (done) => {
     request(app)
       .get("/products/1")
@@ -170,7 +186,8 @@ describe("GET /products", () => {
 
   test("200 get products by category with pagination", (done) => {
     request(app)
-      .get("/products/category/1?page=1&limit=3")
+      .get("/products/category/1")
+      .query({ page: 1, limit: 3 })
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
@@ -184,9 +201,27 @@ describe("GET /products", () => {
       });
   })
 
+  test("500 internal server error", (done) => {
+    jest.spyOn(Product, "findAndCountAll").mockImplementationOnce(() => {
+      throw new Error();
+    });
+    request(app)
+      .get("/products/category/1")
+      .query({ page: 1, limit: 3 })
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(500);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Internal Server Error");
+        done();
+      });
+  });
+
   test("200 get products by category with pagination with search", (done) => {
     request(app)
-      .get("/products/category/1?page=1&limit=3&name=productTest")
+      .get("/products/category/1")
+      .query({ page: 1, limit: 3, name: "productTest" })
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
@@ -202,7 +237,8 @@ describe("GET /products", () => {
 
   test("200 get products by pagination", (done) => {
     request(app)
-      .get("/products/pagination?page=1&limit=1")
+      .get("/products/pagination")
+      .query({ page: 1, limit: 1 })
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
@@ -218,7 +254,8 @@ describe("GET /products", () => {
 
   test("200 get products by pagination with search", (done) => {
     request(app)
-      .get("/products/pagination?page=1&limit=1&name=product")
+      .get("/products/pagination")
+      .query({ page: 1, limit: 1, name: "product" })
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
@@ -231,6 +268,24 @@ describe("GET /products", () => {
         done();
       });
   })
+
+  test("500 internal server error", (done) => {
+    jest.spyOn(Product, "findAndCountAll").mockImplementationOnce(() => {
+      throw new Error();
+    });
+    request(app)
+      .get("/products/pagination")
+      .query({ page: 1, limit: 1 })
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(500);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Internal Server Error");
+        done();
+      });
+  });
+
 
   test("200 get product detail by shop id", (done) => {
     request(app)
@@ -246,6 +301,19 @@ describe("GET /products", () => {
         done();
       });
   })
+
+  test("404, product not found", (done) => {
+    request(app)
+      .get("/products/shop/1/product/999")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(404);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Error not found");
+        done();
+      });
+  });
 
 });
 

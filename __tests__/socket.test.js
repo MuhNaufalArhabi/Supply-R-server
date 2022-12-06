@@ -38,12 +38,14 @@ describe("Suite of unit tests", function() {
 
   describe("Chat tests", function() {
     test("should work", (done) => {
-      socket.emit("message:send", {
+      socket.emit("message", {
         name: "Udin",
         message: "Hello world",
+        senderRole: "buyer",
+        
       });
 
-      socket.on("message:send", (payload) => {
+      socket.on("messageResponse", (payload) => {
         try {
           expect(payload).toHaveProperty("name");
           expect(payload).toHaveProperty("message");
@@ -54,4 +56,112 @@ describe("Suite of unit tests", function() {
       });
     });
   });
+
+  describe("Chat tests", function() {
+    test("should work", (done) => {
+      socket.emit("message", {
+        name: "Udin",
+        message: "Hello world",
+        senderRole: "seller",
+        
+      });
+
+      socket.on("messageResponse", (payload) => {
+        try {
+          console.log(payload)
+          expect(payload).toHaveProperty("name");
+          expect(payload).toHaveProperty("message");
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    });
+  });
+
+  describe("Chat tests", function() {
+    test("should work", (done) => {
+      socket.emit("message", {
+        name: "Udin",
+        message: "Hello world",
+        senderRole: "seller",
+        sender: 1,
+        id: 1,
+        chat: "Hello world",
+        receiver: 2,
+        
+      });
+
+      socket.on("messageResponse", (payload) => {
+        try {
+          expect(findOrCreate).toHaveBeenCalled()
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    });
+  });
+
+  
+
+  describe("User connect tests", function() {
+    test("should work", (done) => {
+      socket.emit("userConnect", {
+        name: "Udin",
+        message: "Hello world",
+        senderRole: "seller",
+      });
+      
+      socket.on("userConnect", (payload) => {
+        try {
+          expect(payload).toHaveProperty("name");
+          expect(payload).toHaveProperty("message");
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    });
+  });
+
+  // describe("New rooms tests", function() {
+  //   test("should work", (done) => {
+  //     socket.emit("newRooms", {
+  //       name: "Udin",
+  //       message: "Hello world",
+  //       senderRole: "buyer",
+  //     });
+
+  //     socket.on("newRoomsResponse", (payload) => {
+  //       try {
+  //         expect(payload).toHaveProperty("name");
+  //         expect(payload).toHaveProperty("message");
+  //         done();
+  //       } catch (err) {
+  //         done(err);
+  //       }
+  //     });
+  //   });
+  // });
+
+  // describe("New rooms tests", function() {
+  //   test("should work", (done) => {
+  //     socket.emit("newRooms", {
+  //       name: "Udin",
+  //       message: "Hello world",
+  //       senderRole: "seller",
+  //     });
+
+  //     socket.on("newRoomsResponse", (payload) => {
+  //       try {
+  //         expect(payload).toHaveProperty("name");
+  //         expect(payload).toHaveProperty("message");
+  //         done();
+  //       } catch (err) {
+  //         done(err);
+  //       }
+  //     });
+  //   });
+  // });
 });

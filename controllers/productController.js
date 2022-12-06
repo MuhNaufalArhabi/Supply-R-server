@@ -87,6 +87,7 @@ class ProductController {
       await t.commit();
       res.status(201).json(newProduct);
     } catch (error) {
+      console.log(error);
       await t.rollback();
       next(error);
     }
