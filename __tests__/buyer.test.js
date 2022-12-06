@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app.js");
+const {http: app} = require("../app.js");
 const { encode } = require("../helpers/jwt.js");
 const { Buyer, Order } = require("../models");
 
