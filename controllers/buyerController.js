@@ -40,6 +40,7 @@ class BuyerController {
         ],
         include: [Order],
       });
+      console.log(buyer)
       if (!buyer) {
         throw { name: "not_found" };
       }
@@ -100,6 +101,9 @@ class BuyerController {
         const token = encode(payload);
         res.status(200).json({
           access_token: token,
+          role: 'buyer',
+          name: buyerData.name,
+          id: buyerData.id,
         });
       } else {
         throw { name: "invalidLogin" };
