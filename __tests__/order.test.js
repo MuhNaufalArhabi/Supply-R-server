@@ -95,9 +95,8 @@ const createTwoBuyers = async () => {
 };
 let access_token;
 beforeAll(async () => {
-  createTwoBuyers();
-  createOrderProducts();
-  access_token = encode({ id: 1 });
+  await createTwoBuyers();
+  await createOrderProducts();
   await createOrderProducts();
   await Order.create({
     BuyerId: 1,
@@ -105,11 +104,11 @@ beforeAll(async () => {
     paymentMethod: "pending",
     totalPrice: 1892905,
   });
+  access_token = encode({ id: 1 });
 });
-afterAll((done) => {
+afterAll(async () => {
   access_token = "";
-  cleanUpDatabase();
-  done();
+  await cleanUpDatabase();
 });
 describe("GET /orders/", () => {
   // beforeAll(async () => {
