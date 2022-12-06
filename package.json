@@ -11,14 +11,7 @@
   "jest": {
     "collectCoverage": false,
     "testPathIgnorePatterns": [
-      "__tests__/buyer.test.js",
-      "__tests__/room.test.js",
-      "__tests__/product.test.js",
-      "__tests__/order.test.js",
-      "__tests__/shop.test.js",
-      "__tests__/category.test.js",
-      "__tests__/socmed.test.js",
-      "__tests__/socket.test.js"
+     
     ]
   },
   "repository": {
