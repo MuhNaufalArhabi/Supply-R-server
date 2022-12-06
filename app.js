@@ -1,29 +1,31 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const http = require('http').Server(app);
-const cors = require('cors');
-const router = require('./routes');
-const errorHandler = require('./middlewares/errorHandler');
-const { Chat, Room, Buyer, Shop } = require('./models');
-const socketIO = require('socket.io')(http, {
+const http = require("http").Server(app);
+const cors = require("cors");
+const router = require("./routes");
+const errorHandler = require("./middlewares/errorHandler");
+const { Chat, Room, Buyer, Shop } = require("./models");
+const socketIO = require("socket.io")(http, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: "http://localhost:3000",
   },
 });
 
-let rooms = [];
-let users = { buyer: null, shop: null };
+let user = [];
 
-socketIO.on('connection', (socket) => {
+socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
+  user.push(socket.id);
+  socket.on("message", async (data) => {
+    socket.emit("messageResponse", data);
+    user.forEach((el) => {
+      if (el.id == data.receiver && el.role != data.role) {
+        socket.to(el.socketId).emit("messageResponse", data);
+      }
+    });
 
-  socket.on('message', async (data) => {
-
-    socket.emit('messageResponse', data);
-   
     let rooms;
-    if (data.senderRole === 'buyer') {
-      users.buyer = data.sender;
+    if (data.senderRole === "buyer") {
       const [room, create] = await Room.findOrCreate({
         where: {
           BuyerId: data.sender,
@@ -36,7 +38,6 @@ socketIO.on('connection', (socket) => {
       });
       rooms = room;
     } else {
-      users.shop = data.sender;
       const [room, create] = await Room.findOrCreate({
         where: {
           BuyerId: data.receiver,
@@ -47,7 +48,7 @@ socketIO.on('connection', (socket) => {
           ShopId: data.sender,
         },
       });
-    
+
       rooms = room;
     }
 
@@ -58,11 +59,11 @@ socketIO.on('connection', (socket) => {
     });
   });
 
-  socket.on('typing', (data) => {
-    socket.broadcast.emit('typingResponse', data);
+  socket.on("userConnect", (data) => {
+    user.push(data);
   });
 
-  socket.on('newRooms', async (data) => {
+  socket.on("newRooms", async (data) => {
     /**
      * cari room yang ada di database
      * jika ada, maka push ke array rooms
@@ -71,29 +72,46 @@ socketIO.on('connection', (socket) => {
      * emit ke client
      */
     // console.log(data, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-    if(users.buyer !== ''){
+    let rooms = [];
+
+    if (data.role == "buyer") {
       const result = await Room.findAll({
         where: {
-          BuyerId: users.buyer,
+          BuyerId: data.id,
         },
-        include: [ Buyer, Shop],
+        include: [Buyer, Shop],
       });
-      rooms.push(result);
+      result.forEach((el) => {
+        const tmp = rooms.find((x) => x.id == el.id);
+        if (!tmp) {
+          rooms.push(el);
+        }
+      });
     } else {
       const result = await Room.findAll({
         where: {
-          ShopId: users.shop,
+          ShopId: data.id,
         },
-        include: [ Buyer, Shop],
-      }); 
-      rooms.push(result);
+        include: [Buyer, Shop],
+      });
+      result.forEach((el) => {
+        const tmp = rooms.find((x) => x.id == el.id);
+        if (!tmp) {
+          rooms.push(el);
+        }
+        // rooms.forEach(x => {
+        //   if(x.id != el.id){
+        //     rooms.push(el);
+        //   }
+        // })
+      });
     }
-    console.log(rooms, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-    socket.emit('newRoomResponse', rooms);
+    console.log(rooms.length, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    socket.emit("newRoomResponse", rooms);
   });
 
-  socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected');
+  socket.on("disconnect", () => {
+    console.log("🔥: A user disconnected");
     socket.disconnect();
   });
 });
