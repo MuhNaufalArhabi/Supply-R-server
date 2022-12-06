@@ -1,4 +1,4 @@
-const { Product, Image, Shop, Category } = require('../models');
+const { Product, Image, Shop, Category, Seller } = require('../models');
 const { sequelize } = require('../models');
 const ImageKit = require('imagekit')
 const fs = require('fs');
@@ -60,7 +60,7 @@ class ProductController {
           })
       })
       let data = await Promise.all(uploadImages); 
-      const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
+      const { name, price, stock, description, CategoryId } = req.body.product
       const ShopId = req.shop.id;
       const slug = name.split(' ').join('-');
       const mainImage = data[0];
@@ -87,8 +87,6 @@ class ProductController {
       await t.commit();
       res.status(201).json(newProduct);
     } catch (error) {
-      console.log(error);
-      console.log(req.user);
       await t.rollback();
       next(error);
     }
@@ -160,6 +158,10 @@ class ProductController {
   static async getProductsByShop(req, res, next) {
     try {
       const { shopId } = req.params;
+      const shopExists = await Shop.findByPk(shopId);
+      if (!shopExists) {
+        throw { name: 'not_found' };
+      }
       const products = await Product.findAll({
         where: { ShopId: shopId },
         include: [{
@@ -169,6 +171,7 @@ class ProductController {
           }
         }, 'Category', 'Images'],
       });
+      
       res.status(200).json(products);
     } catch (error) {
       console.log(error);
@@ -210,15 +213,13 @@ class ProductController {
         res.status(200).json({ products: products.rows, totalPage, currentPage, totalProducts: products.count });
       }
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
 
   static async getProductDetailByShop(req, res, next) {
     try {
-      const { shopId } = req.shop;
-      const { productId } = req.params;
+      const { productId, shopId } = req.params;
       const product = await Product.findOne({
         where: { ShopId: shopId, id: productId },
         include: ['Shop', 'Category', 'Images'],
@@ -263,7 +264,6 @@ class ProductController {
       }
       
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
