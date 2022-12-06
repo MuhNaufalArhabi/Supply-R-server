@@ -1,0 +1,62 @@
+CREATE DATABASE "HacktivDB";
+
+CREATE TABLE "Categories" (
+	"id" serial PRIMARY KEY,
+	"category" varchar NOT NULL
+);
+
+CREATE TABLE "Products" (
+	"name" varchar NOT NULL,
+	"CategoryId" integer NOT NULL REFERENCES "Categories"(id),
+	"stock" integer NOT NULL,
+	"price" integer NOT NULL,
+	"createdAt" date NOT NULL
+);
+
+DROP TABLE "Products";
+
+CREATE TABLE "Products" (
+	"id" serial PRIMARY KEY,
+	"name" varchar NOT NULL,
+	"CategoryId" integer NOT NULL 
+		REFERENCES "Categories"(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	"stock" integer NOT NULL,
+	"price" integer NOT NULL,
+	"createdAt" date NOT NULL
+);
+
+INSERT INTO "Categories"(category)
+VALUES ('Espresso');
+
+INSERT INTO "Categories"(category)
+VALUES 
+	('Chocolate'),
+	('Coffee'),
+	('Tea'),
+	('Cream'),
+	('Juice'),
+	('Toast'),
+	('Other');
+	
+INSERT INTO "Products"("name", "CategoryId", stock, price, "createdAt")
+VALUES ('Double Shots', 1, 87, 48000, '2022-09-28');
+
+INSERT INTO "Products"("name", "CategoryId", stock, price, "createdAt")
+VALUES 
+	('Americano', 1, 86, 34000, '2022-09-28'),
+	('Caramel Macchiato', 1, 78, 57000, '2022-09-28'),
+	('Cappucino', 1, 56, 44000, '2022-09-28'),
+	('Hot Chocolate', 2, 86, 5000, '2022-09-28'),
+	('Coffee', 3, 96, 39000, '2022-09-28'),
+	('Caramel Java Chip', 3, 75, 53000, '2022-09-28'),
+	('Lemon Tea', 4, 50, 22000, '2022-09-28'),
+	('Green Tea', 4, 40, 22000, '2022-09-28'),
+	('Vanilla Cream', 5, 43, 46000, '2022-09-28'),
+	('Green Tea Cream', 5, 41, 53000, '2022-09-28'),
+	('Mango Juice', 6, 43, 39000, '2022-09-28'),
+	('Strawberry Juice', 6, 53, 39000, '2022-09-28'),
+	('Egg and Cheese Toast', 7, 43, 30000, '2022-09-28'),
+	('Crispy Chicken Toast', 7, 43, 32000, '2022-09-28'),
+	('Bakwan', 8, 43, 10000, '2022-09-28');

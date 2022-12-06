@@ -27,7 +27,7 @@ const errorHandler = (err, req, res, next) => {
       code = 400;
       message = "invalid input";
     }
-    // console.log(err)
+    console.log(err)  
     res.status(code).json({ message });
   };
 

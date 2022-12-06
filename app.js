@@ -7,7 +7,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const { Chat, Room, Buyer, Shop } = require("./models");
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
   },
 });
 
@@ -16,7 +16,7 @@ let user = [];
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
   user.push(socket.id);
-  socket.on("message", async (data) => {
+  socket.on("message", async (data) => { 
     socket.emit("messageResponse", data);
     user.forEach((el) => {
       if (el.id == data.receiver && el.role != data.role) {
@@ -26,7 +26,7 @@ socketIO.on("connection", (socket) => {
 
     let rooms;
     if (data.senderRole === "buyer") {
-      const [room, create] = await Room.findOrCreate({
+      const [room, create] = await Room.findOrCreate({ // cuma bisa ngecek rindOrCreate nya kepanggil atau gak
         where: {
           BuyerId: data.sender,
           ShopId: data.receiver,
@@ -52,7 +52,7 @@ socketIO.on("connection", (socket) => {
       rooms = room;
     }
 
-    await Chat.create({
+    await Chat.create({ // sama, cuma bisa ngecek create nya kepanggil atau gak pakai toHaveBeenCalled
       senderId: data.sender,
       RoomId: rooms.id,
       chat: data.chat,
@@ -75,7 +75,7 @@ socketIO.on("connection", (socket) => {
     let rooms = [];
 
     if (data.role == "buyer") {
-      const result = await Room.findAll({
+      const result = await Room.findAll({ // sama, cuma bisa ngecek findAll nya kepanggil atau gak
         where: {
           BuyerId: data.id,
         },
@@ -88,7 +88,7 @@ socketIO.on("connection", (socket) => {
         }
       });
     } else {
-      const result = await Room.findAll({
+      const result = await Room.findAll({ // sama, cuma bisa ngecek findAll nya kepanggil atau gak
         where: {
           ShopId: data.id,
         },
@@ -124,4 +124,4 @@ app.use(router);
 
 app.use(errorHandler);
 
-module.exports = http;
+module.exports = {http, socketIO};

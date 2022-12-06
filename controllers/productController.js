@@ -60,7 +60,9 @@ class ProductController {
           })
       })
       let data = await Promise.all(uploadImages); 
-      const { name, price, stock, description, CategoryId } =JSON.parse(req.body.product)
+
+      const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
+
       const ShopId = req.shop.id;
       const slug = name.split(' ').join('-');
       const mainImage = data[0];
@@ -87,7 +89,6 @@ class ProductController {
       await t.commit();
       res.status(201).json(newProduct);
     } catch (error) {
-      console.log(error)
       await t.rollback();
       next(error);
     }

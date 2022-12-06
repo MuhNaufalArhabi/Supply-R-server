@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app");
+const {http: app} = require("../app");
 const { Seller } = require("../models");
 
 afterAll((done) => {
