@@ -29,7 +29,6 @@ class SellerController {
     const t = await sequelize.transaction();
     try {
       const { username, email, password, phoneNumber, ktp } = req.body.formSeller;
-
       const seller = await Seller.create(
         {
           username,
