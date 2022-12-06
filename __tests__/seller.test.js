@@ -1,14 +1,24 @@
 const request = require("supertest");
-const {http: app} = require("../app");
+const { http: app } = require("../app");
 const { encode } = require("../helpers/jwt");
 const { Seller } = require("../models");
 
 const sellerTest = {
-  email: "seller.test@mail.com",
-  password: "sellerTest",
-  username: "sellerTest",
-  phoneNumber: "1234567890",
-  ktp: "1234567890",
+  formSeller: {
+    email: "seller.test@mail.com",
+    password: "sellerTest",
+    username: "sellerTest",
+    phoneNumber: "1234567890",
+    ktp: "1234567890",
+  },
+  formShop: {
+    name: "sellerTest",
+    lat: "1",
+    long: "1",
+    address: "sellerTest",
+    phoneNumber: "1234567890",
+    owner: "sellerTest",
+  },
 };
 
 const sellerTest2 = {
@@ -21,7 +31,7 @@ const sellerTest2 = {
 
 let access_token_valid = "";
 let access_token_invalid = "123467890";
-let access_token_invalid2 = ""
+let access_token_invalid2 = "";
 
 beforeAll(async () => {
   try {
@@ -57,7 +67,7 @@ describe("Seller Routes Test", () => {
           const { body, status } = res;
           expect(status).toBe(201);
           expect(body).toHaveProperty("id", expect.any(Number));
-          expect(body).toHaveProperty("email", sellerTest.email);
+          expect(body).toHaveProperty("email", sellerTest.formSeller.email);
           return done();
         });
     });
@@ -67,7 +77,10 @@ describe("Seller Routes Test", () => {
     test("200 Success login - should return access_token", (done) => {
       request(app)
         .post("/sellers/login")
-        .send(sellerTest)
+        .send({
+          email: "seller.test@mail.com",
+          password: "sellerTest",
+        })
         .end((err, res) => {
           if (err) return done(err);
           const { body, status } = res;
@@ -83,10 +96,20 @@ describe("Seller Routes Test", () => {
       request(app)
         .post("/sellers/register")
         .send({
-          password: "sellerTest",
-          username: "sellerTest",
-          phoneNumber: "1234567890",
-          ktp: "1234567890",
+          formSeller: {
+            password: "sellerTest",
+            username: "sellerTest",
+            phoneNumber: "1234567890",
+            ktp: "1234567890",
+          },
+          formShop: {
+            name: "sellerTest",
+            lat: "1",
+            long: "1",
+            address: "sellerTest",
+            phoneNumber: "1234567890",
+            owner: "sellerTest",
+          },
         })
         .end((err, res) => {
           if (err) return done(err);
@@ -99,30 +122,25 @@ describe("Seller Routes Test", () => {
   });
 
   describe("POST /register - register new seller", () => {
-    test("400 Failed register - should return error if email is already exists", (done) => {
-      request(app)
-        .post("/sellers/register")
-        .send(sellerTest)
-        .end((err, res) => {
-          if (err) return done(err);
-          const { body, status } = res;
-          expect(status).toBe(400);
-          expect(body).toHaveProperty("message", "email must be unique");
-          return done();
-        });
-    });
-  });
-
-  describe("POST /register - register new seller", () => {
     test("400 Failed register - should return error if email is empty", (done) => {
       request(app)
         .post("/sellers/register")
         .send({
-          email: "",
-          password: "sellerTest",
-          username: "sellerTest",
-          phoneNumber: "1234567890",
-          ktp: "12345678902",
+          formSeller: {
+            email: "",
+            password: "sellerTest",
+            username: "sellerTest",
+            phoneNumber: "1234567890",
+            ktp: "1234567890",
+          },
+          formShop: {
+            name: "sellerTest",
+            lat: "1",
+            long: "1",
+            address: "sellerTest",
+            phoneNumber: "1234567890",
+            owner: "sellerTest",
+          },
         })
         .end((err, res) => {
           if (err) return done(err);
@@ -139,11 +157,21 @@ describe("Seller Routes Test", () => {
       request(app)
         .post("/sellers/register")
         .send({
-          email: "sellertestmail.com",
-          password: "sellerTest",
-          username: "sellerTest",
-          phoneNumber: "1234567890",
-          ktp: "12345678902",
+          formSeller: {
+            email: "seller.testmail.com",
+            password: "sellerTest",
+            username: "sellerTest",
+            phoneNumber: "1234567890",
+            ktp: "1234567890",
+          },
+          formShop: {
+            name: "sellerTest",
+            lat: "1",
+            long: "1",
+            address: "sellerTest",
+            phoneNumber: "1234567890",
+            owner: "sellerTest",
+          },
         })
         .end((err, res) => {
           if (err) return done(err);
@@ -160,10 +188,20 @@ describe("Seller Routes Test", () => {
       request(app)
         .post("/sellers/register")
         .send({
-          email: "seller.test2@mail.com",
-          username: "sellerTest",
-          phoneNumber: "1234567890",
-          ktp: "12345678902",
+          formSeller: {
+            email: "seller.test@mail.com",
+            username: "sellerTest",
+            phoneNumber: "1234567890",
+            ktp: "1234567890",
+          },
+          formShop: {
+            name: "sellerTest",
+            lat: "1",
+            long: "1",
+            address: "sellerTest",
+            phoneNumber: "1234567890",
+            owner: "sellerTest",
+          },
         })
         .end((err, res) => {
           if (err) return done(err);
@@ -180,11 +218,21 @@ describe("Seller Routes Test", () => {
       request(app)
         .post("/sellers/register")
         .send({
-          email: "seller.test2@mail.com",
-          password: "",
-          username: "sellerTest",
-          phoneNumber: "1234567890",
-          ktp: "12345678902",
+          formSeller: {
+            email: "seller.test@mail.com",
+            password: "",
+            username: "sellerTest",
+            phoneNumber: "1234567890",
+            ktp: "1234567890",
+          },
+          formShop: {
+            name: "sellerTest",
+            lat: "1",
+            long: "1",
+            address: "sellerTest",
+            phoneNumber: "1234567890",
+            owner: "sellerTest",
+          },
         })
         .end((err, res) => {
           if (err) return done(err);
@@ -194,47 +242,6 @@ describe("Seller Routes Test", () => {
             "message",
             "Minimum password length is 5 character"
           );
-          return done();
-        });
-    });
-  });
-
-  describe("POST /register - register new seller", () => {
-    test("400 Failed register - should return error if username is null", (done) => {
-      request(app)
-        .post("/sellers/register")
-        .send({
-          email: "seller.test3@mail.com",
-          password: "sellerTest",
-          phoneNumber: "1234567890",
-          ktp: "12345678902",
-        })
-        .end((err, res) => {
-          if (err) return done(err);
-          const { body, status } = res;
-          expect(status).toBe(400);
-          expect(body).toHaveProperty("message", "Username cannot be empty");
-          return done();
-        });
-    });
-  });
-
-  describe("POST /register - register new seller", () => {
-    test("400 Failed register - should return error if username is empty", (done) => {
-      request(app)
-        .post("/sellers/register")
-        .send({
-          email: "seller.test3@mail.com",
-          password: "sellerTest",
-          phoneNumber: "1234567890",
-          ktp: "12345678902",
-          username: "",
-        })
-        .end((err, res) => {
-          if (err) return done(err);
-          const { body, status } = res;
-          expect(status).toBe(400);
-          expect(body).toHaveProperty("message", "Username cannot be empty");
           return done();
         });
     });
@@ -402,161 +409,157 @@ describe("Seller Routes Test", () => {
     });
   });
 
-    describe("PUT /sellers/:id - update seller by id", () => {
+  describe("PUT /sellers/:id - update seller by id", () => {
     test("200 Success update seller - should return success message", (done) => {
       request(app)
         .put("/sellers/2")
         .send({
-            email: "seller.test12@mail.com",
-            password: "sellerTest12",
-            username: "sellerTest12",
-            phoneNumber: "123456789012",
-            ktp: "123456789012",
+          email: "seller.test12@mail.com",
+          password: "sellerTest12",
+          username: "sellerTest12",
+          phoneNumber: "123456789012",
+          ktp: "123456789012",
         })
         .set("access_token", access_token_valid)
         .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(200);
-            expect(body).toHaveProperty("message", "Success update seller");
-            return done();
-            });
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(200);
+          expect(body).toHaveProperty("message", "Success update seller");
+          return done();
         });
     });
+  });
 
-    describe("PUT /sellers/:id - update seller by id", () => {
+  describe("PUT /sellers/:id - update seller by id", () => {
     test("401 Failed update seller - should return error if access token is invalid", (done) => {
       request(app)
         .put("/sellers/2")
         .send({
           email: "seller.test@mail.com",
-            password: "sellerTest",
-            username: "sellerTest",
-            phoneNumber: "1234567890",
-            ktp: "1234567890",
+          password: "sellerTest",
+          username: "sellerTest",
+          phoneNumber: "1234567890",
+          ktp: "1234567890",
         })
         .set("access_token", access_token_invalid)
         .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(401);
-            expect(body).toHaveProperty("message", "Invalid Token");
-            return done();
-            });
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(401);
+          expect(body).toHaveProperty("message", "Invalid Token");
+          return done();
         });
     });
+  });
 
-
-    describe("PUT /sellers/:id - update seller by id", () => {
+  describe("PUT /sellers/:id - update seller by id", () => {
     test("401 Failed update seller - should return error if access token is invalid", (done) => {
       request(app)
         .put("/sellers/2")
         .send({
-            email: "seller.test@mail.com",
-            password: "sellerTest",
-            username: "sellerTest",
-            phoneNumber: "1234567890",
-            ktp: "1234567890",
+          email: "seller.test@mail.com",
+          password: "sellerTest",
+          username: "sellerTest",
+          phoneNumber: "1234567890",
+          ktp: "1234567890",
         })
         .set("access_token", access_token_invalid2)
         .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(401);
-            expect(body).toHaveProperty("message", "Invalid Token");
-            return done();
-            });
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(401);
+          expect(body).toHaveProperty("message", "Invalid Token");
+          return done();
         });
     });
+  });
 
-    describe("PUT /sellers/:id - update seller by id", () => {
-      test("401 Failed update seller - should return error if access token is empty", (done) => {
-        request(app)
-          .put("/sellers/2")
-          .send({
-              email: "seller.test@mail.com",
-              password: "sellerTest",
-              username: "sellerTest",
-              phoneNumber: "1234567890",
-              ktp: "1234567890",
-          })
-          .end((err, res) => {
-              if (err) return done(err);
-              const { body, status } = res;
-              expect(status).toBe(401);
-              expect(body).toHaveProperty("message", "Access Forbidden");
-              return done();
-              });
-          });
-      });
+  describe("PUT /sellers/:id - update seller by id", () => {
+    test("401 Failed update seller - should return error if access token is empty", (done) => {
+      request(app)
+        .put("/sellers/2")
+        .send({
+          email: "seller.test@mail.com",
+          password: "sellerTest",
+          username: "sellerTest",
+          phoneNumber: "1234567890",
+          ktp: "1234567890",
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(403);
+          expect(body).toHaveProperty("message", "Access Forbidden");
+          return done();
+        });
+    });
+  });
 
-    describe("PUT /sellers/:id - update seller by id", () => {
+  describe("PUT /sellers/:id - update seller by id", () => {
     test("404 Failed update seller - should return error if seller not found", (done) => {
       request(app)
         .put("/sellers/100")
         .send({
           email: "seller.test@mail.com",
-            password: "sellerTest",
-            username: "sellerTest",
-            phoneNumber: "1234567890",
-            ktp: "1234567890",
+          password: "sellerTest",
+          username: "sellerTest",
+          phoneNumber: "1234567890",
+          ktp: "1234567890",
         })
         .set("access_token", access_token_valid)
         .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(404);
-            expect(body).toHaveProperty("message", "Error not found");
-            return done();
-            });
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(404);
+          expect(body).toHaveProperty("message", "Error not found");
+          return done();
         });
     });
+  });
 
+  describe("DELETE /sellers/:id - delete seller by id", () => {
+    test("404 Failed delete seller - should return error if seller not found", (done) => {
+      request(app)
+        .delete("/sellers/100")
+        .set("access_token", access_token_valid)
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(404);
+          expect(body).toHaveProperty("message", "Error not found");
+          return done();
+        });
+    });
+  });
 
-    describe("DELETE /sellers/:id - delete seller by id", () => {
-      test("404 Failed delete seller - should return error if seller not found", (done) => {
-        request(app)
-          .delete("/sellers/100")
-          .set("access_token", access_token_valid)
-          .end((err, res) => {
-              if (err) return done(err);
-              const { body, status } = res;
-              expect(status).toBe(404);
-              expect(body).toHaveProperty("message", "Error not found");
-              return done();
-              });
-          });
-      });
-    
-    describe("DELETE /sellers/:id - delete seller by id", () => {
+  describe("DELETE /sellers/:id - delete seller by id", () => {
     test("200 Success delete seller - should return success message", (done) => {
       request(app)
         .delete("/sellers/1")
         .set("access_token", access_token_valid)
         .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(200);
-            expect(body).toHaveProperty("message", "Seller deleted");
-            return done();
-            });
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(200);
+          expect(body).toHaveProperty("message", "Seller deleted");
+          return done();
         });
     });
+  });
 
-    describe("DELETE /sellers/:id - delete seller by id", () => {
+  describe("DELETE /sellers/:id - delete seller by id", () => {
     test("401 Failed delete seller - should return error if access token is invalid", (done) => {
       request(app)
         .delete("/sellers/1")
         .set("access_token", access_token_invalid)
         .end((err, res) => {
-            if (err) return done(err);
-            const { body, status } = res;
-            expect(status).toBe(401);
-            expect(body).toHaveProperty("message", "Invalid Token");
-            return done();
-            });
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(401);
+          expect(body).toHaveProperty("message", "Invalid Token");
+          return done();
         });
     });
-
-    
+  });
 });
