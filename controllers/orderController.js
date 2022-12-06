@@ -5,6 +5,7 @@ const {
   Product,
   Shop,
   Buyer,
+  Category
 } = require("../models");
 const midtransClient = require("midtrans-client");
 class OrderController {
@@ -18,9 +19,7 @@ class OrderController {
           required: true,
           include: {
             model: Product,
-            include: {
-              model: Shop,
-            },
+            include: [Shop, Category]
           },
         },
       };
@@ -74,6 +73,7 @@ class OrderController {
         },
         transaction: t,
       });
+      
       const { orderlists } = req.body;
       if (!orderlists) {
         throw { name: "no_input" };
@@ -99,13 +99,16 @@ class OrderController {
   static async delOrderProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {
+      console.log('masuk sini <<<<<<<<<<<')
       const { orderProductId } = req.params;
+      
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
       // if (!orderProduct) {
       //   throw { name: "not_found" };
       // }
+      
       await OrderProduct.destroy({
         where: { id: orderProductId },
         transaction: t,
