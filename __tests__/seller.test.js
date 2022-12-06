@@ -372,6 +372,21 @@ describe("Seller Routes Test", () => {
           return done();
         });
     });
+
+    test("500 Failed get all sellers - should return error if server error", (done) => {
+      jest.spyOn(Seller, "findAll").mockImplementation(() => {
+        throw new Error("Internal Server Error");
+      });
+      request(app)
+        .get("/sellers")
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(500);
+          expect(body).toHaveProperty("message", "Internal Server Error");
+          return done();
+        });
+    });
   });
 
   describe("GET /sellers/:id - get seller by id", () => {
@@ -390,6 +405,21 @@ describe("Seller Routes Test", () => {
           expect(body).toHaveProperty("ktp", expect.any(String));
           expect(body).toHaveProperty("createdAt", expect.any(String));
           expect(body).toHaveProperty("updatedAt", expect.any(String));
+          return done();
+        });
+    });
+
+    test("500 Failed get seller - should return error if server error", (done) => {
+      jest.spyOn(Seller, "findOne").mockImplementation(() => {
+        throw new Error("Internal Server Error");
+      });
+      request(app)
+        .get("/sellers/1")
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(500);
+          expect(body).toHaveProperty("message", "Internal Server Error");
           return done();
         });
     });

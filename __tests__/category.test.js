@@ -43,4 +43,19 @@ describe("GET /categories", () => {
         done();
       });
   });
+
+  it("500 internal server error", (done) => {
+    jest.spyOn(Category, "findAll").mockImplementation(() => {
+      throw new Error("Internal Server Error");
+    });
+    request(app)
+      .get("/categories")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(500);
+        expect(body).toHaveProperty("message", "Internal Server Error");
+        done();
+      });
+  });
 });
