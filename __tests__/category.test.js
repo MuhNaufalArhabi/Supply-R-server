@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app");
+const {http: app} = require("../app");
 const { Category } = require("../models");
 
 beforeAll((done) => {
@@ -40,6 +40,21 @@ describe("GET /categories", () => {
         expect(body[0]).toHaveProperty("name", expect.any(String));
         expect(body[0]).toHaveProperty("createdAt", expect.any(String));
         expect(body[0]).toHaveProperty("updatedAt", expect.any(String));
+        done();
+      });
+  });
+
+  it("500 internal server error", (done) => {
+    jest.spyOn(Category, "findAll").mockImplementation(() => {
+      throw new Error("Internal Server Error");
+    });
+    request(app)
+      .get("/categories")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(500);
+        expect(body).toHaveProperty("message", "Internal Server Error");
         done();
       });
   });

@@ -3,7 +3,7 @@ const {
   authenticateBuyer,
   authDelBuyer,
 } = require("../middlewares/authenAtas");
-const OrderController = require("../controllers/orderController")
+const OrderController = require("../controllers/orderController");
 const router = require("express").Router();
 
 router.use(authenticateBuyer);
@@ -12,6 +12,7 @@ router.use(authenticateBuyer);
 router.get("/", OrderController.fetchBuyerOrder);
 router.patch("/", OrderController.patchOrder);
 router.post("/products", OrderController.postOrderProduct);
+router.put("/products/bulk", OrderController.bulkUpdateOrderProducts);
 router.delete(
   "/products/:orderProductId",
   authDelBuyer,

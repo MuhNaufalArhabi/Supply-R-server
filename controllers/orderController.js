@@ -5,6 +5,7 @@ const {
   Product,
   Shop,
   Buyer,
+  Category
 } = require("../models");
 const midtransClient = require("midtrans-client");
 class OrderController {
@@ -18,9 +19,7 @@ class OrderController {
           required: true,
           include: {
             model: Product,
-            include: {
-              model: Shop,
-            },
+            include: [Shop, Category]
           },
         },
       };
@@ -38,7 +37,7 @@ class OrderController {
       const BuyerId = req.buyer.id;
       const { paymentMethod: p, isPaid: pay } = req.body;
       const order = await Order.findOne({
-        where: { BuyerId, paymentMethod: "pending" },
+        where: { BuyerId, paymentMethod: "pending", isPaid: false },
       });
       if (!order) {
         throw { name: "not_found" };
@@ -65,7 +64,7 @@ class OrderController {
     try {
       const BuyerId = req.buyer.id;
       const [orders, created] = await Order.findOrCreate({
-        where: { BuyerId, paymentMethod: "pending" },
+        where: { BuyerId, paymentMethod: "pending", isPaid: false },
         defaults: {
           BuyerId,
           isPaid: false,
@@ -74,6 +73,7 @@ class OrderController {
         },
         transaction: t,
       });
+      
       const { orderlists } = req.body;
       if (!orderlists) {
         throw { name: "no_input" };
@@ -90,7 +90,7 @@ class OrderController {
       orders.set({ totalPrice: sum });
       await orders.save({ transaction: t });
       await t.commit();
-      res.status(201).json({ msg: "orderproducts created" });
+      res.status(201).json({ msg: `orderproducts created`, id: orders.id });
     } catch (error) {
       await t.rollback();
       next(error);
@@ -99,13 +99,16 @@ class OrderController {
   static async delOrderProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {
+      console.log('masuk sini <<<<<<<<<<<')
       const { orderProductId } = req.params;
+      
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
       // if (!orderProduct) {
       //   throw { name: "not_found" };
       // }
+      
       await OrderProduct.destroy({
         where: { id: orderProductId },
         transaction: t,
@@ -163,9 +166,9 @@ class OrderController {
       const BuyerId = req.buyer.id;
       const order = await Order.findOne({
         where: { BuyerId, paymentMethod: "pending", isPaid: false },
-        include: Buyer
+        include: Buyer,
       });
-      console.log(order)
+      console.log(order);
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
@@ -173,7 +176,7 @@ class OrderController {
       });
       let parameter = {
         transaction_details: {
-          order_id: order.id+(new Date().getMilliseconds()), // isi order_id dengan value yang unique untuk tiap transaction
+          order_id: order.id + new Date().getMilliseconds(), // isi order_id dengan value yang unique untuk tiap transaction
           gross_amount: order.totalPrice, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
         },
         credit_card: {
@@ -205,6 +208,34 @@ class OrderController {
     } catch (err) {
       console.log(err);
       next(err);
+    }
+  }
+  static async bulkUpdateOrderProducts(req, res, next) {
+    const t = await sequelize.transaction();
+    try {
+      const { orders } = req.body;
+      const { orderlists } = orders;
+      const BuyerId = req.buyer.id;
+      console.log(orderlists);
+      const orderproducts = await OrderProduct.bulkCreate(orderlists, {
+        // fields: ["quantity", "totalPrice", "ProductId", "OrderId"],
+        returning: true,
+        updateOnDuplicate: ["id", "quantity", "totalPrice", "ProductId"],
+        transaction: t,
+      });
+      console.log(orderproducts);
+      const order = await Order.findOne({
+        where: { BuyerId, paymentMethod: "pending" },
+      });
+      order.set({
+        totalPrice: orders.totalPrice,
+      });
+      await order.save({ transaction: t });
+      await t.commit();
+      res.status(200).json({ msg: "orderproducts updated" });
+    } catch (error) {
+      await t.rollback();
+      next(error);
     }
   }
   // static async testGetOrder(req, res, next) {
