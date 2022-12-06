@@ -40,6 +40,7 @@ class BuyerController {
         ],
         include: [Order],
       });
+      console.log(buyer)
       if (!buyer) {
         throw { name: "not_found" };
       }
@@ -92,7 +93,6 @@ class BuyerController {
       const buyerData = await Buyer.findOne({
         where: { email },
       });
-      console.log(buyerData.name, buyerData.id);
       if (!buyerData) {
         throw { name: "invalidLogin" };
       }
