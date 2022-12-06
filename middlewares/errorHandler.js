@@ -1,5 +1,4 @@
 const errorHandler = (err, req, res, next) => {
-    console.log(err)
     let code = 500;
     let message = "Internal Server Error";
     if (err.name === "forbidden") {
@@ -28,7 +27,7 @@ const errorHandler = (err, req, res, next) => {
       code = 400;
       message = "invalid input";
     }
-    console.log(err)
+    // console.log(err)
     res.status(code).json({ message });
   };
 
