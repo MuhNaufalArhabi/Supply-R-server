@@ -40,7 +40,6 @@ class BuyerController {
         ],
         include: [Order],
       });
-      console.log(buyer)
       if (!buyer) {
         throw { name: "not_found" };
       }
