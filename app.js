@@ -7,7 +7,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const { Chat, Room, Buyer, Shop } = require("./models");
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
   },
 });
 
@@ -124,4 +124,4 @@ app.use(router);
 
 app.use(errorHandler);
 
-module.exports = http;
+module.exports = {http, socketIO};
