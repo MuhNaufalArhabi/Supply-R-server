@@ -69,7 +69,6 @@ class SellerController {
           id,
         },
       });
-
       if (!seller) {
         throw { name: 'not_found' };
       }
