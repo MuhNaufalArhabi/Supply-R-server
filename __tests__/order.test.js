@@ -119,7 +119,6 @@ let access_token;
 
 beforeAll(async () => {
   try {
-    await sequelize.sync({ force: true });
     await createTwoBuyers();
     // await createOrderProducts();
     await Seller.create({
@@ -228,6 +227,95 @@ describe("GET /orders/", () => {
   });
 });
 
+describe("PATCH /products/:orderProductId", () => {
+  test("PATCH /products/:orderProductId success", async () => {       
+    const response = await request(app)
+      .patch("/orders/products/1")
+      .set({ access_token })
+      .send({
+        quantity: 20,
+        totalPrice: 100000,
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("msg", "orderproduct changed");
+  });
+  describe("PATCH /products/:orderProductId fail-test", () => {
+    test("PATCH /products/:orderProductId unauthorized", async () => {
+      const access_token2 = encode({ id: 2 });
+      const response = await request(app)
+        .patch("/orders/products/1")
+        .set({ access_token: access_token2 })
+        .send({
+          quantity: 20,
+          totalPrice: 100000,
+        });
+      expect(response.status).toBe(403);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Access Forbidden");
+    });
+
+    test("PATCH /products/:orderProductId notfound", async () => {
+      const response = await request(app)
+        .patch("/orders/products/99")
+        .set({ access_token })
+        .send({
+          quantity: 20,
+          totalPrice: 100000,
+        });
+      expect(response.status).toBe(404);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Error not found");
+    });
+  });
+});
+
+describe("DEL /products/:orderProductId", () => {
+  test("DEL /products/:orderProductId success", async () => {
+    // access_token2 = encode({ id: 2 });
+    const response = await request(app)
+      .delete("/orders/products/1")
+      .set({ access_token });
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("msg", "orderproduct deleted");
+  });
+  describe("DEL /products/:orderProductId fail-test", () => {
+    test("DEL /products/:orderProductId unauthorized", async () => {
+      jest.spyOn(OrderProduct, "findOne").mockImplementationOnce(() => {
+        throw { name : "forbidden"}
+      });
+      const access_token2 = encode({ id: 2 });
+      const response = await request(app)
+        .delete("/orders/products/1")
+        .set({ access_token: access_token2 });
+      expect(response.status).toBe(403);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Access Forbidden");
+    });
+
+    test("DEL 500 internal server error", async () => {
+      jest.spyOn(OrderProduct, "findOne").mockImplementationOnce(() => {
+        throw new Error();
+      });
+      const response = await request(app)
+        .delete("/orders/products/1")
+        .set({ access_token });
+      expect(response.status).toBe(500);
+    });
+
+    test("DEL /products/:orderProductId notfound", async () => {
+      // access_token = encode({ id: 1 });
+      const response = await request(app)
+        .delete("/orders/products/99")
+        .set({ access_token });
+      expect(response.status).toBe(404);
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body).toHaveProperty("message", "Error not found");
+    });
+  });
+});
+
 describe("PATCH /orders/", () => {
   test("PATCH /orders/ success-test", async () => {
     access_token = encode({ id: 1 });
@@ -306,79 +394,9 @@ describe("POST /products", () => {
   });
 });
 
-describe("PATCH /products/:orderProductId", () => {
-  test("PATCH /products/:orderProductId success", async () => {
-    const response = await request(app)
-      .patch("/orders/products/1")
-      .set({ access_token })
-      .send({
-        quantity: 20,
-        totalPrice: 100000,
-      });
-    expect(response.status).toBe(200);
-    expect(response.body).toBeInstanceOf(Object);
-    expect(response.body).toHaveProperty("msg", "orderproduct changed");
-  });
-  describe("PATCH /products/:orderProductId fail-test", () => {
-    test("PATCH /products/:orderProductId unauthorized", async () => {
-      access_token2 = encode({ id: 2 });
-      const response = await request(app)
-        .patch("/orders/products/1")
-        .set({ access_token: access_token2 })
-        .send({
-          quantity: 20,
-          totalPrice: 100000,
-        });
-      expect(response.status).toBe(403);
-      expect(response.body).toBeInstanceOf(Object);
-      expect(response.body).toHaveProperty("message", "Access Forbidden");
-    });
-    test("PATCH /products/:orderProductId notfound", async () => {
-      const response = await request(app)
-        .patch("/orders/products/99")
-        .set({ access_token })
-        .send({
-          quantity: 20,
-          totalPrice: 100000,
-        });
-      expect(response.status).toBe(404);
-      expect(response.body).toBeInstanceOf(Object);
-      expect(response.body).toHaveProperty("message", "Error not found");
-    });
-  });
-});
 
-describe("DEL /products/:orderProductId", () => {
-  test("DEL /products/:orderProductId success", async () => {
-    // access_token2 = encode({ id: 2 });
-    const response = await request(app)
-      .delete("/orders/products/1")
-      .set({ access_token });
-    expect(response.status).toBe(200);
-    expect(response.body).toBeInstanceOf(Object);
-    expect(response.body).toHaveProperty("msg", "orderproduct deleted");
-  });
-  describe("DEL /products/:orderProductId fail-test", () => {
-    test("DEL /products/:orderProductId unauthorized", async () => {
-      access_token2 = encode({ id: 2 });
-      const response = await request(app)
-        .delete("/orders/products/1")
-        .set({ access_token: access_token2 });
-      expect(response.status).toBe(403);
-      expect(response.body).toBeInstanceOf(Object);
-      expect(response.body).toHaveProperty("message", "Access Forbidden");
-    });
-    test("DEL /products/:orderProductId notfound", async () => {
-      // access_token = encode({ id: 1 });
-      const response = await request(app)
-        .delete("/orders/products/99")
-        .set({ access_token });
-      expect(response.status).toBe(404);
-      expect(response.body).toBeInstanceOf(Object);
-      expect(response.body).toHaveProperty("message", "Error not found");
-    });
-  });
-});
+
+
 
 describe("POST /midTTrans", () => {
   test("POST /midTTrans success-test", async () => {
