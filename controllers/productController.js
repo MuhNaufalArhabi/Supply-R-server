@@ -3,7 +3,7 @@ const { sequelize } = require("../models");
 const ImageKit = require("imagekit");
 const fs = require("fs");
 const { Op } = require("sequelize");
-const redis = require("../config/redis");
+// const redis = require("../config/redis");
 
 const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL,
@@ -25,16 +25,16 @@ function makeid(length) {
 class ProductController {
   static async getAllProducts(req, res, next) {
     try {
-      const cacheAllProducts = await redis.get("app:products");
-      if (cacheAllProducts) {
-        res.status(200).json(JSON.parse(cacheAllProducts));
-      } else {
+      // const cacheAllProducts = await redis.get("app:products");
+      // if (cacheAllProducts) {
+      //   res.status(200).json(JSON.parse(cacheAllProducts));
+      // } else {
         const products = await Product.findAll({
           include: ["Shop", "Category", "Images"],
         });
         res.status(200).json(products);
-        await redis.set("app:products", JSON.stringify(products));
-      }
+        // await redis.set("app:products", JSON.stringify(products));
+      // }
     } catch (error) {
       next(error);
     }
@@ -91,8 +91,8 @@ class ProductController {
       });
       await Image.bulkCreate(images, { transaction: t });
       await t.commit();
-      await redis.del("app:products");
-      await redis.del("app:productsPagination");
+      // await redis.del("app:products");
+      // await redis.del("app:productsPagination");
       res.status(201).json(newProduct);
     } catch (error) {
       await t.rollback();
@@ -114,8 +114,8 @@ class ProductController {
         { name, price, stock, description, ShopId, CategoryId },
         { where: { id } }
       );
-      await redis.del("app:products");
-      await redis.del("app:productsPagination");
+      // await redis.del("app:products");
+      // await redis.del("app:productsPagination");
       res.status(200).json({ message: "success update product" });
     } catch (error) {
       next(error);
@@ -133,8 +133,8 @@ class ProductController {
       await Product.destroy({ where: { id }, transaction: t });
       await Image.destroy({ where: { ProductId: id }, transaction: t });
       await t.commit();
-      await redis.del("app:products");
-      await redis.del("app:productsPagination");
+      // await redis.del("app:products");
+      // await redis.del("app:productsPagination");
       res.status(200).json({ message: "Product deleted" });
     } catch (error) {
       await t.rollback();
