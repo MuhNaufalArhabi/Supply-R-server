@@ -61,7 +61,7 @@ class ProductController {
       })
       let data = await Promise.all(uploadImages); 
 
-      const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
+      const { name, price, stock, description, CategoryId } = req.body.product
 
       const ShopId = req.shop.id;
       const slug = name.split(" ").join("-");
