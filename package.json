@@ -11,7 +11,7 @@
   "jest": {
     "collectCoverage": false,
     "testPathIgnorePatterns": [
-    
+      
      
     ]
   },

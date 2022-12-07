@@ -1,7 +1,7 @@
 const request = require("supertest");
 const {http: app} = require("../app");
 const { encode } = require("../helpers/jwt");
-const { Shop, Seller } = require("../models");
+const { Shop, Seller, Order } = require("../models");
 
 let access_token;
 let access_token_invalid;
@@ -323,5 +323,85 @@ describe("GET /shops", () => {
           return done();
         });
     });
+  });
+
+  describe("GET /shops/matriks-upfront", () => {
+    test("200 Success get shop - should return array of shop", (done) => {
+      jest.spyOn(Order, "findAll").mockImplementationOnce(() => {
+        return Promise.resolve([
+          {
+            id: 1,
+            isPadi: true,
+            totalPrice: 100000,
+            paymentMethod: "upfront",
+            buyerId: 1
+          }]);
+      });
+      request(app)
+        .get("/shops/matriks-upfront/1")
+        .set("access_token", access_token)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).toBe(200);
+          expect(res.body).toBeInstanceOf(Array);
+          expect(Order.findAll).toHaveBeenCalled();
+          return done();
+        });
+    });
+
+    test("500 Failed get shop - should return error message", (done) => {
+      jest.spyOn(Order, "findAll").mockImplementationOnce(() => {
+        return Promise.reject(new Error("Error"));
+      });
+      request(app)
+        .get("/shops/matriks-upfront/1")
+        .set("access_token", access_token)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).toBe(500);
+          expect(res.body).toHaveProperty("message", "Internal Server Error");
+          return done();
+        });
+    })
+  });
+  
+  describe("GET /shops/matriks-installment", () => {
+    test("200 Success get shop - should return array of shop", (done) => {
+      jest.spyOn(Order, "findAll").mockImplementationOnce(() => {
+        return Promise.resolve([
+          {
+            id: 1,
+            isPadi: true,
+            totalPrice: 100000,
+            paymentMethod: "installment",
+            buyerId: 1
+          }]);
+      });
+      request(app)
+        .get("/shops/matriks-installment/1")
+        .set("access_token", access_token)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).toBe(200);
+          expect(res.body).toBeInstanceOf(Array);
+          expect(Order.findAll).toHaveBeenCalled();
+          return done();
+        });
+    });
+
+    test("500 Failed get shop - should return error message", (done) => {
+      jest.spyOn(Order, "findAll").mockImplementationOnce(() => {
+        return Promise.reject(new Error("Error"));
+      });
+      request(app)
+        .get("/shops/matriks-installment/1")
+        .set("access_token", access_token)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).toBe(500);
+          expect(res.body).toHaveProperty("message", "Internal Server Error");
+          return done();
+        });
+    })
   });
 });
