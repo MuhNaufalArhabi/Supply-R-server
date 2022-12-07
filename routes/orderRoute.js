@@ -1,4 +1,3 @@
-// const ControllerJalurAtas = require("../controllers/controllerJalurAtas");
 const {
   authenticateBuyer,
   authDelBuyer,
@@ -7,9 +6,7 @@ const OrderController = require("../controllers/orderController");
 const router = require("express").Router();
 
 router.post("/midTTrans", OrderController.patchOrderMidtrans);
-
 router.use(authenticateBuyer);
-
 // can only accessed by authenticated token
 router.get("/", OrderController.fetchBuyerOrder);
 router.patch("/", OrderController.patchOrder);
@@ -25,7 +22,5 @@ router.patch(
   authDelBuyer,
   OrderController.patchOrderProduct
 );
-// router.get("/testers",OrderController.testGetOrder)
-// router.post("/testMid", OrderController.midTransToken);
 
 module.exports = router;

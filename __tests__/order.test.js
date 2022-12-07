@@ -10,6 +10,7 @@ const {
   Category,
   Seller,
 } = require("../models");
+const { sequelize } = require("../models/index.js");
 
 const cleanUpDatabase = async () => {
   try {
@@ -117,51 +118,56 @@ let access_token;
 // });
 
 beforeAll(async () => {
-  await createTwoBuyers();
-  // await createOrderProducts();
-  await Seller.create({
-    username: "test",
-    email: "sellertestlagi@mail.com",
-    password: "123456",
-    ktp: "test",
-    phoneNumber: "test",
-  });
-  await Shop.create({
-    name: "test",
-    address: "test",
-    lat: "test",
-    long: "test",
-    owner: "test",
-    phoneNumber: "test",
-    SellerId: 1,
-  });
-  await Category.create({
-    name: "test",
-  });
-  await Product.create({
-    name: "test",
-    price: 10000,
-    stock: 10,
-    ShopId: 1,
-    CategoryId: 1,
-    description: "test",
-    mainImage: "test",
-    slug: "test",
-  });
-  
-  await Order.create({
-    BuyerId: 1,
-    isPaid: false,
-    paymentMethod: "pending",
-    totalPrice: 1892905,
-  });
-  await OrderProduct.create({
-    OrderId: 1,
-    ProductId: 1,
-    quantity: 1,
-    totalPrice: 10000,
-  });
-  access_token = encode({ id: 1 });
+  try {
+    await sequelize.sync({ force: true });
+    await createTwoBuyers();
+    // await createOrderProducts();
+    await Seller.create({
+      username: "test",
+      email: "sellertestlagi@mail.com",
+      password: "123456",
+      ktp: "test",
+      phoneNumber: "test",
+    });
+    await Shop.create({
+      name: "test",
+      address: "test",
+      lat: "test",
+      long: "test",
+      owner: "test",
+      phoneNumber: "test",
+      SellerId: 1,
+    });
+    await Category.create({
+      name: "test",
+    });
+    await Product.create({
+      name: "test",
+      price: 10000,
+      stock: 10,
+      ShopId: 1,
+      CategoryId: 1,
+      description: "test",
+      mainImage: "test",
+      slug: "test",
+    });
+
+    await Order.create({
+      BuyerId: 1,
+      isPaid: false,
+      paymentMethod: "pending",
+      totalPrice: 1892905,
+    });
+    await OrderProduct.create({
+      OrderId: 1,
+      ProductId: 1,
+      quantity: 1,
+      totalPrice: 10000,
+    });
+    access_token = encode({ id: 1 });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 afterAll(async () => {
@@ -342,7 +348,6 @@ describe("PATCH /products/:orderProductId", () => {
   });
 });
 
-
 describe("DEL /products/:orderProductId", () => {
   test("DEL /products/:orderProductId success", async () => {
     // access_token2 = encode({ id: 2 });
@@ -375,3 +380,84 @@ describe("DEL /products/:orderProductId", () => {
   });
 });
 
+describe("POST /midTTrans", () => {
+  test("POST /midTTrans success-test", async () => {
+    const response = await request(app).post("/orders/midTTrans").send({
+      status_code: 200,
+      order_id: "1-13",
+      installment_term: 3,
+      payment_type: "credit_card",
+    });
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("msg", "order changed");
+  });
+
+  test("POST /midTTrans success-test", async () => {
+    const response = await request(app).post("/orders/midTTrans").send({
+      status_code: 200,
+      order_id: "13-13",
+      installment_term: 3,
+      payment_type: "credit_card",
+    });
+    expect(response.status).toBe(404);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("message", "Error not found");
+  });
+
+  test("POST /midTTrans success-test", async () => {
+    const response = await request(app).post("/orders/midTTrans").send({
+      status_code: 200,
+      order_id: "1-13",
+      payment_type: "credit_card",
+    });
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("msg", "order changed");
+  });
+});
+
+describe("PUT /products/bulk", () => {
+  test("PUT /products/bulk success-test", async () => {
+    const body = {
+      orders: {
+        OrderProducts: [
+          {
+            OrderId: 2,
+            ProductId: 1,
+            quantity: 16,
+            totalPrice: 50000,
+          },
+        ],
+      },
+    };
+    const response = await request(app)
+      .put("/orders/products/bulk")
+      .set({ access_token })
+      .send(body);
+    expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("msg", "orderproducts changed");
+  });
+
+  test("PUT /products/bulk fail-test", async () => {
+    const response = await request(app)
+      .put("/orders/products/bulk")
+      .set({ access_token })
+      .send({
+        orders: {
+          OrderProducts: [
+            {
+              // OrderId: 2,
+              ProductId: 1,
+              quantity: 16,
+              totalPrice: 50000,
+            },
+          ],
+        },
+      });
+    expect(response.status).toBe(500);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("message", "Internal Server Error");
+  });
+})
