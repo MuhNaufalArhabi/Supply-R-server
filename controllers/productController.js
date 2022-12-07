@@ -67,14 +67,14 @@ class ProductController {
       });
       let data = await Promise.all(uploadImages);
 
-        return imagekit
-          .upload({
-            file: gambar, //required
-            fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
-            tags: ['foto'],
-          })
-      })
-      let data = await Promise.all(uploadImages); 
+      //   return imagekit
+      //     .upload({
+      //       file: gambar, //required
+      //       fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
+      //       tags: ['foto'],
+      //     })
+      // });
+      // let data = await Promise.all(uploadImages); 
 
       const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
       const ShopId = req.shop.id;
@@ -263,10 +263,10 @@ class ProductController {
         const currentPage = Number(page);
         res.status(200).json({ products, totalPage, currentPage });
       } else {
-        const cacheProductsPagination = await redis.get("app:productsPagination");
-        if (cacheProductsPagination) {
-          res.status(200).json(JSON.parse(cacheProductsPagination));
-        } else {
+        // const cacheProductsPagination = await redis.get("app:productsPagination");
+        // if (cacheProductsPagination) {
+        //   res.status(200).json(JSON.parse(cacheProductsPagination));
+        // } else {
           const products = await Product.findAndCountAll({
             limit,
             offset,
@@ -275,9 +275,9 @@ class ProductController {
   
           const totalPage = Math.ceil(products.count / limit);
           const currentPage = Number(page);
-          await redis.set("app:productsPagination", JSON.stringify({ products, totalPage, currentPage }));
+          // await redis.set("app:productsPagination", JSON.stringify({ products, totalPage, currentPage }));
           res.status(200).json({ products, totalPage, currentPage });
-        }
+        // }
       }
     } catch (error) {
       next(error);

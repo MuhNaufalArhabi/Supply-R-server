@@ -1,4 +1,4 @@
-// const ControllerJalurAtas = require("../controllers/controllerJalurAtas");
+
 const BuyerController= require("../controllers/buyerController")
 const {authenticateBuyer} = require("../middlewares/authenAtas");
 
