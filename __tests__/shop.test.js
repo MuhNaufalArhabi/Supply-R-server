@@ -45,8 +45,8 @@ beforeAll(async () => {
 afterAll(async () => {
   try {
     access_token = null;
-    await Shop.destroy({ truncate: true, restartIdentity: true });
-    await Seller.destroy({ truncate: true, restartIdentity: true });
+    await Shop.destroy({ truncate: true, cascade: true, restartIdentity: true });
+    await Seller.destroy({ truncate: true, cascade: true, restartIdentity: true });
   } catch (error) {
     console.log(error);
   }
@@ -90,7 +90,22 @@ describe("GET /shops", () => {
             expect.any(String)
           );
           return done();
+        });
+    });
+  });
 
+  describe("Error Response", () => {
+    test("Should return error with status code 500", (done) => {
+      jest.spyOn(Shop, "findAll").mockImplementationOnce(() => {
+        throw new Error();
+      });
+      request(app)
+        .get("/shops")
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(500);
+          expect(body).toHaveProperty("message", "Internal Server Error");
           return done();
         });
     });
@@ -240,7 +255,7 @@ describe("GET /shops", () => {
   describe("PUT /shops/:id - update shop", () => {
     test("200 Success update shop - should return object of shop", (done) => {
       request(app)
-        .put("/shops/update/2")
+        .put("/shops/update/1")
         .send({
           name: "shopTest2",
           address: "shopTest2",
@@ -285,7 +300,7 @@ describe("GET /shops", () => {
   describe("DELETE /shops/:id - delete shop", () => {
     test("200 Success delete shop - should success delete message", (done) => {
       request(app)
-        .delete("/shops/delete/2")
+        .delete("/shops/delete/1")
         .set("access_token", access_token)
         .end((err, res) => {
           if (err) return done(err);

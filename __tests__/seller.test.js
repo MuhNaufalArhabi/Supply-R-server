@@ -374,7 +374,7 @@ describe("Seller Routes Test", () => {
     });
 
     test("500 Failed get all sellers - should return error if server error", (done) => {
-      jest.spyOn(Seller, "findAll").mockImplementation(() => {
+      jest.spyOn(Seller, "findAll").mockImplementationOnce(() => {
         throw new Error("Internal Server Error");
       });
       request(app)
@@ -410,7 +410,7 @@ describe("Seller Routes Test", () => {
     });
 
     test("500 Failed get seller - should return error if server error", (done) => {
-      jest.spyOn(Seller, "findOne").mockImplementation(() => {
+      jest.spyOn(Seller, "findOne").mockImplementationOnce(() => {
         throw new Error("Internal Server Error");
       });
       request(app)
