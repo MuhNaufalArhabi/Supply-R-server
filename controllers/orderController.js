@@ -44,7 +44,7 @@ class OrderController {
           },
         },
       };
-      if(paymentMethod){
+      if (paymentMethod) {
         options.where.paymentMethod = paymentMethod;
       }
       const orders = await Order.findAll(options);
@@ -142,7 +142,7 @@ class OrderController {
       next(error);
     }
   }
-  
+
   static async delOrderProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {
@@ -232,10 +232,9 @@ class OrderController {
       });
       let parameter = {
         transaction_details: {
+          order_id: order.id + "-" + new Date().getTime(),
 
-          order_id: order.id + new Date().getTime(),
-
-          gross_amount: order.totalPrice, 
+          gross_amount: order.totalPrice,
         },
         credit_card: {
           secure: true,
