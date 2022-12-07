@@ -32,6 +32,33 @@ class OrderController {
       next(error);
     }
   }
+  static async fetchBuyerOrderHistory(req, res, next) {
+    try {
+      const BuyerId = req.buyer.id;
+      let { paymentMethod } = req.query;
+      let options = {
+        where: { BuyerId, isPaid: true },
+        include: {
+          model: OrderProduct,
+          required: true,
+          include: {
+            model: Product,
+            include: [Shop, Category],
+          },
+        },
+      };
+      if(paymentMethod){
+        options.where.paymentMethod = paymentMethod;
+      }
+      const orders = await Order.findAll(options);
+      // if (!orders) {
+      //   throw { name: "not_found" };
+      // }
+      res.status(200).json(orders);
+    } catch (error) {
+      next(error);
+    }
+  }
   static async patchOrder(req, res, next) {
     try {
       const BuyerId = req.buyer.id;
@@ -62,7 +89,7 @@ class OrderController {
   static async patchOrderMidtrans(req, res, next) {
     try {
       const { order_id, status_code, installment_term, payment_type } =
-        (req.body);
+        req.body;
       console.log(req.body, typeof req.body);
       const OrderId = +order_id.split("-")[0];
       const order = await Order.findOne({

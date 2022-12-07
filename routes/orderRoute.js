@@ -12,6 +12,7 @@ router.use(authenticateBuyer);
 
 // can only accessed by authenticated token
 router.get("/", OrderController.fetchBuyerOrder);
+router.get("/history", OrderController.fetchBuyerOrderHistory);
 router.patch("/", OrderController.patchOrder);
 router.post("/products", OrderController.postOrderProduct);
 router.put("/products/bulk", OrderController.bulkUpdateOrderProducts);
