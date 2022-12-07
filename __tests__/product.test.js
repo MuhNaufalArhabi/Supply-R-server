@@ -336,9 +336,7 @@ describe("POST /products", () => {
     request(app)
       .post("/products")
       .set("access_token", access_token)
-      .field("product", JSON.stringify(body.product))
-      .attach("image", "__tests__/assets/test.png")
-      .attach("image", "__tests__/assets/test2.png")
+      .send(body)
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
@@ -357,39 +355,12 @@ describe("POST /products", () => {
       });
   });
 
-  test("400 Bad Request create product", (done) => {
-    const body = {
-      product: {
-        price: 10000,
-        stock: 10,
-        description: "productTest",
-        slug: "productTest",
-        CategoryId: 1,
-        ShopId: 1,
-        mainImage: "productTest",
-      },
-      image: imageTest,
-    };
-    request(app)
-      .post("/products")
-      .set("access_token", access_token)
-      .field("product", JSON.stringify(body.product))
-      .attach("image", "__tests__/assets/test.png")
-      .attach("image", "__tests__/assets/test2.png")
-      .end((err, res) => {
-        if (err) return done(err);
-        const { body, status } = res;
-        expect(status).toBe(400);
-        expect(body).toBeInstanceOf(Object);
-        expect(body).toHaveProperty("message", "Name is required");
-        done();
-      });
-  });
+  
 
   test("400 Bad Request create product", (done) => {
     const body = {
       product: {
-        price: 10000,
+        name: "product test test lagi",
         stock: 10,
         description: "productTest",
         slug: "productTest",
@@ -402,14 +373,16 @@ describe("POST /products", () => {
     request(app)
       .post("/products")
       .set("access_token", access_token)
-      .field("product", JSON.stringify(body.product))
-      .attach("image", "__tests__/assets/test3.txt")
+      .send(body)
+      .send({
+        image: imageTest,
+      })
       .end((err, res) => {
         if (err) return done(err);
         const { body, status } = res;
         expect(status).toBe(400);
         expect(body).toBeInstanceOf(Object);
-        expect(body).toHaveProperty("message", "Name is required");
+        expect(body).toHaveProperty("message", "Price is required");
         done();
       });
   });
@@ -436,7 +409,7 @@ describe("PUT /products", () => {
             const { body, status } = res;
             expect(status).toBe(200);
             expect(body).toBeInstanceOf(Object);
-            expect(body).toHaveProperty("message", "Product updated");
+            expect(body).toHaveProperty("message", "success update product");
             
             done();
         });
