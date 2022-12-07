@@ -86,15 +86,6 @@ class ShopController {
       next(err);
     }
   }
-
-  static async findOrders(req, res, next) {
-    try {
-    
-    } catch (err) {
-
-      next(err);
-    }
-  }
 }
 
 module.exports = ShopController;
