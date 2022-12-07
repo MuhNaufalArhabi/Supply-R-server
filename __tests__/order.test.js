@@ -432,17 +432,18 @@ describe("POST /midTTrans", () => {
 });
 
 describe("PUT /products/bulk", () => {
-  test.only("PUT /products/bulk success-test", async () => {
+  test("PUT /products/bulk success-test", async () => {
     const body = {
       orders: {
         OrderProducts: [
           {
-            OrderId: 2,
+            OrderId: 1,
             ProductId: 1,
             quantity: 16,
             totalPrice: 50000,
           },
         ],
+        totalPrice: 50000,
       },
     };
     const response = await request(app)
@@ -468,6 +469,7 @@ describe("PUT /products/bulk", () => {
               totalPrice: 50000,
             },
           ],
+          totalPrice: 50000,
         },
       });
     expect(response.status).toBe(500);
