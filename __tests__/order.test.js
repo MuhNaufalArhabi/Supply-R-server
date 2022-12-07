@@ -394,10 +394,6 @@ describe("POST /products", () => {
   });
 });
 
-
-
-
-
 describe("POST /midTTrans", () => {
   test("POST /midTTrans success-test", async () => {
     const response = await request(app).post("/orders/midTTrans").send({
@@ -436,7 +432,7 @@ describe("POST /midTTrans", () => {
 });
 
 describe("PUT /products/bulk", () => {
-  test("PUT /products/bulk success-test", async () => {
+  test.only("PUT /products/bulk success-test", async () => {
     const body = {
       orders: {
         OrderProducts: [
