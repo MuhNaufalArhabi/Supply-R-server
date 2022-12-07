@@ -39,55 +39,12 @@ describe("Suite of unit tests", function() {
   });
 
   describe("Chat tests", function() {
-    test("should work", (done) => {
-      socket.emit("message", {
-        name: "Udin",
-        message: "Hello world",
-        senderRole: "buyer",
-        
-      });
-
-      socket.on("messageResponse", (payload) => {
-        try {
-          expect(payload).toHaveProperty("name");
-          expect(payload).toHaveProperty("message");
-          done();
-        } catch (err) {
-          done(err);
-        }
-      });
-    });
-  });
-
-  describe("Chat tests", function() {
-    test("should work", (done) => {
-      socket.emit("message", {
-        name: "Udin",
-        message: "Hello world",
-        senderRole: "seller",
-        
-      });
-
-      socket.on("messageResponse", (payload) => {
-        try {
-          console.log(payload)
-          expect(payload).toHaveProperty("name");
-          expect(payload).toHaveProperty("message");
-          done();
-        } catch (err) {
-          done(err);
-        }
-      });
-    });
-  });
-
-  describe("Chat tests", function() {
-    test("should send message", (done) => {
+    test("should work room and chat seller", (done) => {
     const data =  {
-      name: "Udin",
+      name: "Udin 222",
       message: "Hello world",
       senderRole: "seller",
-      sender: 2,
+      sender: 10,
       id: 7,
       chat: "Hello world",
       receiver: 9,
@@ -121,9 +78,9 @@ describe("Suite of unit tests", function() {
   });
 
   describe("Chat tests", function() {
-    test("should work", (done) => {
+    test("should work room and chat buyer", (done) => {
       const data =  {
-        name: "Udin",
+        name: "Udin 231",
         message: "Hello world",
         senderRole: "buyer",
         sender: 3,
@@ -159,24 +116,91 @@ describe("Suite of unit tests", function() {
     });
   });
 
+  describe("Chat tests", function() {
+    test("should work", (done) => {
+      socket.emit("message", {
+        name: "Udin",
+        message: "Hello world",
+        senderRole: "buyer",
+        
+      });
+
+      socket.on("messageResponse", (payload) => {
+        try {
+          expect(payload).toHaveProperty("name");
+          expect(payload).toHaveProperty("message");
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    });
+  });
+
+  describe("Chat tests", function() {
+    test("should work", (done) => {
+      socket.emit("message", {
+        name: "Udin",
+        message: "Hello world",
+        senderRole: "seller",
+        
+      });
+
+      socket.on("messageResponse", (payload) => {
+        try {
+          console.log(payload)
+          expect(payload).toHaveProperty("name");
+          expect(payload).toHaveProperty("message");
+          done();
+        } catch (err) {
+          done(err);
+        }
+      });
+    });
+  });
+
+  
+
   describe("New rooms tests", function() {
     test("should work", (done) => {
       const data = {
-        id: 4,
+        id: 5,
+        role: "seller",
+        socketId: "12345"
+      }
+      jest.spyOn(Room, "findAll").mockResolvedValueOnce([{
+        id: 5,
         ShopId: 5,
-        BuyerId: 6,
+        BuyerId: 6
+      }])
+      socket.emit("newRooms", data);
+      socket.on("newRoomsResponse", (payload) => {
+        try {
+          console.log(payload)
+          expect(Room.findAll).toHaveBeenCalled()
+          done();
+        } catch (err) {
+          console.log(err)
+          done(err);
+        }
+      });
+    });
+  });
+
+  describe("New rooms tests", function() {
+    test("should work", (done) => {
+      const data = {
+        id: 5,
         chat: "Hello world",
-        receiver: 5,
-        sender: 6,
-        senderRole: "buyer",
-        role: "buyer",
+        receiver: 9,
+        role: "seller",
       }
       socket.emit("newRooms", data);
 
       jest.spyOn(Room, "findAll").mockResolvedValueOnce([{
-        id: 4,
-        ShopId: 5,
-        BuyerId: 4
+        id: 12,
+        ShopId: 21,
+        BuyerId: 5
       }])
       socket.on("newRoomsResponse", (payload) => {
         try {
@@ -194,12 +218,9 @@ describe("Suite of unit tests", function() {
     test("should work", (done) => {
       const data = {
         id: 5,
-        name: "Udin",
-        senderRole: "seller",
-        sender: 2,
         chat: "Hello world",
         receiver: 9,
-        role: "seller",
+        role: "buyer",
       }
       socket.emit("newRooms", data);
 

@@ -61,10 +61,8 @@ socketIO.on("connection", (socket) => {
       chat: data.chat,
     });
   });
-
   socket.on("userConnect", (data) => {
     let falg = false
-   
     user.forEach(el => {
       if(el.id == data.id && el.role == data.role){
        el.socketId = data.socketId;
@@ -76,7 +74,6 @@ socketIO.on("connection", (socket) => {
     } 
     console.log(user)
   });
-
   socket.on("newRooms", async (data) => {
     let rooms = [];
 

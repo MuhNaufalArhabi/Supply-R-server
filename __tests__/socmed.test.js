@@ -1,6 +1,6 @@
 const request = require("supertest");
 const {http: app} = require("../app");
-const { Seller } = require("../models");
+const { Seller, Shop } = require("../models");
 
 afterAll((done) => {
   Seller.destroy({ where: {} })
@@ -33,6 +33,32 @@ describe("POST /login", () => {
           }
         });
     });
+
+    test("should send an object (access_token) with 200 status code", (done) => {
+      jest.spyOn(Shop, "findOne").mockImplementationOnce(() => {
+        return Promise.resolve({
+          id: 1,
+          name: "test shop",
+        });
+      });
+      request(app)
+        .post("/sellers/google-login")
+        .send({
+          email: "test2.google@mail.com",
+          username: "test2 google",
+        })
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          } else {
+            expect(res.status).toBe(200);
+            expect(res.body).toBeInstanceOf(Object);
+            expect(res.body).toHaveProperty("access_token", expect.any(String));
+            expect(res.body).toHaveProperty("message", "login Google ok");
+            done();
+          }
+        });
+      });
   });
 
   describe("Error Login Google", () => {

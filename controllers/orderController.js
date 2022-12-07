@@ -122,6 +122,7 @@ class OrderController {
       next(error);
     }
   }
+  
   static async delOrderProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {

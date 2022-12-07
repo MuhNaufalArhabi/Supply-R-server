@@ -2,22 +2,30 @@ const request = require("supertest");
 const {http: app} = require("../app");
 const { Category } = require("../models");
 
-beforeAll((done) => {
-  Category.create({
-    name: "test",
-  })
-    .then((data) => {
-      done();
-    })
-    .catch((err) => {
-      done(err);
-    });
+beforeAll(async () => {
+  try {
+    await Category.bulkCreate([
+      {
+        name: "category 1",
+      },
+      {
+        name: "category 2",
+      },
+      {
+        name: "category 3",
+      },
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 afterAll((done) => {
   Category.destroy({
     where: {},
     truncate: true,
+    cascade: true,
+    restartIdentity: true,
   })
     .then((data) => {
       done();
