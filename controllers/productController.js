@@ -3,6 +3,7 @@ const { sequelize } = require("../models");
 const ImageKit = require("imagekit");
 const fs = require("fs");
 const { Op } = require("sequelize");
+const redis = require("../config/redis");
 
 const imagekit = new ImageKit({
   urlEndpoint: "https://ik.imagekit.io/yyfgxwocn",
@@ -12,7 +13,8 @@ const imagekit = new ImageKit({
 
 function makeid(length) {
   var result = "";
-  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var charactersLength = characters.length;
   for (var i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -23,10 +25,16 @@ function makeid(length) {
 class ProductController {
   static async getAllProducts(req, res, next) {
     try {
-      const products = await Product.findAll({
-        include: ["Shop", "Category", "Images"],
-      });
-      res.status(200).json(products);
+      const cacheAllProducts = await redis.get("app:products");
+      if (cacheAllProducts) {
+        res.status(200).json(JSON.parse(cacheAllProducts));
+      } else {
+        const products = await Product.findAll({
+          include: ["Shop", "Category", "Images"],
+        });
+        res.status(200).json(products);
+        await redis.set("app:products", JSON.stringify(products));
+      }
     } catch (error) {
       next(error);
     }
@@ -51,6 +59,13 @@ class ProductController {
     const t = await sequelize.transaction();
     try {
       const uploadImages = req.body.image.map((gambar) => {
+        return imagekit.upload({
+          file: gambar, //required
+          fileName: makeid(10) + "-" + "supllyR" + ".jpg", //required
+          tags: ["foto"],
+        });
+      });
+      let data = await Promise.all(uploadImages);
 
         return imagekit
           .upload({
@@ -86,6 +101,8 @@ class ProductController {
       });
       await Image.bulkCreate(images, { transaction: t });
       await t.commit();
+      await redis.del("app:products");
+      await redis.del("app:productsPagination")
       res.status(201).json(newProduct);
     } catch (error) {
       await t.rollback();
@@ -94,18 +111,23 @@ class ProductController {
   }
 
   static async editProduct(req, res, next) {
-    // const t = await sequelize.transaction(); 
+    // const t = await sequelize.transaction();
     try {
-      const {id} = req.params
-      const {name, price, stock, description, CategoryId} = req.body
-      const ShopId = req.shop.id 
-      const product = await Product.findByPk(id)
-      if(!product){
-        throw {name: 'not_found'}
+      const { id } = req.params;
+      const { name, price, stock, description, CategoryId } = req.body;
+      const ShopId = req.shop.id;
+      const product = await Product.findByPk(id);
+      if (!product) {
+        throw { name: "not_found" };
       }
-      const updatedProduct = await Product
-      .update({name, price, stock, description, ShopId, CategoryId}, {where: {id}})
-      res.status(200).json({message: 'Product updated'})
+      const updatedProduct = await Product.update(
+        { name, price, stock, description, ShopId, CategoryId },
+        { where: { id } }
+      );
+      await redis.del("app:products");
+      await redis.del("app:productsPagination")
+      res.status(200).json({ message: "success update product" });
+
     } catch (error) {
       next(error);
     }
@@ -122,6 +144,8 @@ class ProductController {
       await Product.destroy({ where: { id }, transaction: t });
       await Image.destroy({ where: { ProductId: id }, transaction: t });
       await t.commit();
+      await redis.del("app:products");
+      await redis.del("app:productsPagination")
       res.status(200).json({ message: "Product deleted" });
     } catch (error) {
       await t.rollback();
@@ -175,14 +199,12 @@ class ProductController {
         });
         const totalPage = Math.ceil(products.count / limit);
         const currentPage = Number(page);
-        res
-          .status(200)
-          .json({
-            products: products.rows,
-            totalPage,
-            currentPage,
-            totalProducts: products.count,
-          });
+        res.status(200).json({
+          products: products.rows,
+          totalPage,
+          currentPage,
+          totalProducts: products.count,
+        });
       } else {
         const products = await Product.findAndCountAll({
           where: {
@@ -194,14 +216,12 @@ class ProductController {
         });
         const totalPage = Math.ceil(products.count / limit);
         const currentPage = Number(page);
-        res
-          .status(200)
-          .json({
-            products: products.rows,
-            totalPage,
-            currentPage,
-            totalProducts: products.count,
-          });
+        res.status(200).json({
+          products: products.rows,
+          totalPage,
+          currentPage,
+          totalProducts: products.count,
+        });
       }
     } catch (error) {
       next(error);
@@ -243,15 +263,21 @@ class ProductController {
         const currentPage = Number(page);
         res.status(200).json({ products, totalPage, currentPage });
       } else {
-        const products = await Product.findAndCountAll({
-          limit,
-          offset,
-          include: ["Shop", "Category", "Images"],
-        });
-
-        const totalPage = Math.ceil(products.count / limit);
-        const currentPage = Number(page);
-        res.status(200).json({ products, totalPage, currentPage });
+        const cacheProductsPagination = await redis.get("app:productsPagination");
+        if (cacheProductsPagination) {
+          res.status(200).json(JSON.parse(cacheProductsPagination));
+        } else {
+          const products = await Product.findAndCountAll({
+            limit,
+            offset,
+            include: ["Shop", "Category", "Images"],
+          });
+  
+          const totalPage = Math.ceil(products.count / limit);
+          const currentPage = Number(page);
+          await redis.set("app:productsPagination", JSON.stringify({ products, totalPage, currentPage }));
+          res.status(200).json({ products, totalPage, currentPage });
+        }
       }
     } catch (error) {
       next(error);
