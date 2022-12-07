@@ -4,24 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --coverage --verbose --testTimeout=10000 --detectOpenHandles",
+    "test": "jest --runInBand --coverage --verbose --testTimeout=10000 --detectOpenHandles --silent",
     "dev": "nodemon bin/www",
     "start": "node bin/www"
   },
-  "jest": {
-    "collectCoverage": false,
-    "testPathIgnorePatterns": [
-      "__tests__/buyer.test.js",
-      "__tests__/room.test.js",
-      "__tests__/product.test.js",
-      "__tests__/order.test.js",
-      "__tests__/category.test.js",
-      "__tests__/shop.test.js",
-      "__tests__/socket.test.js",
-      "__tests__/socmed.test.js"
-     
-    ]
-  },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MuhNaufalArhabi/Final-Boss-BE.git"
