@@ -47,17 +47,16 @@ class ShopController {
 
   static async update(req, res, next) {
     try {
+
+      console.log(req.body)
       const shop = await Shop.findByPk(req.params.id);
       if (!shop) throw { name: "not_found" };
       await Shop.update(
         {
           name: req.body.name,
-          lat: req.body.lat,
-          long: req.body.long,
           address: req.body.address,
           phoneNumber: req.body.phoneNumber,
           owner: req.body.owner,
-          SellerId: req.body.SellerId,
         },
         {
           where: {
@@ -93,11 +92,14 @@ class ShopController {
       const order = await Order.findAll({
         include: {
           model: OrderProduct,
+          required: true,
           include: {
             model: Product,
+            required: true,
             where: {
               ShopId: id,
             },
+            required: true,
             include: {
               model: Shop,
             },
@@ -107,6 +109,7 @@ class ShopController {
           isPaid: true,
           paymentMethod: "upfront",
         },
+        required: true,
       });
       res.status(200).json(order);
     } catch (err) {
