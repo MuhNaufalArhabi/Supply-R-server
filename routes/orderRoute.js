@@ -24,6 +24,6 @@ router.patch(
   OrderController.patchOrderProduct
 );
 // router.get("/testers",OrderController.testGetOrder)
-router.post("/testMid", OrderController.midTransToken);
+// router.post("/testMid", OrderController.midTransToken);
 
 module.exports = router;

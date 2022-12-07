@@ -239,7 +239,7 @@ class OrderController {
       });
       let parameter = {
         transaction_details: {
-          order_id: order.id + new Date().getMilliseconds(), // isi order_id dengan value yang unique untuk tiap transaction
+          order_id: order.id + new Date().getTime(), // isi order_id dengan value yang unique untuk tiap transaction
           gross_amount: order.totalPrice, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
         },
         credit_card: {
