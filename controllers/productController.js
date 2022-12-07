@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 const redis = require("../config/redis");
 
 const imagekit = new ImageKit({
-  urlEndpoint: "https://ik.imagekit.io/yyfgxwocn",
+  urlEndpoint: "private_wja61SmIo3QnDDoZfZanme/WaK0=",
   publicKey: "public_Z+0rVBD68ZVwViLs3o8/sEBMjgE=",
   privateKey: "private_wja61SmIo3QnDDoZfZanme/WaK0=",
 });
@@ -60,8 +60,8 @@ class ProductController {
     try {
       const uploadImages = req.body.image.map((gambar) => {
         return imagekit.upload({
-          file: gambar, //required
-          fileName: makeid(10) + "-" + "supllyR" + ".jpg", //required
+          file: gambar, 
+          fileName: makeid(10) + "-" + "supllyR" + ".jpg",
           tags: ["foto"],
         });
       });

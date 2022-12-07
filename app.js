@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config(); 
+}
 const express = require("express");
 const app = express();
 const http = require("http").Server(app);
@@ -12,7 +15,6 @@ const socketIO = require("socket.io")(http, {
 });
 
 let user = [];
-
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
 
