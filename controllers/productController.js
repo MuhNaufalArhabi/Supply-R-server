@@ -67,16 +67,8 @@ class ProductController {
       });
       let data = await Promise.all(uploadImages);
 
-        return imagekit
-          .upload({
-            file: gambar, //required
-            fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
-            tags: ['foto'],
-          })
-      })
-      let data = await Promise.all(uploadImages); 
+      const { name, price, stock, description, CategoryId } = req.body.product;
 
-      const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
       const ShopId = req.shop.id;
       const slug = name.split(" ").join("-");
       const mainImage = data[0].url;
@@ -127,7 +119,6 @@ class ProductController {
       await redis.del("app:products");
       await redis.del("app:productsPagination")
       res.status(200).json({ message: "success update product" });
-
     } catch (error) {
       next(error);
     }

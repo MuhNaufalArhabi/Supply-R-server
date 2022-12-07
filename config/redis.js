@@ -1,5 +1,4 @@
 const Redis = require('ioredis');
-const fs = require('fs');
 
 // const redis = new Redis({
 //     host: 'redis-16026.c295.ap-southeast-1-1.ec2.cloud.redislabs.com',
