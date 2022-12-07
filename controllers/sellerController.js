@@ -69,7 +69,6 @@ class SellerController {
           id,
         },
       });
-
       if (!seller) {
         throw { name: 'not_found' };
       }
@@ -163,6 +162,7 @@ class SellerController {
           id: seller.id,
           email: seller.email,
         });
+        
         res.status(200).json({ access_token, role: 'seller', id: seller.Shop.id , name: seller.Shop.name, sellerId: seller.id}); // id: seller.Shop.id
 
       }

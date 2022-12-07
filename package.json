@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --coverage --verbose --testTimeout=10000",
+    "test": "jest --runInBand --coverage --verbose --testTimeout=10000 --silent",
     "dev": "nodemon bin/www",
     "start": "node bin/www"
   },

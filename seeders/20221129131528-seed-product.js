@@ -14,6 +14,7 @@ module.exports = {
     */
    const data = require('../db.json').products.map(el => {
     el.createdAt = el.updatedAt = new Date()
+    el.slug = el.name.toLowerCase().split(' ').join('-')
     return el
    });
    await queryInterface.bulkInsert('Products', data)

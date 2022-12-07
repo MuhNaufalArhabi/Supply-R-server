@@ -1,504 +1,454 @@
 {
   "products": [
     {
-      "name": "Danishes - Mini Cheese",
-      "price": 60000,
-      "description": "ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras",
+      "name": "Samsung 43 inch Smart TV Full HD T6500",
+      "price": 3900000,
+      "description": "Samsung 43 inch Smart TV Full HD T6500 dengan PurColor - UA43T6500AKXXD",
       "stock": 92,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://images.samsung.com/is/image/samsung/id-fhd-t5500-ua43t6500akxxd-frontblack-229359102?$730_584_PNG$",
       "ShopId": 5,
-      "CategoryId": 2,
-      "slug": "Lettuce - Lolla Rosa"
+      "CategoryId": 1
     },
     {
-      "name": "Red Cod Fillets - 225g",
-      "price": 50000,
-      "description": "sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis",
+      "name": "PANASONIC AC SPLIT",
+      "price": 3500000,
+      "description": "PANASONIC AC SPLIT AIR CONDITIONER STANDARD LOW WATT CSKN WKJ SERIES",
       "stock": 89,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://myhartono.com/images/detailed/304/CSKN9WKJ-01-06_nw4x-nf.jpg",
       "ShopId": 1,
-      "CategoryId": 3,
-      "slug": "Wine - Fat Bastard Merlot"
+      "CategoryId": 1
     },
     {
-      "name": "Spinach - Baby",
-      "price": 70000,
-      "description": "quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
+      "name": "SHARP KULKAS",
+      "price": 7999000,
+      "description": "SHARP KULKAS SIDE BY SIDE REFRIGERATOR SJIS61GBK",
       "stock": 59,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://myhartono.com/images/detailed/302/SJIS61GBK_1_.jpg",
       "ShopId": 1,
-      "CategoryId": 8,
-      "slug": "Corn Shoots"
+      "CategoryId": 1
     },
     {
-      "name": "Bread - Ciabatta Buns",
-      "price": 80000,
-      "description": "pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam",
+      "name": "Samsung Mesin Cuci Front Loading",
+      "price": 5900000,
+      "description": "Samsung Mesin Cuci Front Loading 9,5 Kg Ecobubble AI Control, Add Wash - WW95T654DLX/SE",
       "stock": 54,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://myhartono.com/images/detailed/344/WW95T654DLX1_439p-4b.jpg",
       "ShopId": 2,
-      "CategoryId": 7,
-      "slug": "Thyme - Lemon, Fresh"
+      "CategoryId": 1
     },
     {
-      "name": "Alize Sunset",
-      "price": 50000,
-      "description": "in imperdiet et commodo vulputate justo in blandit ultrices enim",
+      "name": "LENOVO GAMING LAPTOP",
+      "price": 11500000,
+      "description": "LENOVO GAMING LAPTOP GAMING 3 15ACH6 AMD RYZEN 7-5800H",
       "stock": 72,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://myhartono.com/images/detailed/336/GAMING3_82K201UYID.jpg",
       "ShopId": 4,
-      "CategoryId": 4,
-      "slug": "Lid Tray - 12in Dome"
+      "CategoryId": 1
     },
     {
-      "name": "Juice - Apple, 1.36l",
-      "price": 80000,
-      "description": "lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer",
+      "name": "Pekerjaan Pemasangan AC",
+      "price": 800000,
+      "description": "Pengadaan dan Pemasangan AC di segala Ruang",
       "stock": 73,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a6df17476cace453d5cc8/638dc48b6257e468745680b8/287b20201e11fcb7b8a6afda498394.jpeg",
       "ShopId": 1,
-      "CategoryId": 8,
-      "slug": "Clams - Canned"
+      "CategoryId": 3
     },
     {
-      "name": "Pasta - Penne Primavera, Single",
-      "price": 70000,
-      "description": "maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi",
+      "name": "Perbaikan Jendela dan Penggantian Kaca",
+      "price": 700000,
+      "description": "Perbaikan jendela dan penggantian kaca rumah dinas satuan",
       "stock": 96,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/26112022/631a59965b9755003d28762c/638212979d00db722a9a0e41/96344c76aa63c0ef5d061c0844a9bc.jpg",
       "ShopId": 4,
-      "CategoryId": 6,
-      "slug": "Chick Peas - Dried"
+      "CategoryId": 3
     },
     {
-      "name": "Dill Weed - Dry",
-      "price": 50000,
-      "description": "elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in",
+      "name": "Pembuatan Interior Cafe",
+      "price": 1150000,
+      "description": "Menggunakan bahan bahan Kualitas terbaik, di kerjakan oleh profesional. Gratis Disain 3D.Menyesuaikan keinginan konsumen",
       "stock": 93,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/18112022/631a57b87255a77e0e709450/637707f3bb46ac7849071c7b/38aa80b3c64971f5596f4c104e4c32.jpeg",
       "ShopId": 2,
-      "CategoryId": 3,
-      "slug": "Tomatoes Tear Drop Yellow"
+      "CategoryId": 3
     },
     {
-      "name": "Appetizer - Shrimp Puff",
-      "price": 60000,
-      "description": "eleifend donec ut dolor morbi vel lectus in quam fringilla",
+      "name": "Jasa Penarikan Kabel Tanah Fiber Optik",
+      "price": 600000,
+      "description": "Penyediaan jasa man power untuk melakukan laying kabel fiber optik didalam tanah dengan mekanisme penggalian lubang pit",
       "stock": 41,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "http://www.andalantelecom.com/images/penarikan-fiber-optic.jpg",
       "ShopId": 4,
-      "CategoryId": 3,
-      "slug": "Whmis - Spray Bottle Trigger"
+      "CategoryId": 3
     },
     {
-      "name": "Fish - Halibut, Cold Smoked",
-      "price": 80000,
-      "description": "mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus",
+      "name": "Peremajaan taman",
+      "price": 800000,
+      "description": "peremajaan taman macaw dan pembuatan kebun anggur",
       "stock": 49,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/09112022/636346f6bc1db090a9b10c43/636b94714611e9b28843bc36/eaebfde3050cc7f4cfacf8771a85a7.jpeg",
       "ShopId": 4,
-      "CategoryId": 1,
-      "slug": "Champagne - Brights, Dry"
+      "CategoryId": 3
     },
     {
-      "name": "Samosa - Veg",
-      "price": 100000,
-      "description": "auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed",
+      "name": "Biaya pengecatan ulang plank papan",
+      "price": 200000,
+      "description": "Biaya pengecatan ulang plank papan, cepat dan bagus",
       "stock": 65,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a57fe7255a77e0e70baaa/638e15695d1184d72b13cd50/c9ef9721dc664095010b6a6d9e8b49.jpg",
       "ShopId": 3,
-      "CategoryId": 10,
-      "slug": "Halibut - Steaks"
+      "CategoryId": 2
     },
     {
-      "name": "Pie Filling - Cherry",
-      "price": 90000,
-      "description": "at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit",
+      "name": "GUNTING PIPA PVC RACHET",
+      "price": 290000,
+      "description": "GUNTING PIPA PVC RACHET 0 - 65mm / PVC PIPE CUTTER BESTIR 03963",
       "stock": 56,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/63239039a546503c959a62b2/638dbbb36257e468745652c4/71b96dfbeda3f203d986a4ee4dfa0c.jpg",
       "ShopId": 5,
-      "CategoryId": 10,
-      "slug": "Garlic - Elephant"
+      "CategoryId": 2
     },
     {
-      "name": "Salt And Pepper Mix - Black",
-      "price": 90000,
-      "description": "morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis",
+      "name": "Regulator Las Oksigen",
+      "price": 190000,
+      "description": "REGULATOR LAS OKSIGEN MURAH. Penyegelan yang kuat dan kencang sehingga tersegel dengan baik. Harga murah, kualitas tidak murahan.",
       "stock": 68,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/63239039a546503c959a62b2/638db0c755fd021688616a09/6218a9066b5ea3ae38bcd34f4f7983.jpg",
       "ShopId": 4,
-      "CategoryId": 4,
-      "slug": "Truffle Cups - White Paper"
+      "CategoryId": 2
     },
     {
-      "name": "Dried Cherries",
+      "name": "GERGAJI KAYU TANGAN",
       "price": 100000,
-      "description": "nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus",
+      "description": "Bahan mata gergaji terbuat dari 65Mn (baja mangan) berkualitas tinggi, dan permukaannya diperlakukan dengan Teflon, yang indah dan tahan lama.",
       "stock": 100,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/63239039a546503c959a62b2/638dac4455fd021688615110/0890cc5808618c1170a7250b998e02.jpg",
       "ShopId": 4,
-      "CategoryId": 2,
-      "slug": "Tortillas - Flour, 12"
+      "CategoryId": 2
     },
     {
-      "name": "Cup - 4oz Translucent",
-      "price": 80000,
-      "description": "nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel",
+      "name": "APAR 20 KG POWDER",
+      "price": 8000000,
+      "description": "Apar yang mendapatkan pengesahan Fire Rating dari Dinas Pemadam Kebakaran Provinsi DKI Jakarta. Didisain mengikuti BS EN3 1996 (Standar Eropa).",
       "stock": 83,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/63368a29995ba35f8b89da89/638c885755fd0216885f15cb/9f92ac9f97dd8adaacf46ee0e786a8.jpg",
       "ShopId": 2,
-      "CategoryId": 4,
-      "slug": "Cornish Hen"
+      "CategoryId": 2
     },
     {
-      "name": "Cheese - St. Andre",
+      "name": "Kertas F4 80gr Sinar Dunia",
       "price": 70000,
-      "description": "nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac",
+      "description": "Kertas HVS merk Sinar Dunia memiliki kualitas yang terbaik. Kertasnya sangat putih dan gramatur tiap lembar sama sehingga sangat nyaman digunakan. ",
       "stock": 50,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/17710/57154/ritel8991389291.1605690507.jpg",
       "ShopId": 3,
-      "CategoryId": 1,
-      "slug": "Table Cloth 54x54 White"
+      "CategoryId": 4
     },
     {
-      "name": "Coffee - Decaffeinato Coffee",
-      "price": 90000,
-      "description": "primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices",
+      "name": "Kenko Whiteboard Marker WM-100",
+      "price": 40000,
+      "description": "Kenko Whiteboard Marker WM-100. Acrylic Tip lebih awet dan presisi",
       "stock": 68,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/06122022/631a57b27255a77e0e708e73/638eeb33be56dc475b4bb6c9/da36ff829d0ae98f9abc7b508dffe8.jpg",
       "ShopId": 4,
-      "CategoryId": 1,
-      "slug": "Bread - Bistro White"
+      "CategoryId": 4
     },
     {
-      "name": "Bagel - Everything Presliced",
-      "price": 60000,
-      "description": "sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean",
+      "name": "Tinta EPSON Printer T038 Epson Black",
+      "price": 160000,
+      "description": "Epson C13T038190 Black Ink Cartridge Epson. Kondisi: Produk baru",
       "stock": 40,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/06122022/6386c1e3a8fd042b18ce734c/638eecb6be56dc475b4bcab2/30f658d44df550498364e8863a85ca.jpg",
       "ShopId": 3,
-      "CategoryId": 9,
-      "slug": "Sprouts - Peppercress"
+      "CategoryId": 4
     },
     {
-      "name": "Mussels - Cultivated",
-      "price": 70000,
-      "description": "vestibulum ante ipsum primis in faucibus orci luctus et ultrices",
+      "name": "Mesin Hitung Uang ZSA 2820",
+      "price": 3700000,
+      "description": "Mesin Hitung Uang ZSA 2820.Ready Stok!!! Barang dijamin 100% baru dan asli.Garansi resmi 1 tahun",
       "stock": 68,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/43132/567875/mesin-hitung-ua.1645600290.jpg",
       "ShopId": 2,
-      "CategoryId": 6,
-      "slug": "Soup - Campbells Chili"
+      "CategoryId": 4
     },
     {
-      "name": "Cloves - Ground",
-      "price": 90000,
-      "description": "odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat",
+      "name": "Map Business File BIG",
+      "price": 9000,
+      "description": "Business File Big F4 8804. Harga untuk 1 pcs map, ukuran map 34.5cm x 23cm",
       "stock": 58,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/13517/69085/15.1623654854.png",
       "ShopId": 3,
-      "CategoryId": 1,
-      "slug": "Island Oasis - Cappucino Mix"
+      "CategoryId": 4
     },
     {
-      "name": "Bread - Multigrain",
-      "price": 90000,
-      "description": "lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo",
+      "name": "Jasa Revitalisasi AC Floor Standing dan AC Split",
+      "price": 2000000,
+      "description": "Jasa Revitalisasi AC Floor Standing dan AC Split spesialis",
       "stock": 49,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/19406/627254/ac-floor.1650947375.jpg",
       "ShopId": 5,
-      "CategoryId": 3,
-      "slug": "Wiberg Super Cure"
+      "CategoryId": 5
     },
     {
-      "name": "Kellogs Cereal In A Cup",
-      "price": 70000,
-      "description": "lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla",
+      "name": "Jasa Maintenance APM 90 Kva 1 unit selama 2 bulan",
+      "price": 12000000,
+      "description": "Pengukuran kondisi sumber listrik: tegangan, arus listrik dan frekuensi. Pemeriksaan dan testing secara berkala  pada system",
       "stock": 54,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/06122022/631a6ddd7476cace453d48dc/638eae064feb5637cd58141f/2c80291f866348516eab95043058f1.jpg",
       "ShopId": 4,
-      "CategoryId": 7,
-      "slug": "Frangelico"
+      "CategoryId": 5
     },
     {
-      "name": "Cake - Mini Cheesecake",
-      "price": 50000,
-      "description": "nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci",
+      "name": "Jasa Maintenance ASD Ecaro 25 1 unit selama 2 bulan",
+      "price": 15000000,
+      "description": "Pengukuran kondisi sumber listrik: tegangan, arus listrik dan frekuensi. Pemeriksaan dan testing secara berkala  pada system",
       "stock": 72,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/06122022/631a6ddd7476cace453d48dc/638eb0b85d1184d72b1491dc/8becfc57c111fb759e852aa0e6fedd.jpg",
       "ShopId": 2,
-      "CategoryId": 1,
-      "slug": "Roe - Lump Fish, Red"
+      "CategoryId": 5
     },
     {
-      "name": "Tea Leaves - Oolong",
-      "price": 70000,
-      "description": "nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit",
+      "name": "Jasa Pengecatan Pipa",
+      "price": 155000,
+      "description": "Melapisinya Pipa dengan cat  untuk mencegah karat dan tahan terhadap bahan kimia.",
       "stock": 80,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/52331/730282/jasa-pengecatan.1658997451.jpg",
       "ShopId": 2,
-      "CategoryId": 9,
-      "slug": "Sage Ground Wiberg"
+      "CategoryId": 5
     },
     {
-      "name": "Veal - Knuckle",
-      "price": 50000,
-      "description": "non mi integer ac neque duis bibendum morbi non quam nec",
+      "name": "Jasa Pengelasan Flange",
+      "price": 300000,
+      "description": "Proses pengelasan dilakukan oleh Pekerja yang memiliki Sertifikat.Harga yang tertera adalah harga per Joint ( /Joint)",
       "stock": 78,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/52331/728163/jasa-pengelasan.1658910558.jpg",
       "ShopId": 1,
-      "CategoryId": 4,
-      "slug": "Milk - Condensed"
+      "CategoryId": 5
     },
     {
-      "name": "Nut - Peanut, Roasted",
+      "name": "Termos Kopi bentuk Gelas",
       "price": 100000,
-      "description": "varius ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus",
+      "description": "Bahan 304 stainless steel, tahan panas dan dingin. kapasitas 380 ml. logo sablon 1 warna 1 sisi. Kemasan kotak hitam laminasi doff dengan hotprint logo dan plastik",
       "stock": 70,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/06122022/6386b71fa8fd042b18ccbf93/638e99e8b69b43f50eb70337/338b09b088615456450ab4f1602a2c.jpg",
       "ShopId": 1,
-      "CategoryId": 7,
-      "slug": "Chips Potato All Dressed - 43g"
+      "CategoryId": 6
     },
     {
-      "name": "Beer - Camerons Cream Ale",
-      "price": 90000,
-      "description": "lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus",
+      "name": "Goodie Bag",
+      "price": 20000,
+      "description": "Bahan SpoundBound 70gsm, Sablon Full Colour 1 sisi, tersedia berbagai warna",
       "stock": 76,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/06122022/63896e519f68e3ff02e6f52b/638edfcb5d1184d72b15a174/1a1aca68cfd9cb5330499f164d2d00.jpg",
       "ShopId": 5,
-      "CategoryId": 1,
-      "slug": "Cheese - Pont Couvert"
+      "CategoryId": 6
     },
     {
-      "name": "Bread - Malt",
+      "name": "Kipas Lukis Wayang",
       "price": 70000,
-      "description": "sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla",
+      "description": "Kipas Kayu lukis khas wayang kamasan,cocok dijadikan souvenir, include box",
       "stock": 67,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/70506/798973/img-20220712-wa.1663228629.jpg",
       "ShopId": 5,
-      "CategoryId": 7,
-      "slug": "Vinegar - Rice"
+      "CategoryId": 6
     },
     {
-      "name": "Ecolab Crystal Fusion",
-      "price": 50000,
-      "description": "adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc",
+      "name": "Kalender Dinding Mandiri 2023",
+      "price": 20000,
+      "description": "Semarakkan 2023 mu dengan kalender dinding mandiri terbaru!",
       "stock": 67,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a57c67255a77e0e70a57c/638d8bf665807cbbe628f1eb/7980ed2148b6350af9321ac4aecfca.jpeg",
       "ShopId": 2,
-      "CategoryId": 8,
-      "slug": "Fish - Artic Char, Cold Smoked"
+      "CategoryId": 6
     },
     {
-      "name": "Pepper - Black, Whole",
-      "price": 80000,
-      "description": "neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+      "name": "Gantungan Kunci Ukiran Toraja",
+      "price": 10000,
+      "description": "Salah satu Hasil Kerajinan UMKM Tana Toraja dengan Modifikasi Ukiran Toraja yang diaplikasi dalam bentuk souvenir berupa Gantungan Kunci. Sangat cocok digunakan untuk souvenir dalam beberapa cara atau kegiatan baik itu Pernikahan ataupun acara ceremonial lainnya",
       "stock": 47,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/638d4b92c7a245296bff92b5/638d4da66257e468745350d1/b8020a72c1e56cd4845bb5ab711c3c.jpg",
       "ShopId": 2,
-      "CategoryId": 7,
-      "slug": "Pop - Club Soda Can"
+      "CategoryId": 6
     },
     {
-      "name": "Mahi Mahi",
-      "price": 50000,
-      "description": "in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla",
+      "name": "Paket fullday Meeting",
+      "price": 50000000,
+      "description": "Workshop Mengamanan Scalling Q4 2022 dan Penyusunan LOP Konglomerasi dan Holding BUMN ",
       "stock": 44,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/02122022/631a57035b9755003d274c6c/6389a27351eed251f6e0f199/036c7b76e2094b3e43f41a52aac65a.jpeg",
       "ShopId": 3,
-      "CategoryId": 8,
-      "slug": "Pepper - White, Whole"
+      "CategoryId": 7
     },
     {
-      "name": "Wine - Merlot Vina Carmen",
-      "price": 60000,
-      "description": "proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices",
+      "name": "PAKET MEETING SOSIALISASI neuCENTRIX ke Witel JAKARTA BARAT",
+      "price": 3750000,
+      "description": "PAKET MEETING sosialisasi nueCentrIX 25 X 150.000 = 3.750.000",
       "stock": 58,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a59058755a8a9895f0a55/638daeb06257e4687455f621/10712c11ec58c0d6a56a6ace9d2479.jpeg",
       "ShopId": 3,
-      "CategoryId": 9,
-      "slug": "Rice Wine - Aji Mirin"
+      "CategoryId": 7
     },
     {
-      "name": "Sausage - Blood Pudding",
-      "price": 70000,
-      "description": "nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit",
+      "name": "Paket Support Meeting",
+      "price": 27000000,
+      "description": "Paket Meeting, Paket Konsumsi, Paket Pendukung Meeting",
       "stock": 77,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a53eb7255a77e0e6f9aa9/638d4d4c6257e46874534f6e/6c6f8bceb53ef6f417c71408005a36.png",
       "ShopId": 2,
-      "CategoryId": 7,
-      "slug": "Rice - Sushi"
+      "CategoryId": 7
     },
     {
-      "name": "Sauerkraut",
-      "price": 90000,
-      "description": "proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue",
+      "name": "Event Organizer Kegiatan HUT Perusahaan",
+      "price": 30000000,
+      "description": "Menerima pesanan jasa event organizer hari ulang tahun perusahaan untuk 100 orang",
       "stock": 71,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/02122022/631a5d5faa3096cbda26120b/638938c39d00db722aa49639/1c95aa4cfbcbb1cfadadae7d694e70.jpg",
       "ShopId": 3,
-      "CategoryId": 4,
-      "slug": "Cookie - Dough Variety"
+      "CategoryId": 7
     },
     {
-      "name": "Cheese - Ricotta",
-      "price": 70000,
-      "description": "ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+      "name": "Jasa Spreading dan Canvassing",
+      "price": 3700000,
+      "description": "include Tenda segi empat, Kursi lipat, Meja lipat, roll banner ",
       "stock": 96,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/21112022/631a5d898755a8a989608bab/637b29d9fc1a8ac1939017b4/a10e3c85316cc00dcff8685dec5a91.jpg",
       "ShopId": 4,
-      "CategoryId": 2,
-      "slug": "Tray - Foam, Square 4 - S"
+      "CategoryId": 7
     },
     {
-      "name": "Cheese - Augre Des Champs",
-      "price": 60000,
-      "description": "morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis",
+      "name": "PAKET JASA KEGIATAN SALES DAN PENGAWALAN TEKNIS",
+      "price": 4600000,
+      "description": "Penawaran  produk dan visiting cluster tender, Pengawalan maintenance teknis jaringan",
       "stock": 81,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/29372/515772/hero1.1641873004.jpg",
       "ShopId": 2,
-      "CategoryId": 8,
-      "slug": "Cup - 4oz Translucent"
+      "CategoryId": 8
     },
     {
-      "name": "Tart Shells - Sweet, 3",
-      "price": 50000,
-      "description": "purus sit amet nulla quisque arcu libero rutrum ac lobortis",
+      "name": "Jasa manpower muat dan bongkar plank papan & drum plastik",
+      "price": 150000,
+      "description": "Biaya manpower muat + bongkar plank papan & drum plastik per satu tenaga kerja",
       "stock": 47,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a57fe7255a77e0e70baaa/638e142b5d1184d72b13cd17/fa255633d251a25c99473f28f59e4a.jpg",
       "ShopId": 4,
-      "CategoryId": 3,
-      "slug": "Cake - Dulce De Leche"
+      "CategoryId": 8
     },
     {
-      "name": "Juice - Cranberry, 341 Ml",
-      "price": 90000,
-      "description": "morbi ut odio cras mi pede malesuada in imperdiet et commodo",
+      "name": "Jasa Pengawalan P3 Backbone Harian",
+      "price": 399000,
+      "description": "Jasa Pengawalan P3 Backbone Harian harga khusus",
       "stock": 49,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/18112022/631a57c37255a77e0e70a0d7/6376e437dc6688718a173553/ee36cdc2c2e0ff88071e0149d83017.jpg",
       "ShopId": 1,
-      "CategoryId": 8,
-      "slug": "Pork - Hock And Feet Attached"
+      "CategoryId": 8
     },
     {
-      "name": "Langers - Ruby Red Grapfruit",
-      "price": 80000,
-      "description": "non pretium quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse",
+      "name": "Paket Pengawasan dan Pengamanan",
+      "price": 380000,
+      "description": "Pengawasan dan Pengamanan (Galian dan perataan tanah untuk pelebaran jalan - sisi kiri kanan)",
       "stock": 78,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/11102022/631a570c5b9755003d275a30/634522ed03dc9178a447f800/c899236abc71e285a4400597b19fbb.png",
       "ShopId": 1,
-      "CategoryId": 2,
-      "slug": "Soup - Campbells Chili"
+      "CategoryId": 8
     },
     {
-      "name": "Calaloo",
-      "price": 90000,
-      "description": "gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut",
+      "name": "PENGAMANAN SEMENTARA JALUR KABEL",
+      "price": 1900000,
+      "description": "PEKERJAAN JASA PENGAMANAN SEMENTARA JALUR KABEL NETWORK",
       "stock": 63,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/10102022/631a5d4daa3096cbda260002/634382e5c40e8544a736781d/f6b7c005d0ea9c804ae3443b54233e.jpg",
       "ShopId": 3,
-      "CategoryId": 8,
-      "slug": "Coffee Cup 12oz 5342cd"
+      "CategoryId": 8
     },
     {
-      "name": "Muffin Mix - Carrot",
-      "price": 80000,
-      "description": "odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras",
+      "name": "CETAK ID CARD CUSTOM",
+      "price": 13000,
+      "description": "Bahan PVC (RFID), Cetak digital printing tinta UV full color 2 sisi, Ukuran standar",
       "stock": 70,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a6564cdc00cf233d35664/638d861b65807cbbe628c37c/0638542fbf243d6bf94385e116573b.jpg",
       "ShopId": 2,
-      "CategoryId": 9,
-      "slug": "Bread Country Roll"
+      "CategoryId": 9
     },
     {
-      "name": "Beef Striploin Aaa",
-      "price": 60000,
-      "description": "nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi",
+      "name": "Cetak Roller Up Banner",
+      "price": 160000,
+      "description": "Bahan : Albatros Indoor, Finishing : Finishing Roll Up + AlatRoller Up 60 x 160 cm",
       "stock": 65,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/7/25/629888fc-1ba6-483c-b55a-89915d459673.jpg",
       "ShopId": 1,
-      "CategoryId": 8,
-      "slug": "Bread - White Mini Epi"
+      "CategoryId": 9
     },
     {
-      "name": "Bread Base - Goodhearth",
+      "name": "Pembuatan desain dan cetak banner",
+      "price": 380000,
+      "description": "Pembuatan desain dan cetak banner, cepat amanah harga bersaing",
+      "stock": 65,
+      "mainImage": "https://percetakandimensi.co.id/wp-content/uploads/2020/05/jasa-desain-dan-cetak-spanduk-online-harga-murah-dan-terdekat-di-bsd-city-tangerang-selatan.jpg",
+      "ShopId": 1,
+      "CategoryId": 9
+    },
+    {
+      "name": "Katalog Produk Layanan",
       "price": 80000,
-      "description": "consequat nulla nisl nunc nisl duis bibendum felis sed interdum",
-      "stock": 65,
-      "mainImage": "http://dummyimage.com/x200.png/cc0000/ffffff",
-      "ShopId": 1,
-      "CategoryId": 1,
-      "slug": "Longos - Cheese Tortellini"
-    },
-    {
-      "name": "Veal - Ground",
-      "price": 100000,
-      "description": "id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in",
+      "description": "Cetak dan Jilid Katalog Produk Layanan Manage,Bahan HVS dan Art Paper,Jilid Spiral Kawat",
       "stock": 80,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/35928/588821/katalog-poduk.1647502874.jpg",
       "ShopId": 5,
-      "CategoryId": 1,
-      "slug": "French Pastries"
+      "CategoryId": 9
     },
     {
-      "name": "Wine - White, Ej",
-      "price": 80000,
-      "description": "elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien",
+      "name": "Custom AKRILIK NAME TAG",
+      "price": 28000,
+      "description": "Bahan : Akrilik,Ukuran : 5cm x 12 cm,Print UV ",
       "stock": 69,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/03122022/631a53e47255a77e0e6f92ea/638b063665807cbbe62472b4/cd4ea55ba764acae56a848a63d9463.JPG",
       "ShopId": 5,
-      "CategoryId": 9,
-      "slug": "Crush - Cream Soda"
+      "CategoryId": 9
     },
     {
-      "name": "Trout Rainbow Whole",
+      "name": "Alat Kelengkapan Sarana P3K",
       "price": 80000,
-      "description": "varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel",
+      "description": "Paket Alat Kelengkapan Sarana P3K versi standar",
       "stock": 46,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/06122022/631a53e47255a77e0e6f927c/638f0dc9be56dc475b4d7d24/75d6a01f301f9cd00a4b384341ce01.jpg",
       "ShopId": 1,
-      "CategoryId": 4,
-      "slug": "Cauliflower"
+      "CategoryId": 10
     },
     {
-      "name": "Cafe Royale",
-      "price": 60000,
-      "description": "est lacinia nisi venenatis tristique fusce congue diam id ornare",
+      "name": "Masker KF 94 Mouson",
+      "price": 50000,
+      "description": "Dijual per 1 box = 10 pcs, tersedia warna hitam dan putih",
       "stock": 64,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/22033/131798/masker-kf-94.1615349336.jpeg",
       "ShopId": 2,
-      "CategoryId": 3,
-      "slug": "Appetizer - Mini Egg Roll, Shrimp"
+      "CategoryId": 10
     },
     {
-      "name": "Pepper - Black, Whole",
-      "price": 70000,
-      "description": "bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis fusce posuere",
+      "name": "Instance Hand Sanitizer 100ml Spray",
+      "price": 20000,
+      "description": "Hand sanitizer Instance 75% alkohol 100ml",
       "stock": 75,
-      "mainImage": "http://dummyimage.com/x200.png/dddddd/000000",
+      "mainImage": "https://assets.klikindomaret.com/share/20106554_1.jpg",
       "ShopId": 4,
-      "CategoryId": 7,
-      "slug": "Wine - Acient Coast Caberne"
+      "CategoryId": 10
     },
     {
-      "name": "Garbage Bags - Clear",
-      "price": 80000,
-      "description": "non mauris morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci",
+      "name": "PAKET MURAH 1 SET LENGKAP TABUNG OKSIGEN 1M3 SIAP PAKAI",
+      "price": 1800000,
+      "description": "Tabung oksigen tidak hanya digunakan untuk kebutuhan Rumah sakit tapi tabung oksigen juga dapat digunakan untuk kebutuhan home care atau kebutuhan kesehatan di rumah anda.",
       "stock": 55,
-      "mainImage": "http://dummyimage.com/x200.png/5fa2dd/ffffff",
+      "mainImage": "https://cf.shopee.co.id/file/a45818b6a41c39a7a3f8c1b41a0eef3e",
       "ShopId": 3,
-      "CategoryId": 10,
-      "slug": "Soap - Hand Soap"
+      "CategoryId": 10
     },
     {
-      "name": "Soup - Verve - Chipotle Chicken",
-      "price": 60000,
-      "description": "fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem",
+      "name": "KASSA STERIL",
+      "price": 20000,
+      "description": "Kasa steril digunakan untuk operasi besar/kecil, khitan, penutup luka, dan bebat pusar bayi. Bersihkan luka dari kotoran, bakteri dan partikel untuk mencegah infeksi. Keringkan kulit sekitar luka dengan lembut. Tutup luka dari kotoran dan bakteri menggunakan Kasa Steril. ",
       "stock": 47,
-      "mainImage": "http://dummyimage.com/x200.png/ff4444/ffffff",
+      "mainImage": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a59298755a8a9895f0fd1/638d9bf055fd02168860fc20/8faa9c49b4b2dc3d6a8b569d87f862.jpeg",
       "ShopId": 2,
-      "CategoryId": 10,
-      "slug": "Herb Du Provence - Primerba"
+      "CategoryId": 10
     }
   ],
   "categories": [
@@ -545,203 +495,203 @@
   ],
   "childImages": [
     {
-      "image": "http://dummyimage.com/186x243.png/cc0000/ffffff",
+      "image": "https://images.samsung.com/is/image/samsung/id-fhd-t5500-ua43t6500akxxd-lperspectiveblack-229359082?$684_547_PNG$",
       "ProductId": 1
     },
     {
-      "image": "http://dummyimage.com/122x197.png/dddddd/000000",
+      "image": "https://www.selka.id/assets/images/product/panasonic/ac-split/panasonic_cs-ln5wkj_5.jpg",
       "ProductId": 2
     },
     {
-      "image": "http://dummyimage.com/244x153.png/ff4444/ffffff",
+      "image": "https://myhartono.com/images/detailed/302/SJIS61GBK_2_.jpg",
       "ProductId": 3
     },
     {
-      "image": "http://dummyimage.com/214x120.png/5fa2dd/ffffff",
+      "image": "https://id-test-11.slatic.net/p/66a2d530405b2210ffecabad56018c79.jpg",
       "ProductId": 4
     },
     {
-      "image": "http://dummyimage.com/119x183.png/cc0000/ffffff",
+      "image": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2022/1/20/77d2208b-a63c-4471-9b73-a2f260f57a6e.jpg",
       "ProductId": 5
     },
     {
-      "image": "http://dummyimage.com/239x109.png/5fa2dd/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a6df17476cace453d5cc8/638dc48b6257e468745680b8/761bd4d3ba01acee37e2ab5f67a0b1.jpeg",
       "ProductId": 6
     },
     {
-      "image": "http://dummyimage.com/112x152.png/dddddd/000000",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/26112022/631a59965b9755003d28762c/638212979d00db722a9a0e41/7588d944ac2c5ce8bac9b194dcf60a.jpg",
       "ProductId": 7
     },
     {
-      "image": "http://dummyimage.com/101x209.png/cc0000/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/18112022/631a57b87255a77e0e709450/637707f3bb46ac7849071c7b/0bc2611e523c7bd6099060a700b874.jpeg",
       "ProductId": 8
     },
     {
-      "image": "http://dummyimage.com/197x197.png/5fa2dd/ffffff",
+      "image": "https://ik.imagekit.io/carro/jualo/original/25873155/jasa-penarikan-kabel-jasa-lainnya-25873155.jpg?v=1588582555",
       "ProductId": 9
     },
     {
-      "image": "http://dummyimage.com/106x192.png/dddddd/000000",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/09112022/636346f6bc1db090a9b10c43/636b94714611e9b28843bc36/074698a1b9eb652892db3e2d86f50f.jpeg",
       "ProductId": 10
     },
     {
-      "image": "http://dummyimage.com/118x118.png/cc0000/ffffff",
+      "image": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/7/23/38c5aa4d-4454-4d0d-a976-2573d13f7a66.jpg",
       "ProductId": 11
     },
     {
-      "image": "http://dummyimage.com/163x167.png/dddddd/000000",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/63239039a546503c959a62b2/638dbbb36257e468745652c4/05d96b8efb9fa7d9d8d688d09cfcd5.jpg",
       "ProductId": 12
     },
     {
-      "image": "http://dummyimage.com/168x152.png/cc0000/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/63239039a546503c959a62b2/638db0c755fd021688616a09/2f4076f4b46389c0bd4ccd171e1e69.jpg",
       "ProductId": 13
     },
     {
-      "image": "http://dummyimage.com/187x210.png/5fa2dd/ffffff",
+      "image": "https://sc04.alicdn.com/kf/HTB18fYQOpXXXXbQXVXXq6xXFXXXH.jpg",
       "ProductId": 14
     },
     {
-      "image": "http://dummyimage.com/146x135.png/dddddd/000000",
+      "image": "https://images.tokopedia.net/img/cache/700/VqbcmM/2021/6/4/96767230-99c4-4f78-8f8d-7f6c2dd7f873.jpg",
       "ProductId": 15
     },
     {
-      "image": "http://dummyimage.com/108x190.png/ff4444/ffffff",
+      "image": "https://image1ws.indotrading.com/s3/productimages/webp/co244108/p979690/w425-h425/c0f9edc2-8a6a-44cc-bf01-21688cb8a112.jpg",
       "ProductId": 16
     },
     {
-      "image": "http://dummyimage.com/224x234.png/dddddd/000000",
+      "image": "https://shop.kenko.co.id/image/cache/catalog/product/Marker/Permanent-Marker-PM-100-Black-Blue-Red-700x700.png",
       "ProductId": 17
     },
     {
-      "image": "http://dummyimage.com/106x178.png/dddddd/000000",
+      "image": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/2/9/89ed4f4d-0b4f-48cf-a084-50e2c706a1ad.jpg",
       "ProductId": 18
     },
     {
-      "image": "http://dummyimage.com/210x227.png/dddddd/000000",
+      "image": "https://images.tokopedia.net/img/cache/500-square/product-1/2018/11/21/38948477/38948477_293effc4-7371-4316-b227-0542f6593f21_1052_592.jpeg",
       "ProductId": 19
     },
     {
-      "image": "http://dummyimage.com/161x137.png/5fa2dd/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/13517/69085/13.1623654845.png",
       "ProductId": 20
     },
     {
-      "image": "http://dummyimage.com/199x194.png/cc0000/ffffff",
+      "image": "https://image1ws.indotrading.com/s3/productimages/webp/co63182/p511261/w600-h600/8f2a7156-e071-4b79-8490-57c26e47b57aw.png",
       "ProductId": 21
     },
     {
-      "image": "http://dummyimage.com/183x208.png/ff4444/ffffff",
+      "image": "https://tiimg.tistatic.com/fp/2/006/821/liebert-apm-ups-90-kva-768.jpg",
       "ProductId": 22
     },
     {
-      "image": "http://dummyimage.com/221x134.png/cc0000/ffffff",
+      "image": "https://eduardovillafuerteblog.files.wordpress.com/2018/11/ecaro-25.jpeg",
       "ProductId": 23
     },
     {
-      "image": "http://dummyimage.com/111x159.png/dddddd/000000",
+      "image": "https://cdn-2.tstatic.net/tribunnews/foto/images/preview/20140218_165258_pengecatan-pipa-air-bersih-palyja.jpg",
       "ProductId": 24
     },
     {
-      "image": "http://dummyimage.com/226x179.png/5fa2dd/ffffff",
+      "image": "https://www.winlandmetal.com/sites/default/files/inline-images/copper-welding-flange-installation_0.jpg",
       "ProductId": 25
     },
     {
-      "image": "http://dummyimage.com/167x223.png/cc0000/ffffff",
+      "image": "https://ae01.alicdn.com/kf/H0f498acdee2f4079bacbe1e70a3c2cacp/Gelas-Kopi-Termos-Terisolasi-Anggur-Baja-Tahan-Karat-12OZ-Nama-Sesuai-Pesanan-Gelas-Termos-Vakum-Gelas.jpg_Q90.jpg_.webp",
       "ProductId": 26
     },
     {
-      "image": "http://dummyimage.com/224x205.png/cc0000/ffffff",
+      "image": "https://ipbshop.ipb.ac.id/wp-content/uploads/2021/02/Goodie-Bag.jpg",
       "ProductId": 27
     },
     {
-      "image": "http://dummyimage.com/198x163.png/ff4444/ffffff",
+      "image": "https://cf.shopee.co.id/file/6cac0f7e47c4c0c9377ae7a330c594f6",
       "ProductId": 28
     },
     {
-      "image": "http://dummyimage.com/121x231.png/5fa2dd/ffffff",
+      "image": "https://images.tokopedia.net/img/cache/500-square/hDjmkQ/2022/1/18/a12d45c9-3f38-4d90-908e-aa0c837bb40e.jpg",
       "ProductId": 29
     },
     {
-      "image": "http://dummyimage.com/212x198.png/5fa2dd/ffffff",
+      "image": "https://id-live-01.slatic.net/p/f4797f097f3f8bfe65e8bc2968366bc1.jpg",
       "ProductId": 30
     },
     {
-      "image": "http://dummyimage.com/174x179.png/dddddd/000000",
+      "image": "https://dbijapkm3o6fj.cloudfront.net/resources/18240,1004,1,6,4,0,600,450/-4601-/20180928153737/paket-meeting-mulai-dari-idr-70-000-pax-.jpeg",
       "ProductId": 31
     },
     {
-      "image": "http://dummyimage.com/166x204.png/dddddd/000000",
+      "image": "https://static.republika.co.id/uploads/images/inpicture_slide/pt-telekomunikasi-indonesia-tbk-telkom-terus-memacu-program-international-_180417104148-762.jpg",
       "ProductId": 32
     },
     {
-      "image": "http://dummyimage.com/246x217.png/ff4444/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/05122022/631a53eb7255a77e0e6f9aa9/638d4d4c6257e46874534f6e/fa1ec68381f137cd1a9b0be61d9a33.jpg",
       "ProductId": 33
     },
     {
-      "image": "http://dummyimage.com/217x246.png/cc0000/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/02122022/631a5d5faa3096cbda26120b/638938c39d00db722aa49639/7daeee81562490c5cf1c284accf979.jpg",
       "ProductId": 34
     },
     {
-      "image": "http://dummyimage.com/126x119.png/dddddd/000000",
+      "image": "https://subsystem.indihome.co.id/referral-system/uploads/blog/LOGO-KONTEN_KEGIATAN3874-20210830091515.jpeg",
       "ProductId": 35
     },
     {
-      "image": "http://dummyimage.com/193x223.png/cc0000/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/products/29372/515772/hero.1641872995.jpg",
       "ProductId": 36
     },
     {
-      "image": "http://dummyimage.com/195x137.png/cc0000/ffffff",
+      "image": "https://i.ytimg.com/vi/E-nslRIAllE/sddefault.jpg",
       "ProductId": 37
     },
     {
-      "image": "http://dummyimage.com/176x229.png/5fa2dd/ffffff",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/18112022/631a57c37255a77e0e70a0d7/6376eb9fdc6688718a175ecc/700aeaa3a57e64d46b401200ad2a54.jpg",
       "ProductId": 38
     },
     {
-      "image": "http://dummyimage.com/180x106.png/dddddd/000000",
+      "image": "https://smb-padiumkm-images-public-prod.oss-ap-southeast-5.aliyuncs.com/product/image/11102022/631a570c5b9755003d275a30/634522ed03dc9178a447f800/96f55591ce7f9d5d05fe0da3c82258.png",
       "ProductId": 39
     },
     {
-      "image": "http://dummyimage.com/249x122.png/dddddd/000000",
+      "image": "https://resgorontalo.gorontalo.polri.go.id/wp-content/uploads/2020/03/WhatsApp-Image-2020-03-18-at-11.07.18-750x430.jpeg",
       "ProductId": 40
     },
     {
-      "image": "http://dummyimage.com/167x121.png/dddddd/000000",
+      "image": "https://buringprint.com/wp-content/uploads/2022/03/ID-Card-Custom_2.jpg",
       "ProductId": 41
     },
     {
-      "image": "http://dummyimage.com/160x179.png/dddddd/000000",
+      "image": "https://cf.shopee.co.id/file/b23b33097741619be1c0e43b382b9c96",
       "ProductId": 42
     },
     {
-      "image": "http://dummyimage.com/102x173.png/5fa2dd/ffffff",
+      "image": "https://1.bp.blogspot.com/-42wDd6NvKfo/XqqgbjkvCwI/AAAAAAAAOhs/ZcgKV24qYXsy004kABMuaLPX12GtVSiPACLcBGAsYHQ/s1600/BALIHO%2B5.jpg",
       "ProductId": 43
     },
     {
-      "image": "http://dummyimage.com/155x134.png/cc0000/ffffff",
+      "image": "https://www.telkomdigitalsolution.com/uploads/2021/03/Thumbnail-Katalog-2021.jpg",
       "ProductId": 44
     },
     {
-      "image": "http://dummyimage.com/136x208.png/5fa2dd/ffffff",
+      "image": "https://images.tokopedia.net/img/cache/500-square/product-1/2017/11/11/161553910/161553910_a8007cbf-abb4-43bf-87da-529e807a0286_612_816.jpg",
       "ProductId": 45
     },
     {
-      "image": "http://dummyimage.com/131x237.png/5fa2dd/ffffff",
+      "image": "https://www.medicalogy.com/blog/wp-content/uploads/2017/02/Kotak_P3k-02.jpg",
       "ProductId": 46
     },
     {
-      "image": "http://dummyimage.com/159x104.png/5fa2dd/ffffff",
+      "image": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//98/MTA-11477366/mouson_masker_kf94_mouson_10pcs__full00.jpg",
       "ProductId": 47
     },
     {
-      "image": "http://dummyimage.com/190x162.png/5fa2dd/ffffff",
+      "image": "https://d2qjkwm11akmwu.cloudfront.net/products/649524_10-7-2020_11-24-54-1665821307.jpeg",
       "ProductId": 48
     },
     {
-      "image": "http://dummyimage.com/158x234.png/dddddd/000000",
+      "image": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/6/23/996ec4e2-06bc-4f66-989f-33ad466f2a80.jpg",
       "ProductId": 49
     },
     {
-      "image": "http://dummyimage.com/234x149.png/cc0000/ffffff",
+      "image": "https://cf.shopee.co.id/file/1b13016d714049bc22c341ea1e5ffab3",
       "ProductId": 50
     }
   ],
@@ -795,40 +745,40 @@
   "sellers": [
     {
       "username": "Cybil Monini",
-      "email": "cmonini0@moonfruit.com",
-      "password": "Cg1zisg",
+      "email": "seller1@mail.com",
+      "password": "seller1",
       "phoneNumber": "424-918-0094",
       "ktp": "64-997-9027",
       "id": 1
     },
     {
       "username": "Giustino Snoddin",
-      "email": "gsnoddin1@themeforest.net",
-      "password": "rgidiNZdOC7O",
+      "email": "seller2@mail.com",
+      "password": "seller2",
       "phoneNumber": "524-182-2382",
       "ktp": "88-974-4294",
       "id": 2
     },
     {
       "username": "Conny Carter",
-      "email": "ccarter2@lycos.com",
-      "password": "CTFxmAS0",
+      "email": "seller3@mail.com",
+      "password": "seller3",
       "phoneNumber": "568-854-2955",
       "ktp": "39-953-5310",
       "id": 3
     },
     {
       "username": "Joann Tanner",
-      "email": "jtanner3@themeforest.net",
-      "password": "5T4b29j7mdbG",
+      "email": "seller4@mail.com",
+      "password": "seller4",
       "phoneNumber": "652-166-4827",
       "ktp": "01-168-3657",
       "id": 4
     },
     {
       "username": "Ring McDill",
-      "email": "rmcdill4@reddit.com",
-      "password": "MGYh7c614",
+      "email": "seller5@mail.com",
+      "password": "seller5",
       "phoneNumber": "941-412-3551",
       "ktp": "09-537-7413",
       "id": 5
@@ -838,8 +788,8 @@
     {
       "name": "Oyoloo",
       "owner": "Ed Jacqueme",
-      "password": "E9Lsv4TtIBi",
-      "email": "inibaruya@technorati.com",
+      "password": "buyer1",
+      "email": "buyer1@mail.com",
       "phoneNumber": "161-714-7611",
       "address": "94 Continental Terrace",
       "website": "www.Oyoloo.com",
@@ -849,8 +799,8 @@
     {
       "name": "Skinte",
       "owner": "Christie Proom",
-      "password": "T7hHtER",
-      "email": "cproom1@sphinn.com",
+      "password": "buyer2",
+      "email": "buyer2@mail.com",
       "phoneNumber": "944-996-9330",
       "address": "02 Pierstorff Parkway",
       "website": "www.Skinte.com",
@@ -932,29 +882,6 @@
       "ProductId": 49,
       "quantity": 20,
       "totalPrice": 756116
-    }
-  ],
-  "Users": [
-    {
-      "role": "buyer"
-    },
-    {
-      "role": "seller"
-    },
-    {
-      "role": "seller"
-    },
-    {
-      "role": "seller"
-    },
-    {
-      "role": "seller"
-    },
-    {
-      "role": "seller"
-    },
-    {
-      "role": "buyer"
     }
   ]
 }

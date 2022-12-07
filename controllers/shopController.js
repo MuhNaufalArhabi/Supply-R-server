@@ -1,4 +1,4 @@
-const { Shop, Seller, Product } = require("../models");
+const { Shop, Seller, Product, Order, OrderProduct } = require("../models");
 
 class ShopController {
   static async findAll(req, res, next) {
@@ -82,6 +82,67 @@ class ShopController {
         },
       });
       res.status(200).json({ message: "Shop deleted" });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async findOrders(req, res, next) {
+    try {
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async matriksUpfront(req, res, next) {
+    try {
+      const { id } = req.params;
+      const order = await Order.findAll({
+        include: {
+          model: OrderProduct,
+          include: {
+            model: Product,
+            where: {
+              ShopId: id,
+            },
+            include: {
+              model: Shop,
+            },
+          },
+        },
+        where: {
+          isPaid: true,
+          paymentMethod: "upfront",
+        },
+      });
+      res.status(200).json(order);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async matriksInstallment(req, res, next) {
+    try {
+      const { id } = req.params;
+      const order = await Order.findAll({
+        include: {
+          model: OrderProduct,
+          include: {
+            model: Product,
+            where: {
+              ShopId: id,
+            },
+            include: {
+              model: Shop,
+            },
+          },
+        },
+        where: {
+          isPaid: true,
+          paymentMethod: "installment",
+        },
+      });
+      res.status(200).json(order);
     } catch (err) {
       next(err);
     }
