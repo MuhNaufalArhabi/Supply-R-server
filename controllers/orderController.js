@@ -5,7 +5,7 @@ const {
   Product,
   Shop,
   Buyer,
-  Category
+  Category,
 } = require("../models");
 const midtransClient = require("midtrans-client");
 class OrderController {
@@ -19,7 +19,7 @@ class OrderController {
           required: true,
           include: {
             model: Product,
-            include: [Shop, Category]
+            include: [Shop, Category],
           },
         },
       };
@@ -59,6 +59,32 @@ class OrderController {
       next(error);
     }
   }
+  static async patchOrderMidtrans(req, res, next) {
+    try {
+      const { order_id, status_code, installment_term, payment_type } =
+        (req.body);
+      console.log(req.body, typeof req.body);
+      const OrderId = +order_id.split("-")[0];
+      const order = await Order.findOne({
+        where: { id: OrderId },
+      });
+      if (!order) {
+        throw { name: "not_found" };
+      }
+      if (status_code == 200) {
+        order.set({ isPaid: true });
+        if (payment_type === "credit_card" && installment_term) {
+          order.set({ paymentMethod: "installment" });
+        } else {
+          order.set({ paymentMethod: "upfront" });
+        }
+      }
+      await order.save();
+      res.status(200).json({ msg: "order changed" });
+    } catch (error) {
+      next(error);
+    }
+  }
   static async postOrderProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {
@@ -73,7 +99,7 @@ class OrderController {
         },
         transaction: t,
       });
-      
+
       const { orderlists } = req.body;
       if (!orderlists) {
         throw { name: "no_input" };
@@ -99,16 +125,16 @@ class OrderController {
   static async delOrderProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      console.log('masuk sini <<<<<<<<<<<')
+      console.log("masuk sini <<<<<<<<<<<");
       const { orderProductId } = req.params;
-      
+
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
       // if (!orderProduct) {
       //   throw { name: "not_found" };
       // }
-      
+
       await OrderProduct.destroy({
         where: { id: orderProductId },
         transaction: t,
@@ -161,55 +187,6 @@ class OrderController {
       next(error);
     }
   }
-  // static async midTransToken(req, res, next) {
-  //   try {
-  //     const BuyerId = req.buyer.id;
-  //     const order = await Order.findOne({
-  //       where: { BuyerId, paymentMethod: "pending", isPaid: false },
-  //       include: Buyer,
-  //     });
-  //     console.log(order);
-  //     let snap = new midtransClient.Snap({
-  //       // Set to true if you want Production Environment (accept real transaction).
-  //       isProduction: false,
-  //       serverKey: process.env.MIDTRANS_SERVER_KEY,
-  //     });
-  //     let parameter = {
-  //       transaction_details: {
-  //         order_id: order.id + new Date().getMilliseconds(), // isi order_id dengan value yang unique untuk tiap transaction
-  //         gross_amount: order.totalPrice, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
-  //       },
-  //       credit_card: {
-  //         secure: true,
-  //         installment: {
-  //           required: false,
-  //           terms: {
-  //             bca: [3, 6, 12],
-  //             bni: [3, 6, 12],
-  //             mandiri: [3, 6, 12],
-  //             cimb: [3, 6, 12],
-  //             bri: [3, 6, 12],
-  //             maybank: [3, 6, 12],
-  //             mega: [3, 6, 12],
-  //           },
-  //         },
-  //       },
-  //       customer_details: {
-  //         first_name: order.Buyer.name,
-  //         // last_name: "test first last name",
-  //         // email: "budi@mail.com",
-  //         // phone: "08111222333",
-  //       },
-  //     };
-
-  //     const transaction = await snap.createTransaction(parameter);
-
-  //     res.status(201).json({ transaction });
-  //   } catch (err) {
-  //     console.log(err);
-  //     next(err);
-  //   }
-  // }
   static async bulkUpdateOrderProducts(req, res, next) {
     const t = await sequelize.transaction();
     try {
@@ -225,7 +202,7 @@ class OrderController {
       });
       const order = await Order.findOne({
         where: { BuyerId, paymentMethod: "pending" },
-        include: Buyer
+        include: Buyer,
       });
       //kalkulasi Order totalPrice mestinya di Backend
       order.set({
@@ -239,7 +216,7 @@ class OrderController {
       });
       let parameter = {
         transaction_details: {
-          order_id: order.id + new Date().getMilliseconds(), // isi order_id dengan value yang unique untuk tiap transaction
+          order_id: order.id + "-" + new Date().getMilliseconds(), // isi order_id dengan value yang unique untuk tiap transaction
           gross_amount: order.totalPrice, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
         },
         credit_card: {
@@ -270,38 +247,11 @@ class OrderController {
       await t.commit();
 
       res.status(201).json({ transaction });
-      // console.log(order);
-      // res.status(200).json({ msg: "orderproducts updated" });
     } catch (error) {
       await t.rollback();
       next(error);
     }
   }
-  // static async testGetOrder(req, res, next) {
-  //   try {
-  //     const data = await Shop.findAll({
-  //       include: {
-  //         model: Product,
-  //         required: true,
-  //         include: {
-  //           model: OrderProduct,
-  //           required: true,
-
-  //           include: {
-  //             model: Order,
-  //             where: { isPaid: false },
-  //           },
-  //         },
-  //       },
-  //       where: {
-  //         id: 4,
-  //       },
-  //     });
-  //     res.status(200).json(data);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
 }
 
 module.exports = OrderController;
