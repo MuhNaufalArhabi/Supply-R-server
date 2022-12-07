@@ -65,16 +65,9 @@ class ProductController {
           tags: ["foto"],
         });
       });
-      let data = await Promise.all(uploadImages);
 
-      //   return imagekit
-      //     .upload({
-      //       file: gambar, //required
-      //       fileName: makeid(10) + '-' + 'supllyR' + '.jpg', //required
-      //       tags: ['foto'],
-      //     })
-      // });
-      // let data = await Promise.all(uploadImages); 
+      let data = await Promise.all(uploadImages); 
+
 
       const { name, price, stock, description, CategoryId } = JSON.parse(req.body.product)
       const ShopId = req.shop.id;
