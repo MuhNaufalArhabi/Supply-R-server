@@ -117,51 +117,55 @@ let access_token;
 // });
 
 beforeAll(async () => {
-  await createTwoBuyers();
-  // await createOrderProducts();
-  await Seller.create({
-    username: "test",
-    email: "sellertestlagi@mail.com",
-    password: "123456",
-    ktp: "test",
-    phoneNumber: "test",
-  });
-  await Shop.create({
-    name: "test",
-    address: "test",
-    lat: "test",
-    long: "test",
-    owner: "test",
-    phoneNumber: "test",
-    SellerId: 1,
-  });
-  await Category.create({
-    name: "test",
-  });
-  await Product.create({
-    name: "test",
-    price: 10000,
-    stock: 10,
-    ShopId: 1,
-    CategoryId: 1,
-    description: "test",
-    mainImage: "test",
-    slug: "test",
-  });
-  
-  await Order.create({
-    BuyerId: 1,
-    isPaid: false,
-    paymentMethod: "pending",
-    totalPrice: 1892905,
-  });
-  await OrderProduct.create({
-    OrderId: 1,
-    ProductId: 1,
-    quantity: 1,
-    totalPrice: 10000,
-  });
-  access_token = encode({ id: 1 });
+  try {    
+    await createTwoBuyers();
+    // await createOrderProducts();
+    await Seller.create({
+      username: "test",
+      email: "sellertestlagi@mail.com",
+      password: "123456",
+      ktp: "test",
+      phoneNumber: "test",
+    });
+    await Shop.create({
+      name: "test",
+      address: "test",
+      lat: "test",
+      long: "test",
+      owner: "test",
+      phoneNumber: "test",
+      SellerId: 1,
+    });
+    await Category.create({
+      name: "test",
+    });
+    await Product.create({
+      name: "test",
+      price: 10000,
+      stock: 10,
+      ShopId: 1,
+      CategoryId: 1,
+      description: "test",
+      mainImage: "test",
+      slug: "test",
+    });
+    
+    await Order.create({
+      BuyerId: 1,
+      isPaid: false,
+      paymentMethod: "pending",
+      totalPrice: 1892905,
+    });
+    await OrderProduct.create({
+      OrderId: 1,
+      ProductId: 1,
+      quantity: 1,
+      totalPrice: 10000,
+    });
+    access_token = encode({ id: 1 });
+  } catch (error) {
+    console.log(error)
+  }
 });
 
 afterAll(async () => {

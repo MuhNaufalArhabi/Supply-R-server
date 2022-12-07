@@ -10,9 +10,7 @@
   },
   "jest": {
     "collectCoverage": false,
-    "testPathIgnorePatterns": [
-
-    ]
+    "testPathIgnorePatterns": []
   },
   "repository": {
     "type": "git",
