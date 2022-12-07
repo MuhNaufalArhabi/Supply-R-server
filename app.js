@@ -16,7 +16,7 @@ let user = [];
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
 
- 
+
   socket.on("message", async (data) => { 
     socket.emit("messageResponse", data);
     user.forEach((el) => {
@@ -24,8 +24,9 @@ socketIO.on("connection", (socket) => {
         socket.to(el.socketId).emit("messageResponse", data);
       }
     });
-    socket.emit("messageResponse", data);
+    // socket.emit("messageResponse", data);
 
+    console.log(data)
     let rooms;
     if (data.senderRole === "buyer") {
       const [room, create] = await Room.findOrCreate({ // cuma bisa ngecek rindOrCreate nya kepanggil atau gak
@@ -39,7 +40,7 @@ socketIO.on("connection", (socket) => {
         },
       });
       rooms = room;
-    } else {
+    } else { 
       const [room, create] = await Room.findOrCreate({
         where: {
           BuyerId: data.receiver,
@@ -63,7 +64,7 @@ socketIO.on("connection", (socket) => {
 
   socket.on("userConnect", (data) => {
     let falg = false
-    
+   
     user.forEach(el => {
       if(el.id == data.id && el.role == data.role){
        el.socketId = data.socketId;
@@ -73,6 +74,7 @@ socketIO.on("connection", (socket) => {
     if(!falg){
       user.push(data);
     } 
+    console.log(user)
   });
 
   socket.on("newRooms", async (data) => {

@@ -106,7 +106,7 @@ class ProductController {
       }
       const updatedProduct = await Product
       .update({name, price, stock, description, ShopId, CategoryId}, {where: {id}})
-      res.status(200).json({message: 'success update product'})
+      res.status(200).json({message: 'Product updated'})
     } catch (error) {
       next(error);
     }

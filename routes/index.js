@@ -18,3 +18,4 @@ router.use("/rooms", roomRouter);
 router.use(categoryRouter);
 
 module.exports = router;
+ 
