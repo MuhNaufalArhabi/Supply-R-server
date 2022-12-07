@@ -72,6 +72,33 @@ router.use(categoryRouter);
 //   }
 // })
 
+router.get('/matriks-test/:id', async(req, res, next)=> {
+  try {
+    const { id } = req.params
+    const shop = await Shop.findOne({
+      where: {
+        id: id
+      },
+      include: {
+        model: Product,
+        include: {
+          model: OrderProduct,
+          required: true,
+          include: {
+            model: Order,
+            required: true,
+            where: {
+              isPaid: true
+            }
+          }
+        }
+      }
+    })
+    res.status(200).json(shop)
+  } catch (err) {
+    console.log(err)
+  }
+})
 
 
 module.exports = router;
