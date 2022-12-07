@@ -393,6 +393,64 @@ describe("POST /products", () => {
       });
   });
 
+  test("POST /products failed internal server error", (done) => {
+    jest.spyOn(Product, "create").mockImplementationOnce(() => {
+      throw new Error("Internal server error");
+    });
+    const body = {
+      product: {
+        name: "productTest test test",
+        price: "10000",
+        stock: 10,
+        description: "productTest",
+        CategoryId: 1,
+        ShopId: 1,
+      },
+    }
+    request(app)
+      .post("/products")
+      .set("access_token", access_token)
+      .field("product", JSON.stringify(body.product))
+      .attach("image", ("__tests__/assets/test.png"))
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(500);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Internal Server Error");
+        done();
+      });
+  })
+
+  test("POST /products failed internal server error", (done) => {
+    jest.spyOn(Product, "create").mockImplementationOnce(() => {
+      throw new Error("Internal server error");
+    });
+    const body = {
+      product: {
+        name: "productTest test test",
+        price: "10000",
+        stock: 10,
+        description: "productTest",
+        CategoryId: 1,
+        ShopId: 1,
+      },
+    }
+    request(app)
+      .post("/products")
+      .set("access_token", access_token)
+      .field("product", JSON.stringify(body.product))
+      .attach("image", ("__tests__/assets/test3.txt"))
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(500);
+        expect(body).toBeInstanceOf(Object);
+        expect(body).toHaveProperty("message", "Internal Server Error");
+        done();
+      });
+  })
+
   test("400 Bad Request create product", (done) => {
     const body = {
       product: {
@@ -585,3 +643,5 @@ describe("DELETE /products", () => {
       });
   });
 });
+
+
