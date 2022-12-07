@@ -6,6 +6,8 @@ const {
 const OrderController = require("../controllers/orderController");
 const router = require("express").Router();
 
+router.post("/midTTrans", OrderController.patchOrderMidtrans);
+
 router.use(authenticateBuyer);
 
 // can only accessed by authenticated token
