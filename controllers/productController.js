@@ -6,9 +6,9 @@ const { Op } = require("sequelize");
 const redis = require("../config/redis");
 
 const imagekit = new ImageKit({
-  urlEndpoint: "private_wja61SmIo3QnDDoZfZanme/WaK0=",
-  publicKey: "public_Z+0rVBD68ZVwViLs3o8/sEBMjgE=",
-  privateKey: "private_wja61SmIo3QnDDoZfZanme/WaK0=",
+  urlEndpoint: process.env.IMAGEKIT_URL,
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
 });
 
 function makeid(length) {
@@ -60,13 +60,13 @@ class ProductController {
     try {
       const uploadImages = req.body.image.map((gambar) => {
         return imagekit.upload({
-          file: gambar, 
+          file: gambar,
           fileName: makeid(10) + "-" + "supllyR" + ".jpg",
           tags: ["foto"],
         });
       });
       let data = await Promise.all(uploadImages);
-      const { name, price, stock, description, CategoryId } = req.body.product
+      const { name, price, stock, description, CategoryId } = req.body.product;
       const ShopId = req.shop.id;
       const slug = name.split(" ").join("-");
       const mainImage = data[0].url;
@@ -92,7 +92,7 @@ class ProductController {
       await Image.bulkCreate(images, { transaction: t });
       await t.commit();
       await redis.del("app:products");
-      await redis.del("app:productsPagination")
+      await redis.del("app:productsPagination");
       res.status(201).json(newProduct);
     } catch (error) {
       await t.rollback();
@@ -115,7 +115,7 @@ class ProductController {
         { where: { id } }
       );
       await redis.del("app:products");
-      await redis.del("app:productsPagination")
+      await redis.del("app:productsPagination");
       res.status(200).json({ message: "success update product" });
     } catch (error) {
       next(error);
@@ -134,7 +134,7 @@ class ProductController {
       await Image.destroy({ where: { ProductId: id }, transaction: t });
       await t.commit();
       await redis.del("app:products");
-      await redis.del("app:productsPagination")
+      await redis.del("app:productsPagination");
       res.status(200).json({ message: "Product deleted" });
     } catch (error) {
       await t.rollback();
@@ -256,16 +256,16 @@ class ProductController {
         // if (cacheProductsPagination) {
         //   res.status(200).json(JSON.parse(cacheProductsPagination));
         // } else {
-          const products = await Product.findAndCountAll({
-            limit,
-            offset,
-            include: ["Shop", "Category", "Images"],
-          });
-  
-          const totalPage = Math.ceil(products.count / limit);
-          const currentPage = Number(page);
-          // await redis.set("app:productsPagination", JSON.stringify({ products, totalPage, currentPage }));
-          res.status(200).json({ products, totalPage, currentPage });
+        const products = await Product.findAndCountAll({
+          limit,
+          offset,
+          include: ["Shop", "Category", "Images"],
+        });
+
+        const totalPage = Math.ceil(products.count / limit);
+        const currentPage = Number(page);
+        // await redis.set("app:productsPagination", JSON.stringify({ products, totalPage, currentPage }));
+        res.status(200).json({ products, totalPage, currentPage });
         // }
       }
     } catch (error) {
