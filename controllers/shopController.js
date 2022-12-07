@@ -87,13 +87,6 @@ class ShopController {
     }
   }
 
-  static async findOrders(req, res, next) {
-    try {
-    } catch (err) {
-      next(err);
-    }
-  }
-
   static async matriksUpfront(req, res, next) {
     try {
       const { id } = req.params;
