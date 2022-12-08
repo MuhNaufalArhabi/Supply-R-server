@@ -11,7 +11,7 @@ const { Chat, Room, Buyer, Shop } = require("./models");
 const socketIO = require("socket.io")(http, {
   cors: {
     origin: true,
-    methods: ["GET", "POST"],
+    // methods: ["GET", "POST"],
   },
 });
 
