@@ -744,41 +744,41 @@
 	],
 	"sellers": [
 		{
-			"username": "Cybil Monini",
-			"email": "seller1@mail.com",
-			"password": "seller1",
+			"username": "Budi Santoso",
+			"email": "budi@gmail.com",
+			"password": "budibudi",
 			"phoneNumber": "424-918-0094",
 			"ktp": "64-997-9027",
 			"id": 1
 		},
 		{
-			"username": "Giustino Snoddin",
-			"email": "seller2@mail.com",
-			"password": "seller2",
+			"username": "Peter Kasenda",
+			"email": "peterkasenda@gmail.com",
+			"password": "peterkasenda",
 			"phoneNumber": "524-182-2382",
 			"ktp": "88-974-4294",
 			"id": 2
 		},
 		{
-			"username": "Conny Carter",
-			"email": "seller3@mail.com",
-			"password": "seller3",
+			"username": "Putri Tiara",
+			"email": "putritiara@gmail.com",
+			"password": "putritiara",
 			"phoneNumber": "568-854-2955",
 			"ktp": "39-953-5310",
 			"id": 3
 		},
 		{
-			"username": "Joann Tanner",
-			"email": "seller4@mail.com",
-			"password": "seller4",
+			"username": "Aman Suparman",
+			"email": "suparman@gmail.com",
+			"password": "suparman",
 			"phoneNumber": "652-166-4827",
 			"ktp": "01-168-3657",
 			"id": 4
 		},
 		{
-			"username": "Ring McDill",
-			"email": "seller5@mail.com",
-			"password": "seller5",
+			"username": "Reynaldi Sihombing",
+			"email": "reynaldi@gmail.com",
+			"password": "reynaldi",
 			"phoneNumber": "941-412-3551",
 			"ktp": "09-537-7413",
 			"id": 5
@@ -786,24 +786,24 @@
 	],
 	"buyers": [
 		{
-			"name": "Oyoloo",
-			"owner": "Ed Jacqueme",
-			"password": "buyer1",
-			"email": "buyer1@mail.com",
+			"name": "PT SURAKARTA ENGINEERING",
+			"owner": "Ajeng Ayu",
+			"password": "surakarta",
+			"email": "surakarta@mail.com",
 			"phoneNumber": "161-714-7611",
-			"address": "94 Continental Terrace",
-			"website": "www.Oyoloo.com",
-			"industry": "Advertising",
+			"address": "Jl. Surakarta no. 10",
+			"website": "www.surakartaengineering.com",
+			"industry": "Building",
 			"id": 1
 		},
 		{
-			"name": "Skinte",
-			"owner": "Christie Proom",
-			"password": "buyer2",
-			"email": "buyer2@mail.com",
+			"name": "CV MAJU JAYA BERSAMA",
+			"owner": "Joko Roaminoto",
+			"password": "majujaya",
+			"email": "majujaya@mail.com",
 			"phoneNumber": "944-996-9330",
-			"address": "02 Pierstorff Parkway",
-			"website": "www.Skinte.com",
+			"address": "Jl. Buah Mangga no. 21A",
+			"website": "www.majujaya.com",
 			"industry": "Metal Fabrications",
 			"id": 2
 		}

@@ -10,7 +10,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const { Chat, Room, Buyer, Shop } = require("./models");
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "https://supply-r-e1ec8.web.app",
+    origin: "*",
   },
 });
 
