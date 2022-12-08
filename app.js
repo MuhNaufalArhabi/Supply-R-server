@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config(); 
+  require("dotenv").config();
 }
 const express = require("express");
 const app = express();
@@ -10,7 +10,8 @@ const errorHandler = require("./middlewares/errorHandler");
 const { Chat, Room, Buyer, Shop } = require("./models");
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "*",
+    origin: true,
+    methods: ["GET", "POST"],
   },
 });
 
@@ -18,8 +19,7 @@ let user = [];
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
 
-
-  socket.on("message", async (data) => { 
+  socket.on("message", async (data) => {
     socket.emit("messageResponse", data);
     user.forEach((el) => {
       if (el.id == data.receiver && el.role != data.role) {
@@ -28,10 +28,11 @@ socketIO.on("connection", (socket) => {
     });
     // socket.emit("messageResponse", data);
 
-    console.log(data)
+    console.log(data);
     let rooms;
     if (data.senderRole === "buyer") {
-      const [room, create] = await Room.findOrCreate({ // cuma bisa ngecek rindOrCreate nya kepanggil atau gak
+      const [room, create] = await Room.findOrCreate({
+        // cuma bisa ngecek rindOrCreate nya kepanggil atau gak
         where: {
           BuyerId: data.sender,
           ShopId: data.receiver,
@@ -42,7 +43,7 @@ socketIO.on("connection", (socket) => {
         },
       });
       rooms = room;
-    } else { 
+    } else {
       const [room, create] = await Room.findOrCreate({
         where: {
           BuyerId: data.receiver,
@@ -57,30 +58,32 @@ socketIO.on("connection", (socket) => {
       rooms = room;
     }
 
-    await Chat.create({ // sama, cuma bisa ngecek create nya kepanggil atau gak pakai toHaveBeenCalled
+    await Chat.create({
+      // sama, cuma bisa ngecek create nya kepanggil atau gak pakai toHaveBeenCalled
       senderId: data.sender,
       RoomId: rooms.id,
       chat: data.chat,
     });
   });
   socket.on("userConnect", (data) => {
-    let falg = false
-    user.forEach(el => {
-      if(el.id == data.id && el.role == data.role){
-       el.socketId = data.socketId;
-       falg = true
+    let falg = false;
+    user.forEach((el) => {
+      if (el.id == data.id && el.role == data.role) {
+        el.socketId = data.socketId;
+        falg = true;
       }
-    })
-    if(!falg){
+    });
+    if (!falg) {
       user.push(data);
-    } 
-    console.log(user)
+    }
+    console.log(user);
   });
   socket.on("newRooms", async (data) => {
     let rooms = [];
 
     if (data.role == "buyer") {
-      const result = await Room.findAll({ // sama, cuma bisa ngecek findAll nya kepanggil atau gak
+      const result = await Room.findAll({
+        // sama, cuma bisa ngecek findAll nya kepanggil atau gak
         where: {
           BuyerId: data.id,
         },
@@ -93,7 +96,8 @@ socketIO.on("connection", (socket) => {
         }
       });
     } else {
-      const result = await Room.findAll({ // sama, cuma bisa ngecek findAll nya kepanggil atau gak
+      const result = await Room.findAll({
+        // sama, cuma bisa ngecek findAll nya kepanggil atau gak
         where: {
           ShopId: data.id,
         },
@@ -123,4 +127,4 @@ app.use(router);
 
 app.use(errorHandler);
 
-module.exports = {http, socketIO};
+module.exports = { http, socketIO };
