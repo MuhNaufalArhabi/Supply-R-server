@@ -290,6 +290,17 @@ describe("GET /buyers/", () => {
     expect(response.body[0]).toHaveProperty("industry", expect.any(String));
     expect(response.body[0]).toHaveProperty("Order", expect.any(Object));
   });
+
+  test("GET 500 /buyers/ fail-test ", async () => {
+    jest.spyOn(Buyer, "findAll").mockImplementationOnce(() => {
+      throw new Error("Internal Server Error");
+    });
+    const response = await request(app).get("/buyers/");
+    expect(response.status).toBe(500);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("message", "Internal Server Error");
+  });
+
   test("GET /buyers/:id success-test", async () => {
     const response = await request(app).get("/buyers/1");
     expect(response.status).toBe(200);
@@ -321,6 +332,20 @@ describe("DEL /buyers/", () => {
     expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("msg", "Buyer deleted");
   });
+
+  test("DEL /buyers/delete fail-test", async () => {
+    jest.spyOn(Buyer, "destroy").mockImplementationOnce(() => {
+      throw new Error("Internal Server Error");
+    });
+    access_token = encode({ id: 3 });
+    const response = await request(app)
+      .delete("/buyers")
+      .set({ access_token: access_token });
+    expect(response.status).toBe(500);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("message", "Internal Server Error");
+  });
+
   test("DEL /buyers/delete no token-test", async () => {
     const response = await request(app).delete("/buyers");
     expect(response.status).toBe(401);
@@ -359,6 +384,28 @@ describe("PUT /buyers/", () => {
     expect(response.body).toHaveProperty(
       "msg",
       "buyer id 1 is successfully changed"
+    );
+  });
+
+  test("PUT 400 Bad request", async () => {
+    access_token = encode({ id: 1 });
+    const response = await request(app)
+      .put("/buyers")
+      .set({ access_token: access_token })
+      .send({
+        owner: "Owner Diubah",
+        password: "E9Lsv4TtIBi",
+        email: "testing@h8.com",
+        phoneNumber: "161-714-7611",
+        address: "Jalan",
+        website: "www.bura.com",
+        industry: "Civil Works",
+      });
+    expect(response.status).toBe(400);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty(
+      "message",
+      "Name is required"
     );
   });
 });

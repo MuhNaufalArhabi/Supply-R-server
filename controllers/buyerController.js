@@ -124,9 +124,9 @@ class BuyerController {
       } = req.body;
       const { id: buyerId } = req.buyer;
       const buyer = await Buyer.findOne({ where: { id: buyerId } });
-      if (!buyer) {
-        throw { name: "not_found" };
-      }
+      // if (!buyer) {
+      //   throw { name: "not_found" };
+      // }
       buyer.set({
         name,
         owner,
