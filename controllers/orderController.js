@@ -24,9 +24,30 @@ class OrderController {
         },
       };
       const orders = await Order.findAll(options);
-      // if (!orders) {
-      //   throw { name: "not_found" };
-      // }
+      res.status(200).json(orders);
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async fetchBuyerOrderHistory(req, res, next) {
+    try {
+      const BuyerId = req.buyer.id;
+      let { paymentMethod } = req.query;
+      let options = {
+        where: { BuyerId, isPaid: true },
+        include: {
+          model: OrderProduct,
+          required: true,
+          include: {
+            model: Product,
+            include: [Shop, Category],
+          },
+        },
+      };
+      if (paymentMethod) {
+        options.where.paymentMethod = paymentMethod;
+      }
+      const orders = await Order.findAll(options);
       res.status(200).json(orders);
     } catch (error) {
       next(error);
@@ -51,7 +72,6 @@ class OrderController {
           delete input[key];
         }
       }
-      // console.log({ p, pay });
       order.set(input);
       await order.save();
       res.status(200).json({ msg: "order changed" });
@@ -62,7 +82,7 @@ class OrderController {
   static async patchOrderMidtrans(req, res, next) {
     try {
       const { order_id, status_code, installment_term, payment_type } =
-        (req.body);
+        req.body;
       console.log(req.body, typeof req.body);
       const OrderId = +order_id.split("-")[0];
       const order = await Order.findOne({
@@ -122,7 +142,7 @@ class OrderController {
       next(error);
     }
   }
-  
+
   static async delOrderProduct(req, res, next) {
     const t = await sequelize.transaction();
     try {
@@ -132,9 +152,6 @@ class OrderController {
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
-      // if (!orderProduct) {
-      //   throw { name: "not_found" };
-      // }
 
       await OrderProduct.destroy({
         where: { id: orderProductId },
@@ -162,7 +179,6 @@ class OrderController {
       const orderProduct = await OrderProduct.findOne({
         where: { id: orderProductId },
       });
-      //janlup tambahin proteksi tambahan kalau ispaid ternyata true
       if (!orderProduct) {
         throw { name: "not_found" };
       }
@@ -211,16 +227,14 @@ class OrderController {
       });
       await order.save({ transaction: t });
       let snap = new midtransClient.Snap({
-        // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
         serverKey: process.env.MIDTRANS_SERVER_KEY,
       });
       let parameter = {
         transaction_details: {
+          order_id: order.id + "-" + new Date().getTime(),
 
-          order_id: order.id + new Date().getTime(), // isi order_id dengan value yang unique untuk tiap transaction
-
-          gross_amount: order.totalPrice, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
+          gross_amount: order.totalPrice,
         },
         credit_card: {
           secure: true,
@@ -239,9 +253,6 @@ class OrderController {
         },
         customer_details: {
           first_name: order.Buyer.name,
-          // last_name: "test first last name",
-          // email: "budi@mail.com",
-          // phone: "08111222333",
         },
       };
 

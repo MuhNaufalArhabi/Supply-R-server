@@ -150,7 +150,6 @@ beforeAll(async () => {
       mainImage: "test",
       slug: "test",
     });
-
     await Order.create({
       BuyerId: 1,
       isPaid: false,

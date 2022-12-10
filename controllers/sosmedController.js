@@ -1,4 +1,4 @@
-const { Seller, Shop } = require('../models');
+const { Seller, Shop } = require("../models");
 const { encode } = require("../helpers/jwt");
 
 class SosmedController {
@@ -7,25 +7,43 @@ class SosmedController {
       let { email, username } = req.body;
       const [user, created] = await Seller.findOrCreate({
         where: {
-          email: email
+          email: email,
         },
         defaults: {
           username: username,
           email: email,
-          password: 'google_secret',
-          ktp: '',
-          phoneNumber: ''
+          password: "google_secret",
+          ktp: "",
+          phoneNumber: "",
         },
-        hooks: false
-      })
+        hooks: false,
+      });
       const access_token = encode({
-        id: user.id
-      })
-      const shop = await Shop.findOne({where: {SellerId: user.id}})
+        id: user.id,
+      });
+      const shop = await Shop.findOne({ where: { SellerId: user.id } });
       if (shop === null) {
-      res.status(200).json({access_token, message: `login Google ok`, sellerId: user.id, username: user.username, role: 'seller' })
+        res
+          .status(200)
+          .json({
+            access_token,
+            message: `login Google ok`,
+            sellerId: user.id,
+            username: user.username,
+            role: "seller",
+          });
       } else {
-        res.status(200).json({access_token, message: `login Google ok`, sellerId: user.id, username: user.username, role: 'seller', shopId: shop.id, shopName: shop.name })
+        res
+          .status(200)
+          .json({
+            access_token,
+            message: `login Google ok`,
+            sellerId: user.id,
+            username: user.username,
+            role: "seller",
+            shopId: shop.id,
+            shopName: shop.name,
+          });
       }
     } catch (err) {
       next(err);
@@ -37,21 +55,40 @@ class SosmedController {
       let { email, username } = req.body;
       const [user, created] = await Seller.findOrCreate({
         where: {
-          email: email
+          email: email,
         },
         defaults: {
           username: username,
           email: email,
-          password: 'facebook_secret',
-          ktp: '',
-          phoneNumber: ''
+          password: "facebook_secret",
+          ktp: "",
+          phoneNumber: "",
         },
-        hooks: false
-      })
+        hooks: false,
+      });
       const access_token = encode({
-        id: user.id
-      })
-      res.status(200).json({access_token, message: `login Facebook ok` })
+        id: user.id,
+      });
+      const shop = await Shop.findOne({ where: { SellerId: user.id } });
+      if (shop === null) {
+        res.status(200).json({
+          access_token,
+          message: `login Facebook ok`,
+          sellerId: user.id,
+          username: user.username,
+          role: "seller",
+        });
+      } else {
+        res.status(200).json({
+          access_token,
+          message: `login Facebook ok`,
+          sellerId: user.id,
+          username: user.username,
+          role: "seller",
+          shopId: shop.id,
+          shopName: shop.name,
+        });
+      }
     } catch (err) {
       next(err);
     }
@@ -62,21 +99,40 @@ class SosmedController {
       let { email, username } = req.body;
       const [user, created] = await Seller.findOrCreate({
         where: {
-          email: email
+          email: email,
         },
         defaults: {
           username: username,
           email: email,
-          password: 'twitter_secret',
-          ktp: '',
-          phoneNumber: ''
+          password: "twitter_secret",
+          ktp: "",
+          phoneNumber: "",
         },
-        hooks: false
-      })
+        hooks: false,
+      });
       const access_token = encode({
-        id: user.id
-      })
-      res.status(200).json({access_token, message: `login Twitter ok` })
+        id: user.id,
+      });
+      const shop = await Shop.findOne({ where: { SellerId: user.id } });
+      if (shop === null) {
+        res.status(200).json({
+          access_token,
+          message: `login Twitter ok`,
+          sellerId: user.id,
+          username: user.username,
+          role: "seller",
+        });
+      } else {
+        res.status(200).json({
+          access_token,
+          message: `login Twitter ok`,
+          sellerId: user.id,
+          username: user.username,
+          role: "seller",
+          shopId: shop.id,
+          shopName: shop.name,
+        });
+      }
     } catch (err) {
       next(err);
     }
